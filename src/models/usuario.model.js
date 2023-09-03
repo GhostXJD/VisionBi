@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const usuarioSchema = mongoose.Schema({
+const usuarioSchema = new mongoose.Schema({
     nombre: {
         type: String,
         required: true,
@@ -11,13 +11,13 @@ const usuarioSchema = mongoose.Schema({
     },
     password: { type: String, 
         required: true
-    },
-    active: {type: Boolean
-    },
-    tipoUsuario: {type: String,
-        required: true  
     }
 })
 
 export default mongoose.model('usuario', usuarioSchema)
-/* Escribir el nombre de la tabla en singular */
+/* Escribir el nombre de la tabla en singular ,
+    active: {type: Boolean
+    },
+    tipoUsuario: {type: String,
+        required: true  
+    }*/
