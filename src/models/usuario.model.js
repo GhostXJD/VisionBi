@@ -7,17 +7,18 @@ const usuarioSchema = new mongoose.Schema({
         trim: true,
     },
     correo: { type: String, 
-        required: true
+        required: true,
+        unique: true
     },
     password: { type: String, 
         required: true
-    }
-})
-
-export default mongoose.model('usuario', usuarioSchema)
-/* Escribir el nombre de la tabla en singular ,
+    },
     active: {type: Boolean
     },
     tipoUsuario: {type: String,
-        required: true  
-    }*/
+        required: true
+    }  
+})
+
+export default mongoose.model('usuario', usuarioSchema)
+/* Escribir el nombre de la tabla en singular */
