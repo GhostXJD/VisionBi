@@ -1,0 +1,45 @@
+import { z } from "zod"
+
+export const registroSchema = z.object({
+    nombre: z
+        .string({
+            required_error: "Nombre required",
+        }),
+    correo: z
+        .string({
+            required_error: "Email required",
+        }).email({
+            message: "Invalid email address"
+        }),
+    password: z
+        .string({
+            required_error: "Password is required",
+        }).min(5, {
+            message: "Password must be at least 5 characters"
+        }),
+    active: z
+        .boolean({
+            required_error: "active is required",
+        }),
+    tipoUsuario: z
+        .string({
+            required_error: "Type user is required",
+        })
+});
+
+export const loginSchema = z.object({
+    correo: z
+        .string({
+            required_error: "Email required",
+        })
+        .email({
+            message: "Invalid email address"
+        }),
+    password: z
+        .string({
+            required_error: "Password is required",
+        })
+        .min(5, {
+            message: "Password must be at least 5 characters"
+        }),
+});
