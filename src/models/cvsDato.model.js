@@ -25,4 +25,4 @@ const csvDatoSchema = new mongoose.Schema({
         type: Date, 
         required: true,
     }  
-}, { timestamps: true }  )
+}, { timestamps: false }  )
