@@ -24,5 +24,12 @@ const csvDatoSchema = new mongoose.Schema({
     fechaVenta: { 
         type: Date, 
         required: true,
+    },
+    usuario: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'usuario',
+        required: true
     }  
-}, { timestamps: false }  )
+}, { timestamps: true }  )
+
+export default mongoose.model('csvDato', csvDatoSchema)
