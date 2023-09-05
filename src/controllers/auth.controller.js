@@ -1,6 +1,8 @@
 import usuario from "../models/usuario.model.js";
 import bcrypt from 'bcryptjs'
 import { createAccessToken } from "../libs/jwt.js";
+import jwt from 'jsonwebtoken';
+import { TOKEN_SECRET } from "../config.js";
 
 export const registro = async (req, res) => {
     const { nombre, correo, password, active, tipoUsuario } = req.body;
@@ -41,7 +43,7 @@ export const login = async (req, res) => {
 
         const usuarioFound = await usuario.findOne({ correo })
 
-        if (!usuarioFound) return res.status(400).json({message:"user not found"}); 
+        if (!usuarioFound) return res.status(400).json({ message: "user not found" });
 
         const isMatch = await bcrypt.compare(password, usuarioFound.password);
 
@@ -63,7 +65,7 @@ export const login = async (req, res) => {
 };
 
 export const logout = async (req, res) => {
-    res.cookie('token', "",{
+    res.cookie('token', "", {
         expires: new Date(0),
     });
     return res.sendStatus(200);
@@ -72,7 +74,7 @@ export const logout = async (req, res) => {
 export const profile = async (req, res) => {
     const usuarioFound = await usuario.findById(req.usuario.id)
 
-    if (!usuarioFound) return res.status(400).json({message:"user not found"}); 
+    if (!usuarioFound) return res.status(400).json({ message: "user not found" });
 
     return res.json({
         id: usuarioFound._id,
@@ -80,5 +82,25 @@ export const profile = async (req, res) => {
         correo: usuarioFound.correo,
         active: usuarioFound.active,
         tipoUsuario: usuarioFound.tipoUsuario
+    })
+};
+
+export const verifyToken = async (req, res) => {
+    const { token } = req.cookies;
+
+    if (!token) return res.status(401).json({ message: "unauthorized" });
+
+    jwt.verify(token, TOKEN_SECRET, async (err, usuario) => {
+        if (err) return res.status(401).json({ message: "unauthorized" });
+
+        const usuarioFound = await usuario.findById(usuario.id);
+        if (!usuarioFound) return res.status(401).json({ message: "unauthorized" });
+
+        return res.json({
+            id: usuarioFound._id,
+            nombre: usuarioFound.nombre,
+            correo: usuarioFound.correo,
+
+        });
     })
 };
