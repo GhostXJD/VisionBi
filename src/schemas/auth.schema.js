@@ -33,13 +33,13 @@ export const loginSchema = z.object({
             required_error: "Email required",
         })
         .email({
-            message: "Invalid email address"
+            message: "El correo no es valido"
         }),
     password: z
         .string({
-            required_error: "Password is required",
+            required_error: "Contraseña incorrecta",
         })
         .min(5, {
-            message: "Password must be at least 5 characters"
+            message: "Contraseña incorrecta"
         }),
 });
