@@ -13,7 +13,8 @@ const usuarioSchema = new mongoose.Schema({
     password: { type: String, 
         required: true
     },
-    active: {type: Boolean
+    active: {type: Boolean,
+        required: true
     },
     tipoUsuario: {type: String,
         required: true

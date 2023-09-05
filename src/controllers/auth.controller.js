@@ -5,6 +5,10 @@ import { createAccessToken } from "../libs/jwt.js";
 export const registro = async (req, res) => {
     const { nombre, correo, password, active, tipoUsuario } = req.body;
     try {
+        const usuarioFound = await usuario.findOne({ correo });
+        if (usuarioFound)
+            return res.status(404).json(['El correo ya existe']);
+
         const passwordHashs = await bcrypt.hash(password, 10)
 
         const newUsuario = new usuario({

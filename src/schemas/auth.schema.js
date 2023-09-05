@@ -15,7 +15,7 @@ export const registroSchema = z.object({
         .string({
             required_error: "Password is required",
         }).min(5, {
-            message: "Password must be at least 5 characters"
+            message: "La contraseña debe tener minimo 5 caracteres"
         }),
     active: z
         .boolean({
