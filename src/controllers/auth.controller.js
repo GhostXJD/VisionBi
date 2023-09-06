@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs'
 import { createAccessToken } from "../libs/jwt.js";
 import jwt from 'jsonwebtoken';
 import { TOKEN_SECRET } from "../config.js";
+import usuarioModel from "../models/usuario.model.js";
 
 export const registro = async (req, res) => {
     const { nombre, correo, password, active, tipoUsuario } = req.body;
@@ -93,14 +94,13 @@ export const verifyToken = async (req, res) => {
     jwt.verify(token, TOKEN_SECRET, async (err, usuario) => {
         if (err) return res.status(401).json({ message: "unauthorized" });
 
-        const usuarioFound = await usuario.findById(usuario.id);
+        const usuarioFound = await usuarioModel.findById(usuario.id);
         if (!usuarioFound) return res.status(401).json({ message: "unauthorized" });
 
         return res.json({
             id: usuarioFound._id,
             nombre: usuarioFound.nombre,
             correo: usuarioFound.correo,
-
         });
     })
 };
