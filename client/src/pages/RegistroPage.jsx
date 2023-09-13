@@ -9,7 +9,7 @@ function RegistroPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isAuthenticated) navigate('/csvDatos')
+    if (isAuthenticated) navigate('/inicio')
   }, [isAuthenticated])
 
   const onSubmit = handleSubmit(async (values) => {

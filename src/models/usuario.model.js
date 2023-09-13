@@ -6,19 +6,28 @@ const usuarioSchema = new mongoose.Schema({
         required: true,
         trim: true,
     },
-    correo: { type: String, 
+    rut: {
+        type: String,
         required: true,
         unique: true
     },
-    password: { type: String, 
+    correo: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    password: {
+        type: String,
         required: true
     },
-    active: {type: Boolean,
+    active: {
+        type: Boolean,
         required: true
     },
-    tipoUsuario: {type: String,
+    tipoUsuario: {
+        type: String,
         required: true
-    }  
+    }
 })
 
 export default mongoose.model('usuario', usuarioSchema)

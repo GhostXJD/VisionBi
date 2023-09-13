@@ -5,6 +5,10 @@ export const registroSchema = z.object({
         .string({
             required_error: "Nombre required",
         }),
+    rut: z
+        .string({
+            required_error: "Rut required",
+        }),
     correo: z
         .string({
             required_error: "Email required",

@@ -3,7 +3,7 @@ import { AuthProvider } from './context/AuthContext';
 
 import RegistroPage from './pages/RegistroPage';
 import LoginPage from './pages/LoginPage';
-import HomePage from './pages/homePage';
+import HomePage from './pages/HomePage';
 import Profile from './pages/Profile';
 
 import ProtectedRoute from './ProtectedRoute'
@@ -13,7 +13,7 @@ function App() {
     <AuthProvider>
       <BrowserRouter>
         <Routes>
-          <Route path='/' element={<h1>Home Page</h1>} />
+          <Route path='/' element={<h1>Principal Page</h1>} />
           <Route path='/login' element={<LoginPage />} />
           <Route path='/registro' element={<RegistroPage />} />
 

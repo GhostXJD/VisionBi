@@ -6,7 +6,7 @@ import { TOKEN_SECRET } from "../config.js";
 import usuarioModel from "../models/usuario.model.js";
 
 export const registro = async (req, res) => {
-    const { nombre, correo, password, active, tipoUsuario } = req.body;
+    const { nombre, rut, correo, password, active, tipoUsuario } = req.body;
     try {
         const usuarioFound = await usuario.findOne({ correo });
         if (usuarioFound)
@@ -16,6 +16,7 @@ export const registro = async (req, res) => {
 
         const newUsuario = new usuario({
             nombre,
+            rut,
             correo,
             password: passwordHashs,
             active,
@@ -28,6 +29,7 @@ export const registro = async (req, res) => {
         res.json({
             id: userSaved._id,
             nombre: userSaved.nombre,
+            rut: userSaved.rut,
             correo: userSaved.correo,
             active: userSaved.active,
             tipoUsuario: userSaved.tipoUsuario
@@ -55,6 +57,7 @@ export const login = async (req, res) => {
         res.json({
             id: usuarioFound._id,
             nombre: usuarioFound.nombre,
+            rut: usuarioFound.rut,
             correo: usuarioFound.correo,
             active: usuarioFound.active,
             tipoUsuario: usuarioFound.tipoUsuario
@@ -80,6 +83,7 @@ export const profile = async (req, res) => {
     return res.json({
         id: usuarioFound._id,
         nombre: usuarioFound.nombre,
+        rut: usuarioFound.rut,
         correo: usuarioFound.correo,
         active: usuarioFound.active,
         tipoUsuario: usuarioFound.tipoUsuario

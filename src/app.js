@@ -5,6 +5,7 @@ import cors from 'cors';
 
 import authRoutes from './routes/auth.routes.js';
 import csvRoutes from './routes/csvDatos.routes.js';
+import usuarioRoutes from './routes/usuarios.routes.js';
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(express.json())
 app.use(cookieParser());
 
 app.use("/api",authRoutes);
-app.use("/api",csvRoutes); 
+app.use("/api",csvRoutes);
+app.use("/api",usuarioRoutes); 
 
 export default app;
