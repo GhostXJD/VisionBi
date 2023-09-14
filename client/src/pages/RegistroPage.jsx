@@ -1,4 +1,4 @@
-import { useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form';
 import { useAuth } from '../context/AuthContext'
 import { useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
@@ -34,32 +34,35 @@ function RegistroPage() {
     }
   };
 
-  /*TODO: Falta que formatee el rut osea ocupar esta funcion*/
   const formatearRut = (rut) => {
-    console.log('El rut es este ->', rut)
     const rutSinFormatear = rut.replace(/\./g, "").replace("-", "").trim();
     const rutNum = rutSinFormatear.slice(0, -1);
     const dvIngresado = rutSinFormatear.slice(-1);
     const dvCalculado = calcularDigitoVerificador(rutNum);
 
     if (dvIngresado.toUpperCase() === dvCalculado) {
-      console.log("funco")
       const rutFormateado = rutNum.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + "-" + dvIngresado;
-      setRut(rutFormateado);
+      return rutFormateado;
     } else {
       Swal.fire({
-        icon: 'info', text: 'El RUT ingresado no es válido',
+        icon: 'info',
+        text: 'El RUT ingresado no es válido',
         confirmButtonColor: 'rgb(158 173 56)',
       });
-      setRut("")
+      return "";
     }
   };
 
   const onSubmit = handleSubmit(async (values) => {
-    values.tipoUsuario = "empresa"
-    values.active = true
-    signup(values)
-  })
+    const rutFormateado = formatearRut(values.rut);
+    if (rutFormateado !== "") {
+      values.rut = rutFormateado;
+      values.tipoUsuario = "empresa";
+      values.active = true;
+      signup(values);
+    }
+  });
+
 
   return (
     <div className='bg-zinc-800 max-w-md p-10 rounded-md'>
@@ -78,15 +81,26 @@ function RegistroPage() {
         {errors.nombre && (
           <p className='text-red-500'>Se necesita nombre</p>
         )}
+
         <input
           type="text"
           {...register("rut", { required: true })}
           className='w-full bg-zinc-700 text-white px4 py-2 rounded-md my-2'
           placeholder='Ingrese su rut'
+          onBlur={(e) => {
+            const rutFormateado = formatearRut(e.target.value);
+
+            if (rutFormateado !== "") {
+              e.target.value = rutFormateado; 
+            } else {
+              e.target.value = ""; 
+            }
+          }}
         />
         {errors.rut && (
           <p className='text-red-500'>Se necesita rut</p>
         )}
+        
         <input
           type="email"
           {...register("correo", { required: true, pattern: { value: "([a-zA-Z0-9]([^ @&%$\\\/()=?¿!.,:;]?|\d?)+[a-zA-Z0-9][\.]){1,2}" } })}
@@ -127,4 +141,3 @@ function RegistroPage() {
 }
 
 export default RegistroPage
-

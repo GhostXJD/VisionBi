@@ -35,31 +35,33 @@ function RegistroPage() {
         }
     };
 
-    /*TODO: Falta que formatee el rut osea ocupar esta funcion*/
     const formatearRut = (rut) => {
-        console.log('El rut es este ->', rut)
         const rutSinFormatear = rut.replace(/\./g, "").replace("-", "").trim();
         const rutNum = rutSinFormatear.slice(0, -1);
         const dvIngresado = rutSinFormatear.slice(-1);
         const dvCalculado = calcularDigitoVerificador(rutNum);
 
         if (dvIngresado.toUpperCase() === dvCalculado) {
-            console.log("funco")
             const rutFormateado = rutNum.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + "-" + dvIngresado;
-            setRut(rutFormateado);
+            return rutFormateado;
         } else {
             Swal.fire({
-                icon: 'info', text: 'El RUT ingresado no es válido',
+                icon: 'info',
+                text: 'El RUT ingresado no es válido',
                 confirmButtonColor: 'rgb(158 173 56)',
             });
-            setRut("")
+            return "";
         }
     };
 
     const onSubmit = handleSubmit(async (values) => {
-        values.active = true
-        createUsuarioRequest(values)
-        navigate('/ListarUsuarios')
+        const rutFormateado = formatearRut(values.rut);
+        if (rutFormateado !== "") {
+            values.rut = rutFormateado;
+            values.active = true
+            createUsuarioRequest(values)
+            navigate('/ListarUsuarios')
+        }
     })
 
     return (
@@ -84,6 +86,15 @@ function RegistroPage() {
                     {...register("rut", { required: true })}
                     className='w-full bg-zinc-700 text-white px4 py-2 rounded-md my-2'
                     placeholder='Ingrese su rut'
+                    onBlur={(e) => {
+                        const rutFormateado = formatearRut(e.target.value);
+
+                        if (rutFormateado !== "") {
+                            e.target.value = rutFormateado;
+                        } else {
+                            e.target.value = "";
+                        }
+                    }}
                 />
                 {errors.rut && (
                     <p className='text-red-500'>Se necesita rut</p>
