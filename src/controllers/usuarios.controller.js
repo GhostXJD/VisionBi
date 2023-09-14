@@ -1,8 +1,9 @@
 import usuario from "../models/usuario.model.js";
+import bcrypt from 'bcryptjs'
 
 export const getUsuarios = async (req, res) => {
     try {
-        const usuarios = await usuario.find();
+        const usuarios = await usuario.find().select('nombre rut correo tipoUsuario active');
         res.json(usuarios)
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -38,8 +39,6 @@ export const createUsuario = async (req, res) => {
         });
 
         const userSaved = await newUsuario.save();
-        const token = await createAccessToken({ id: userSaved._id })
-        res.cookie('token', token);
         res.json({
             id: userSaved._id,
             nombre: userSaved.nombre,
