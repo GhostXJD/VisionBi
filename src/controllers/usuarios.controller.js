@@ -12,9 +12,9 @@ export const getUsuarios = async (req, res) => {
 
 export const getUsuario = async (req, res) => {
     try {
-        const usuario = await Usuario.findById(req.params.id);
-        if (!usuario) return res.status(404).json({ message: 'Usuarios no encontrados' });
-        res.json(usuario)
+        const usuarioEncontrado = await usuario.findById(req.params.id);
+        if (!usuarioEncontrado) return res.status(404).json({ message: 'Usuario no encontrados' });
+        res.json(usuarioEncontrado)
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -55,8 +55,8 @@ export const createUsuario = async (req, res) => {
 
 export const deleteUsuario = async (req, res) => {
     try {
-        const usuario = await usuario.findByIdAndDelete(req.params.id);
-        if (!usuario) return res.status(404).json({ message: "Usuario not found" });
+        const usuarioEncontrado = await usuario.findByIdAndDelete(req.params.id);
+        if (!usuarioEncontrado) return res.status(404).json({ message: "Usuario not found" });
         return res.sendStatus(204);
     } catch (error) {
         res.status(404).json({ message: "Usuario not found" });

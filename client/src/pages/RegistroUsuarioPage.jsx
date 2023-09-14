@@ -59,7 +59,7 @@ function RegistroPage() {
     const onSubmit = handleSubmit(async (values) => {
         values.active = true
         createUsuarioRequest(values)
-        console.log(values)
+        navigate('/ListarUsuarios')
     })
 
     return (
