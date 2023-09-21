@@ -6,7 +6,7 @@ import { TOKEN_SECRET } from "../config.js";
 import usuarioModel from "../models/usuario.model.js";
 
 export const registro = async (req, res) => {
-    const { nombre, rut, correo, password, active, tipoUsuario } = req.body;
+    const { rut, nombre, apellido, correo, password, active, tipoUsuario } = req.body;
     try {
         const usuarioFound = await usuario.findOne({ correo });
         if (usuarioFound)
@@ -15,12 +15,14 @@ export const registro = async (req, res) => {
         const passwordHashs = await bcrypt.hash(password, 10)
 
         const newUsuario = new usuario({
-            nombre,
             rut,
+            nombre,
+            apellido,
             correo,
             password: passwordHashs,
             active,
             tipoUsuario
+
         });
 
         const userSaved = await newUsuario.save();
@@ -28,8 +30,9 @@ export const registro = async (req, res) => {
         res.cookie('token', token);
         res.json({
             id: userSaved._id,
-            nombre: userSaved.nombre,
             rut: userSaved.rut,
+            nombre: userSaved.nombre,
+            apellido: userSaved.apellido,
             correo: userSaved.correo,
             active: userSaved.active,
             tipoUsuario: userSaved.tipoUsuario
@@ -56,8 +59,9 @@ export const login = async (req, res) => {
         res.cookie('token', token);
         res.json({
             id: usuarioFound._id,
-            nombre: usuarioFound.nombre,
             rut: usuarioFound.rut,
+            nombre: usuarioFound.nombre,
+            apellido: usuarioFound.apellido,
             correo: usuarioFound.correo,
             active: usuarioFound.active,
             tipoUsuario: usuarioFound.tipoUsuario
@@ -82,8 +86,9 @@ export const profile = async (req, res) => {
 
     return res.json({
         id: usuarioFound._id,
-        nombre: usuarioFound.nombre,
         rut: usuarioFound.rut,
+        nombre: usuarioFound.nombre,
+        apellido: usuarioFound.apellido,
         correo: usuarioFound.correo,
         active: usuarioFound.active,
         tipoUsuario: usuarioFound.tipoUsuario
@@ -104,7 +109,8 @@ export const verifyToken = async (req, res) => {
         return res.json({
             id: usuarioFound._id,
             nombre: usuarioFound.nombre,
-            correo: usuarioFound.correo,
+            apellido: usuarioFound.apellido,
+            correo: usuarioFound.correo
         });
     })
 };

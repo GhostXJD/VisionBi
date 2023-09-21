@@ -1,15 +1,20 @@
 import mongoose from "mongoose";
 
 const usuarioSchema = new mongoose.Schema({
+    rut: {
+        type: String,
+        required: true,
+        unique: true
+    },
     nombre: {
         type: String,
         required: true,
         trim: true,
     },
-    rut: {
+    apellido: {
         type: String,
         required: true,
-        unique: true
+        trim: true,
     },
     correo: {
         type: String,
@@ -25,6 +30,10 @@ const usuarioSchema = new mongoose.Schema({
         required: true
     },
     tipoUsuario: {
+        type: String,
+        required: true
+    },
+    company: {
         type: String,
         required: true
     }

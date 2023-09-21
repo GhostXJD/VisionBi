@@ -1,13 +1,17 @@
 import { z } from "zod"
 
 export const registroSchema = z.object({
+    rut: z
+        .string({
+            required_error: "Rut required",
+        }),
     nombre: z
         .string({
             required_error: "Nombre required",
         }),
-    rut: z
+    apellido: z
         .string({
-            required_error: "Rut required",
+            required_error: "Apellido required",
         }),
     correo: z
         .string({
