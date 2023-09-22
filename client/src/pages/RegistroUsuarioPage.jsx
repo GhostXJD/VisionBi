@@ -65,80 +65,84 @@ function RegistroPage() {
     })
 
     return (
-        <div className='bg-zinc-800 max-w-md p-10 rounded-md'>
-            {registroError.map((error, i) => (
-                <div className='bg-red-500 p-2 text-white text-center my-2' key={i}>
-                    {error}
-                </div>
-            ))}
-            <form onSubmit={onSubmit}>
-                <input
-                    type="text"
-                    {...register("nombre", { required: true })}
-                    className='w-full bg-zinc-700 text-white px4 py-2 rounded-md my-2'
-                    placeholder='Ingrese su nombre'
-                />
-                {errors.nombre && (
-                    <p className='text-red-500'>Se necesita nombre</p>
-                )}
-                <input
-                    type="text"
-                    {...register("rut", { required: true })}
-                    className='w-full bg-zinc-700 text-white px4 py-2 rounded-md my-2'
-                    placeholder='Ingrese su rut'
-                    onBlur={(e) => {
-                        const rutFormateado = formatearRut(e.target.value);
+        <div className='flex h-screen items-center justify-center'>
 
-                        if (rutFormateado !== "") {
-                            e.target.value = rutFormateado;
-                        } else {
-                            e.target.value = "";
-                        }
-                    }}
-                />
-                {errors.rut && (
-                    <p className='text-red-500'>Se necesita rut</p>
-                )}
-                <input
-                    type="email"
-                    {...register("correo", { required: true, pattern: { value: "([a-zA-Z0-9]([^ @&%$\\\/()=?¿!.,:;]?|\d?)+[a-zA-Z0-9][\.]){1,2}" } })}
-                    className='w-full bg-zinc-700 text-white px4 py-2 rounded-md my-2'
-                    placeholder='Ingrese su correo'
-                />
-                {errors.correo && (
-                    <p className='text-red-500'>Se necesita correo</p>
-                )}
-                <input
-                    type="password"
-                    {...register("password", { required: true })}
-                    className='w-full bg-zinc-700 text-white px4 py-2 rounded-md my-2'
-                    placeholder='Ingrese su contraseña'
-                />
-                {errors.password && (
-                    <p className='text-red-500'>Se necesita contraseña</p>
-                )}
-                <input
-                    type="password"
-                    {...register("confirmarPassword", { required: true, validate: value => value === watch('password') || "Las contraseñas no coinciden" })}
-                    className='w-full bg-zinc-700 text-white px4 py-2 rounded-md my-2'
-                    placeholder='Confirme su contraseña'
-                />
-                {errors.confirmarPassword && (
-                    <p className='text-red-500'>{errors.confirmarPassword.message}</p>
-                )}
-                {errors.confirmarPassword && (
-                    <p className='text-red-500'>Se necesita confirmar contraseña</p>
-                )}
-                <select
-                    {...register("tipoUsuario", { required: true })}
-                    className='w-full bg-zinc-700 text-white px4 py-2 rounded-md my-2'>
-                    <option disabled={true}>Seleccione tipo de usuario</option>
-                    <option value="empresa">Empresa</option>
-                    <option value="empleado">Empleado</option>
-                </select>
-                <button type="submit">Registrar</button>
-            </form>
+            <div className='bg-zinc-800 max-w-md p-10 rounded-md'>
+                {registroError.map((error, i) => (
+                    <div className='bg-red-500 p-2 text-white text-center my-2' key={i}>
+                        {error}
+                    </div>
+                ))}
+                <form onSubmit={onSubmit}>
+                    <input
+                        type="text"
+                        {...register("nombre", { required: true })}
+                        className='w-full bg-zinc-700 text-white px4 py-2 rounded-md my-2'
+                        placeholder=' Ingrese su nombre'
+                    />
+                    {errors.nombre && (
+                        <p className='text-red-500'>Se necesita nombre</p>
+                    )}
+                    <input
+                        type="text"
+                        {...register("rut", { required: true })}
+                        className='w-full bg-zinc-700 text-white px4 py-2 rounded-md my-2'
+                        placeholder=' Ingrese su rut'
+                        onBlur={(e) => {
+                            const rutFormateado = formatearRut(e.target.value);
+
+                            if (rutFormateado !== "") {
+                                e.target.value = rutFormateado;
+                            } else {
+                                e.target.value = "";
+                            }
+                        }}
+                    />
+                    {errors.rut && (
+                        <p className='text-red-500'>Se necesita rut</p>
+                    )}
+                    <input
+                        type="email"
+                        {...register("correo", { required: true, pattern: { value: "([a-zA-Z0-9]([^ @&%$\\\/()=?¿!.,:;]?|\d?)+[a-zA-Z0-9][\.]){1,2}" } })}
+                        className='w-full bg-zinc-700 text-white px4 py-2 rounded-md my-2'
+                        placeholder=' Ingrese su correo'
+                    />
+                    {errors.correo && (
+                        <p className='text-red-500'>Se necesita correo</p>
+                    )}
+                    <input
+                        type="password"
+                        {...register("password", { required: true })}
+                        className='w-full bg-zinc-700 text-white px4 py-2 rounded-md my-2'
+                        placeholder=' Ingrese su contraseña'
+                    />
+                    {errors.password && (
+                        <p className='text-red-500'>Se necesita contraseña</p>
+                    )}
+                    <input
+                        type="password"
+                        {...register("confirmarPassword", { required: true, validate: value => value === watch('password') || "Las contraseñas no coinciden" })}
+                        className='w-full bg-zinc-700 text-white px4 py-2 rounded-md my-2'
+                        placeholder=' Confirme su contraseña'
+                    />
+                    {errors.confirmarPassword && (
+                        <p className='text-red-500'>{errors.confirmarPassword.message}</p>
+                    )}
+                    {errors.confirmarPassword && (
+                        <p className='text-red-500'>Se necesita confirmar contraseña</p>
+                    )}
+                    <select
+                        {...register("tipoUsuario", { required: true })}
+                        className='w-full bg-zinc-700 text-white px4 py-2 rounded-md my-2'>
+                        <option disabled={true}>Seleccione tipo de usuario</option>
+                        <option value="empresa">Empresa</option>
+                        <option value="empleado">Empleado</option>
+                    </select>
+                    <button className='bg-zinc-400 px-3 py-1 rounded-lg' type="submit">Registrar</button>
+                </form>
+            </div>
         </div>
+
     );
 }
 

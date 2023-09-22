@@ -29,7 +29,7 @@ function App() {
               <Route path='/perfil' element={<Profile />} />
             </Route>
 
-        /*TODO: Falta agregar el hasRole que lo hare mas adelante*/
+        //TODO: Falta agregar el hasRole que lo hare mas adelante
             <Route element={<ProtectedRoute />}>
               <Route path='/RegistrarUsuario' element={<RegistroUsuarioPage />} />
               <Route path='/ListarUsuarios' element={<ListarUsuariosPage />} />

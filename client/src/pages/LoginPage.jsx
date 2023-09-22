@@ -25,24 +25,24 @@ function LoginPage() {
           onSubmit={onSubmit}>
           <input type="email" {...register("correo", { required: true })}
             className='w-full bg-zinc-700 text-white px4 py-2 rounded-md my-2'
-            placeholder='Ingrese su correo'
+            placeholder=' Ingrese su correo'
           />
           {errors.correo && (
             <p className='text-red-500'>Se necesita correo</p>
           )}
           <input type="password" {...register("password", { required: true })}
             className='w-full bg-zinc-700 text-white px4 py-2 rounded-md my-2'
-            placeholder='Ingrese su contraseña'
+            placeholder=' Ingrese su contraseña'
           />
           {errors.password && (
             <p className='text-red-500'>Se necesita contraseña</p>
           )}
-          <button type="submit">Ingresar</button>
+          <button className='bg-zinc-400 px-3 py-1 rounded-lg' type="submit">Ingresar</button>
         </form>
 
         <p className='flex gap-x-2 justify-between'>
           No tienes una cuenta? <Link to='/registro'
-            className='text-sky-500'>Crear una cuenta</Link>
+            className='bg-sky-500 px-4 py-1 rounded-xl'>Crear una cuenta</Link>
         </p>
       </div>
     </div>

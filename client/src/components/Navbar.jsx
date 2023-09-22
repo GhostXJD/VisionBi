@@ -15,18 +15,18 @@ function Navbar() {
             <ul className="flex gap-x-2">
                 {isAuthenticated ? (
                     <>
-                        <li>
-                            Bienvenido {usuario.nombre}
+                        <li className='text-center px-3 py-1' >
+                            Bienvenido {usuario.nombre}!
                         </li>
-                        <li>
+                        <li className='bg-lime-700 px-3 py-1 rounded-lg'>
                             <Link to='/RegistrarUsuario'>Agregar usuario</Link>
                         </li>
-                        <li>
+                        <li className='bg-zinc-400 px-3 py-1 rounded-lg'>
                             <Link to='/ListarUsuarios'>Lista de usuarios</Link>
                         </li>
-                        <li>
+                        <li className="bg-red-700 px-4 py-1 rounded-lg">
                             <Link to='/' onClick={() => { logout(); }} 
-                            className="bg-indigo-500 px-4 py-1 rounded-sm">Cerrar Sesión</Link>
+                            >Cerrar Sesión</Link>
                         </li>
                     </>
                 ) : (

@@ -65,7 +65,8 @@ function RegistroPage() {
 
 
   return (
-    <div className='bg-zinc-800 max-w-md p-10 rounded-md'>
+    <div className='flex h-screen items-center justify-center'>
+    <div  className='bg-zinc-800 max-w-md p-10 rounded-md'>
       {registroError.map((error, i) => (
         <div className='bg-red-500 p-2 text-white text-center my-2' key={i}>
           {error}
@@ -76,7 +77,7 @@ function RegistroPage() {
           type="text"
           {...register("nombre", { required: true })}
           className='w-full bg-zinc-700 text-white px4 py-2 rounded-md my-2'
-          placeholder='Ingrese su nombre'
+          placeholder=' Ingrese su nombre'
         />
         {errors.nombre && (
           <p className='text-red-500'>Se necesita nombre</p>
@@ -86,7 +87,7 @@ function RegistroPage() {
           type="text"
           {...register("rut", { required: true })}
           className='w-full bg-zinc-700 text-white px4 py-2 rounded-md my-2'
-          placeholder='Ingrese su rut'
+          placeholder=' Ingrese su rut'
           onBlur={(e) => {
             const rutFormateado = formatearRut(e.target.value);
 
@@ -105,7 +106,7 @@ function RegistroPage() {
           type="email"
           {...register("correo", { required: true, pattern: { value: "([a-zA-Z0-9]([^ @&%$\\\/()=?¿!.,:;]?|\d?)+[a-zA-Z0-9][\.]){1,2}" } })}
           className='w-full bg-zinc-700 text-white px4 py-2 rounded-md my-2'
-          placeholder='Ingrese su correo'
+          placeholder=' Ingrese su correo'
         />
         {errors.correo && (
           <p className='text-red-500'>Se necesita correo</p>
@@ -114,7 +115,7 @@ function RegistroPage() {
           type="password"
           {...register("password", { required: true })}
           className='w-full bg-zinc-700 text-white px4 py-2 rounded-md my-2'
-          placeholder='Ingrese su contraseña'
+          placeholder=' Ingrese su contraseña'
         />
         {errors.password && (
           <p className='text-red-500'>Se necesita contraseña</p>
@@ -123,7 +124,7 @@ function RegistroPage() {
           type="password"
           {...register("confirmarPassword", { required: true, validate: value => value === watch('password') || "Las contraseñas no coinciden" })}
           className='w-full bg-zinc-700 text-white px4 py-2 rounded-md my-2'
-          placeholder='Confirme su contraseña'
+          placeholder=' Confirme su contraseña'
         />
         {errors.confirmarPassword && (
           <p className='text-red-500'>{errors.confirmarPassword.message}</p>
@@ -131,12 +132,12 @@ function RegistroPage() {
         {errors.confirmarPassword && (
           <p className='text-red-500'>Se necesita confirmar contraseña</p>
         )}
-        <button type="submit">Registrarse</button>
+        <button className='bg-zinc-400 px-3 py-1 rounded-lg' type="submit">Registrarse</button>
       </form>
-      <p className='flex gap-x-2 justify-between'>
-        Ya tienes una cuenta? <Link to='/login' className='text-sky-500'>Ingresa aquí</Link>
+      <p className='flex gap-x-2 justify-between text-sky-100'>
+        Ya tienes una cuenta? <Link to='/login' className='bg-sky-500 px-4 py-1 rounded-xl'>Ingresa aquí</Link>
       </p>
-    </div>
+    </div></div>
   );
 }
 
