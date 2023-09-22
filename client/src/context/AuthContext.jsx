@@ -49,7 +49,7 @@ export const AuthProvider = ({ children }) => {
         setUsuario(null);
     }
 
-    const hasRole = (tipoUsuario) => usuario?.tipoUsuario === tipoUsuario;
+    const hasRole = (role) => usuario?.tipoUsuario === role;
 
     useEffect(() => {
         if (errors.length > 0) {
