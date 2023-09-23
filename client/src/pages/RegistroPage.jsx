@@ -3,6 +3,7 @@ import { useAuth } from '../context/AuthContext'
 import { useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import Swal from 'sweetalert2'
+import { createCompanyRequest } from '../api/company';
 
 function RegistroPage() {
 
@@ -57,9 +58,26 @@ function RegistroPage() {
     const rutFormateado = formatearRut(values.rut);
     if (rutFormateado !== "") {
       values.rut = rutFormateado;
-      values.tipoUsuario = "representante";
-      values.active = true;
-      signup(values);
+
+      const userData = {
+        nombre: values.nombre,
+        apellido: values.apellido,
+        rut: values.rut,
+        correo: values.correo,
+        password: values.password,
+        tipoUsuario: "representante",
+        active: true,
+        company: values.businessRut
+      }
+
+      const companyData = {
+        businessRut: values.businessRut,
+        businessName: values.businessName,
+        agent: values.rut
+      }
+
+      createCompanyRequest(companyData)
+      signup(userData);
     }
   });
 
@@ -81,6 +99,15 @@ function RegistroPage() {
         />
         {errors.nombre && (
           <p className='text-red-500'>Se necesita nombre</p>
+        )}
+        <input
+          type="text"
+          {...register("apellido", { required: true })}
+          className='w-full bg-zinc-700 text-white px4 py-2 rounded-md my-2'
+          placeholder=' Ingrese su apellido'
+        />
+        {errors.nombre && (
+          <p className='text-red-500'>Se necesita apellido</p>
         )}
 
         <input
@@ -131,6 +158,21 @@ function RegistroPage() {
         )}
         {errors.confirmarPassword && (
           <p className='text-red-500'>Se necesita confirmar contraseña</p>
+        )}
+        <input
+          type="text"
+          {...register("businessRut", { required: true })}
+          className='w-full bg-zinc-700 text-white px4 py-2 rounded-md my-2'
+          placeholder=' Ingrese el rut de su compañia'
+        />
+        <input
+          type="text"
+          {...register("businessName", { required: true })}
+          className='w-full bg-zinc-700 text-white px4 py-2 rounded-md my-2'
+          placeholder=' Ingrese el nombre de su compañia'
+        />
+        {errors.nombre && (
+          <p className='text-red-500'>Se necesita nombre de compañia</p>
         )}
         <button className='bg-zinc-400 px-3 py-1 rounded-lg' type="submit">Registrarse</button>
       </form>

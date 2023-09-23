@@ -6,7 +6,7 @@ import { TOKEN_SECRET } from "../config.js";
 import usuarioModel from "../models/usuario.model.js";
 
 export const registro = async (req, res) => {
-    const { rut, nombre, apellido, correo, password, active, tipoUsuario } = req.body;
+    const { rut, nombre, apellido, correo, password, active, tipoUsuario, company } = req.body;
     try {
         const usuarioFound = await usuario.findOne({ correo });
         if (usuarioFound)
@@ -21,7 +21,8 @@ export const registro = async (req, res) => {
             correo,
             password: passwordHashs,
             active,
-            tipoUsuario
+            tipoUsuario,
+            company
 
         });
 
@@ -35,7 +36,8 @@ export const registro = async (req, res) => {
             apellido: userSaved.apellido,
             correo: userSaved.correo,
             active: userSaved.active,
-            tipoUsuario: userSaved.tipoUsuario
+            tipoUsuario: userSaved.tipoUsuario,
+            company: userSaved.company
         });
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -64,7 +66,8 @@ export const login = async (req, res) => {
             apellido: usuarioFound.apellido,
             correo: usuarioFound.correo,
             active: usuarioFound.active,
-            tipoUsuario: usuarioFound.tipoUsuario
+            tipoUsuario: usuarioFound.tipoUsuario,
+            company: usuarioFound.company
         });
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -91,7 +94,8 @@ export const profile = async (req, res) => {
         apellido: usuarioFound.apellido,
         correo: usuarioFound.correo,
         active: usuarioFound.active,
-        tipoUsuario: usuarioFound.tipoUsuario
+        tipoUsuario: usuarioFound.tipoUsuario,
+        company: usuarioFound.company
     })
 };
 

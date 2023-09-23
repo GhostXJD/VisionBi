@@ -32,6 +32,10 @@ export const registroSchema = z.object({
     tipoUsuario: z
         .string({
             required_error: "Type user is required",
+        }),
+    company: z
+        .string({
+            required_error: "Company is required",
         })
 });
 
