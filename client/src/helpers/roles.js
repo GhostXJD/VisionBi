@@ -1,6 +1,6 @@
 const roles = {
     admin: 'admin',
-    empresa: 'empresa',
+    representante: 'representante',
     empleado: 'empleado',
 };
 

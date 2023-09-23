@@ -57,7 +57,7 @@ function RegistroPage() {
     const rutFormateado = formatearRut(values.rut);
     if (rutFormateado !== "") {
       values.rut = rutFormateado;
-      values.tipoUsuario = "empresa";
+      values.tipoUsuario = "representante";
       values.active = true;
       signup(values);
     }
