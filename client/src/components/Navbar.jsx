@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useEffect, useState } from "react";
+import logo from "../images/visionBI (1).png"
 
 function Navbar() {
     const { isAuthenticated, logout, usuario, hasRole } = useAuth();
@@ -27,8 +28,9 @@ function Navbar() {
     return (
         <nav className="bg-zinc-700 my-3 flex justify-between py-5 px-10 rounded-lg">
             <Link to='/'>
-                <h1 className="text-2xl font-bold">VisionBi</h1>
+                <img src={logo} alt="Logo"  />
             </Link>
+
 
             <ul className="flex gap-x-2">
                 {isAuthenticated ? (
@@ -73,10 +75,10 @@ function Navbar() {
                     </>
                 )}
                 <button
-                    className='text-center px-3 py-1 bg-slate-200 rounded-3xl hover:bg-slate-300 dark:bg-slate-900 dark:hover:bg-slate-900'
+                    className='text-center px-3 py-1 h-8 bg-slate-200 rounded-3xl hover:bg-slate-300 dark:bg-zinc-800 dark:hover:bg-slate-900'
                     onClick={handleChangeTheme}
                 >
-                    <div className="flex items-center space-x-2"> {/* Utiliza flex para alinear los íconos horizontalmente */}
+                    <div className="flex items-center space-x-2 ">
                         <div>
                             <svg
                                 viewBox="0 0 24 24"
