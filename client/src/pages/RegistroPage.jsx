@@ -159,6 +159,7 @@ function RegistroPage() {
         {errors.confirmarPassword && (
           <p className='text-red-500'>Se necesita confirmar contraseña</p>
         )}
+        {/*TODO: Agregar formato al rut*/}
         <input
           type="text"
           {...register("businessRut", { required: true })}

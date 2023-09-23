@@ -135,7 +135,7 @@ function RegistroPage() {
                         {...register("tipoUsuario", { required: true })}
                         className='w-full bg-zinc-700 text-white px4 py-2 rounded-md my-2'>
                         <option disabled={true}>Seleccione tipo de usuario</option>
-                        <option value="empresa">Empresa</option>
+                        <option value="representante">Representante</option>
                         <option value="empleado">Empleado</option>
                     </select>
                     <button className='bg-zinc-400 px-3 py-1 rounded-lg' type="submit">Registrar</button>

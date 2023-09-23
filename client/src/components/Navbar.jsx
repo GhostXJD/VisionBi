@@ -50,6 +50,14 @@ function Navbar() {
                                 </li>
                             </>
                         )}
+
+                        {hasRole('representante') && (
+                            <>
+                                <li className='bg-lime-700 px-3 py-1 rounded-lg'>
+                                    <Link to='/RegistrarEmpleado'>Agregar empleado</Link>
+                                </li>
+                            </>
+                        )}
                         <li className="bg-red-700 px-4 py-1 rounded-lg">
                             <Link to='/' onClick={() => { logout(); }}>Cerrar Sesión</Link>
                         </li>

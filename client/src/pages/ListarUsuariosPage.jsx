@@ -13,7 +13,7 @@ function ListarUsuariosPage() {
     try {
       const res = await getUsuariosRequest();
       const usuarios = res.data.filter(
-        (usuario) => usuario.tipoUsuario === 'empresa' || usuario.tipoUsuario === 'empleado'
+        (usuario) => usuario.tipoUsuario === 'representante' || usuario.tipoUsuario === 'empleado'
       );
       setUsuarios(usuarios);
     } catch (error) {

@@ -10,7 +10,8 @@ import RegistroUsuarioPage from './pages/RegistroUsuarioPage'
 import ListarUsuariosPage from './pages/ListarUsuariosPage';
 
 import ProtectedRoute from './ProtectedRoute'
-import Navbar from './components/navbar';
+import Navbar from './components/Navbar';
+import RegistroEmpleadoPage from './pages/RegistroEmpleadoPage';
 
 function App() {
   return (
@@ -35,10 +36,15 @@ function App() {
               <Route path='/ListarUsuarios' element={<ListarUsuariosPage />} />
               <Route path='/RegistrarUsuario' element={<RegistroUsuarioPage />} />
             </Route>
+
+            //Rutas Representante
+            <Route element={<ProtectedRoute role='representante'/>}>
+              <Route path='/RegistrarEmpleado' element={<RegistroEmpleadoPage />} />
+            </Route>
+
             <Route path='/csvDatos' element={<h1>Datos</h1>} />
             <Route path='/add-csv' element={<h1>Agregar Datos</h1>} />
             <Route path='/csvDatos/:id' element={<h1>Update Datos</h1>} />
-            <Route path='/perfil' element={<h1>Perfil</h1>} />
           </Routes>
         </main>
       </BrowserRouter>
