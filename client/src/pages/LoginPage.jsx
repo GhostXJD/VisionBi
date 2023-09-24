@@ -17,18 +17,65 @@ import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { useFormik } from 'formik';
+import { useState } from 'react';
+import * as Yup from 'yup';
+import { useEffect } from 'react';
 import {
+  Button,
   Typography
 } from '@mui/material';
+import { set } from 'zod';
 
 function LoginPage() {
-  //Constants
-  const { register, handleSubmit, formState: { errors } } = useForm();
-  const { signin, errors: signinErrors } = useAuth();
+    //Constants
+    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { signin, errors: signinErrors } = useAuth();
 
-  const onSubmit = handleSubmit(data => {
-    signin(data)
-  })
+  const formik = useFormik({
+    initialValues: {
+      correo: '',
+      password: '',
+      submit: null
+    },
+    validationSchema: Yup.object({
+      correo: Yup
+        .string()
+        .email('Must be a valid email')
+        .max(255)
+        .required('Email is required'),
+      password: Yup
+        .string()
+        .max(255)
+        .required('Password is required')
+    }),
+    
+    onSubmit: async (values, helpers) => {
+      
+      for (const errores of signinErrors) {
+        if (errores == "Correo incorrecto") {
+          formik.setFieldError('correo', 'Email is incorrect');
+        } else if (errores == "Contraseña incorrecta") {
+          formik.setFieldError('password', 'Password is incorrect');
+        }
+      }
+      try {
+        const userLogin = {
+          correo: values.correo,
+          password: values.password
+        }
+        signin(userLogin);
+
+          
+
+      } catch (err) {
+        helpers.setStatus({ success: false });
+        helpers.setErrors({ submit: err.message });
+        helpers.setSubmitting(false);
+      }
+    }
+  });
+
 
   const [showPassword, setShowPassword] = React.useState(false);
 
@@ -36,106 +83,113 @@ function LoginPage() {
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
+
+    
   };
 
-  
 
   return (
     <div className='flex h-screen items-center justify-right'>
       <div className='bg-zinc-800 max-w-md w-full p-10 rounded-md'>
-        {signinErrors.map((error, i) => (
-          <div className='bg-red-500 p-2 text-white text-center my-2' key={i}>
-            {error}
-          </div>
-        ))
-        }
-            <grid>
-              <Stack
-                spacing={1}
-                sx={{ mb: 3 }}
+        <grid>
+          <Stack
+            spacing={1}
+            sx={{ mb: 3 }}
+          >
+            <Typography variant="h4">
+              Login
+            </Typography>
+            <Typography
+              color="text.secondary"
+              variant="body2"
+            >
+              Don't have an account?
+              <Link
+                href=""
+                underline="hover"
+                variant="subtitle2"
               >
-                <Typography variant="h4">
-                  Login
-                </Typography>
-                <Typography
-                  color="text.secondary"
-                  variant="body2"
-                >
-                  Don't have an account?
-                  <Link
-                    href=""
-                    underline="hover"
-                    variant="subtitle2"
-                  >
-                    Register
-                  </Link>
-                </Typography>
-              </Stack>
-            </grid>
+                Register
+              </Link>
+            </Typography>
+          </Stack>
+        </grid>
 
-            <form
-              onSubmit={onSubmit}>
+        <form
+          noValidate
+          onSubmit={formik.handleSubmit}
+        >
 
-              <FormControl sx={{ m: 1, width: '100%' }} variant="outlined" className='w-full bg-zinc-700 text-white px4 py-2 rounded-md my-2'>
-                {/* Ingreso de Correo */}
-                <InputLabel htmlFor="outlined-adornment-password" text-white px4 py-2 rounded-md my-2 >Email</InputLabel>
-                <OutlinedInput
-                  id="outlined-adornment-password"
-                  type={'mail'}
-                  {...register("correo", { required: true })}
-                  label="Password"
-                />
-                {/* Valido el ingreso de un Correo */}
-                {errors.correo && (
-                  <Stack sx={{ width: '100%' }} spacing={0.5}>
-                    <Alert severity="error">Se requiere correo</Alert>
-                  </Stack>
-                )}
-              </FormControl>
-              <FormControl sx={{ m: 1, width: '100%' }} variant="outlined" className='w-full bg-zinc-700 text-white px4 py-2 rounded-md my-2'>
-                {/* Ingreso de Contraseña */}
-                <InputLabel htmlFor="outlined-adornment-password" text-white px4 py-2 rounded-md my-2 >Password</InputLabel>
-                <OutlinedInput
-                  id="outlined-adornment-password"
-                  type={showPassword ? 'text' : 'password'}
-                  {...register("password", { required: true })}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
+          <Stack spacing={3}>
+            <TextField
+              error={!!(formik.touched.correo && formik.errors.correo)}
+              fullWidth
+              helperText={formik.touched.correo && formik.errors.correo}
+              label="Email Address"
+              name="correo"
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+              type="email"
+              value={formik.values.correo}
+              
+            />
+            <TextField
+              error={!!(formik.touched.password && formik.errors.password)}
+              fullWidth
+              helperText={formik.touched.password && formik.errors.password}
+              label="Password"
+              name="password"
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+              type={showPassword ? 'text' : 'password'}
+              value={formik.values.password}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
 
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                        edge="end"
-                      >
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                  label="Password"
-                />
+          </Stack>
+          {formik.errors.submit && (
+            <Typography
+              color="error"
+              sx={{ mt: 3 }}
+              variant="body2"
+            >
+              {formik.errors.submit}
+            </Typography>
+          )}
+          {/* Botón de ingresar */}
+          <Button
+            fullWidth
+            size="large"
+            sx={{ mt: 3 }}
+            type="submit"
+            variant="contained"
+          >
+            Continue
+          </Button>
 
-                {/* Valido el ingreso de una contraseña */}
-                {errors.password && (
-                  <Stack sx={{ width: '100%' }} spacing={0.5}>
-                    <Alert severity="error">Se requiere contraseña</Alert>
-                  </Stack>
-                )}
-              </FormControl>
+        </form>
 
-              {/* Botón de ingresar */}
-              <button className='bg-zinc-400 px-3 py-1 rounded-lg' sx={{ width: '100%' }} type="submit">Ingresar</button>
-
-            </form>
-
-            <p className='flex gap-x-2 justify-between'>
-              No tienes una cuenta? <Link to='/registro'
-                className='bg-sky-500 px-4 py-1 rounded-xl'>Crear una cuenta</Link>
-            </p>
-          </div>
-      </div >
-      )
+        <p className='flex gap-x-2 justify-between'>
+          No tienes una cuenta? <Link to='/registro'
+            className='bg-sky-500 px-4 py-1 rounded-xl'>Crear una cuenta</Link>
+        </p>
+      </div>
+    </div >
+  )
 }
-      export default LoginPage
+export default LoginPage
 
 
