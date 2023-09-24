@@ -6,7 +6,7 @@ function PresentacionPage() {
             <div className="space-y-6 md:space-y-0 md:flex md:gap-6 lg:items-center lg:gap-12">
                 <div className="md:5/12 lg:w-5/12">
                     <img
-                        src="https://tailus.io/sources/blocks/left-image/preview/images/startup.png"
+                        src="https://www.axiomafv.com/wp-content/uploads/2017/11/prediccion-de-ventas-700x433.jpg"
                         alt="image"
                         loading="lazy"
                     />

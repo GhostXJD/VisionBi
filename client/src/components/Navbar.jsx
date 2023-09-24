@@ -56,7 +56,7 @@ function Navbar() {
                     </>
                 )}
                 <button
-                    className={`text-center px-3 py-1 h-8 bg-slate-200 rounded-3xl hover:bg-slate-300 dark:bg-zinc-800 dark:hover:bg-slate-900`}
+                    className={`text-center px-3 py-1 h-8 bg-slate-200 rounded-3xl hover:bg-slate-300 dark:bg-zinc-800 dark:hover:bg-zinc-700`}
                     onClick={toggleTheme} // Utiliza la función toggleTheme para cambiar el tema
                 >
                     <div className="flex items-center space-x-2 ">

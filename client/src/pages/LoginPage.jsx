@@ -3,34 +3,33 @@ import { useForm } from 'react-hook-form'
 import { useAuth } from '../context/AuthContext';
 import { Link } from 'react-router-dom';
 import * as React from 'react';
-import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
-import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
-import Input from '@mui/material/Input';
-import FilledInput from '@mui/material/FilledInput';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
-import FormHelperText from '@mui/material/FormHelperText';
-import FormControl from '@mui/material/FormControl';
+//import Alert from '@mui/material/Alert';
+//import Box from '@mui/material/Box';
+//import Input from '@mui/material/Input';
+//import FilledInput from '@mui/material/FilledInput';
+//import OutlinedInput from '@mui/material/OutlinedInput';
+//import InputLabel from '@mui/material/InputLabel';
+//import FormHelperText from '@mui/material/FormHelperText';
+//import FormControl from '@mui/material/FormControl';
+//import { useState } from 'react';
+//import { useEffect } from 'react';
+//import { set } from 'zod';
 import TextField from '@mui/material/TextField';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { useFormik } from 'formik';
-import { useState } from 'react';
 import * as Yup from 'yup';
-import { useEffect } from 'react';
-import {
-  Button,
-  Typography
-} from '@mui/material';
-import { set } from 'zod';
+import { Button, Typography } from '@mui/material';
+import { useTheme } from '../context/ThemeContext';
 
 function LoginPage() {
-    //Constants
-    const { register, handleSubmit, formState: { errors } } = useForm();
-    const { signin, errors: signinErrors } = useAuth();
+  //Constants
+  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { signin, errors: signinErrors } = useAuth();
+  const { theme } = useTheme();
 
   const formik = useFormik({
     initialValues: {
@@ -49,9 +48,9 @@ function LoginPage() {
         .max(255)
         .required('Password is required')
     }),
-    
+
     onSubmit: async (values, helpers) => {
-      
+
       for (const errores of signinErrors) {
         if (errores == "Correo incorrecto") {
           formik.setFieldError('correo', 'Email is incorrect');
@@ -66,7 +65,7 @@ function LoginPage() {
         }
         signin(userLogin);
 
-          
+
 
       } catch (err) {
         helpers.setStatus({ success: false });
@@ -84,13 +83,13 @@ function LoginPage() {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
 
-    
+
   };
 
 
   return (
-    <div className='flex h-screen items-center justify-right'>
-      <div className='bg-zinc-800 max-w-md w-full p-10 rounded-md'>
+    <div className='flex py-6  items-center justify-right h-[70vh]'>
+      <div className={` max-w-md w-full p-10 rounded-md ${theme === 'dark' ? "dark" : "bg-white"}`}>
         <grid>
           <Stack
             spacing={1}
@@ -103,9 +102,8 @@ function LoginPage() {
               color="text.secondary"
               variant="body2"
             >
-              Don't have an account?
-              <Link
-                href=""
+              Dont have an account?
+              <Link to='/registro'
                 underline="hover"
                 variant="subtitle2"
               >
@@ -131,7 +129,7 @@ function LoginPage() {
               onChange={formik.handleChange}
               type="email"
               value={formik.values.correo}
-              
+
             />
             <TextField
               error={!!(formik.touched.password && formik.errors.password)}
@@ -182,8 +180,8 @@ function LoginPage() {
 
         </form>
 
-        <p className='flex gap-x-2 justify-between'>
-          No tienes una cuenta? <Link to='/registro'
+        <p hidden className='flex gap-x-2 justify-between'>
+          No tienes una cuenta? <Link hidden to='/registro'
             className='bg-sky-500 px-4 py-1 rounded-xl'>Crear una cuenta</Link>
         </p>
       </div>

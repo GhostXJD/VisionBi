@@ -85,7 +85,7 @@ function RegistroPage() {
 
 
   return (
-    <div className={`flex h-screen items-center justify-center bg-${theme === 'dark' ? 'dark' : ''}`}>
+    <div className={`flex  h-[80vh] items-center justify-center bg-${theme === 'dark' ? 'dark' : ''}`}>
       <div className={`max-w-md p-10 rounded-md ${theme === 'dark' ? "bg-zinc-100" : "bg-indigo-400"}`}>
         {registroError.map((error, i) => (
           <div className='bg-red-500 p-2 text-white text-center my-2' key={i}>
