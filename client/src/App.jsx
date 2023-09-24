@@ -7,7 +7,6 @@ import LoginPage from './pages/LoginPage';
 import RegistroPage from './pages/RegistroPage';
 import HomePage from './pages/HomePage';
 import Profile from './pages/Profile';
-import RegistroUsuarioPage from './pages/RegistroUsuarioPage'
 import ListarUsuariosPage from './pages/ListarUsuariosPage';
 
 import ProtectedRoute from './ProtectedRoute'
@@ -36,7 +35,6 @@ function App() {
             {/* Rutas Admin */}
             <Route element={<ProtectedRoute role='admin'/>}>
               <Route path='/ListarUsuarios' element={<ListarUsuariosPage />} />
-              <Route path='/RegistrarUsuario' element={<RegistroUsuarioPage />} />
             </Route>
 
             {/* Rutas Representante */}

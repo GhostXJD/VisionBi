@@ -109,7 +109,7 @@ function RegistroPage() {
           className='w-full bg-${theme === "dark" ? "dark" : ""}`} text-${theme === "dark" ? "dark" : ""}`} text-white px4 py-2 rounded-md my-2'
           placeholder=' Ingrese su apellido'
         />
-        {errors.nombre && (
+        {errors.apellido && (
           <p className='text-red-500'>Se necesita apellido</p>
         )}
 

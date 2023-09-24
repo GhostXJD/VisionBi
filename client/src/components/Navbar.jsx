@@ -25,9 +25,6 @@ function Navbar() {
 
                         {hasRole('admin') && (
                             <>
-                                <li className='bg-lime-700 px-3 py-1 rounded-lg'>
-                                    <Link to='/RegistrarUsuario'>Agregar usuario</Link>
-                                </li>
                                 <li className='bg-zinc-400 px-3 py-1 rounded-lg'>
                                     <Link to='/ListarUsuarios'>Lista de usuarios</Link>
                                 </li>
