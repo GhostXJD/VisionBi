@@ -85,105 +85,106 @@ function RegistroPage() {
 
 
   return (
-        <div className={`flex h-screen items-center justify-center bg-${theme === 'dark' ? 'dark' : ''}`}>
-      <div className={`max-w-md p-10 rounded-md bg-${theme === 'dark' ? 'zinc-800' : 'zinc-300'}`}>
+    <div className={`flex h-screen items-center justify-center bg-${theme === 'dark' ? 'dark' : ''}`}>
+      <div className={`max-w-md p-10 rounded-md ${theme === 'dark' ? "bg-zinc-100" : "bg-indigo-400"}`}>
         {registroError.map((error, i) => (
           <div className='bg-red-500 p-2 text-white text-center my-2' key={i}>
             {error}
 
-        </div>
-      ))}
-      <form onSubmit={onSubmit}>
-        <input
-          type="text"
-          {...register("nombre", { required: true })}
-          className='w-full bg-${theme === "dark" ? "dark" : ""}`} text-${theme === "dark" ? "dark" : ""}`} px4 py-2 rounded-md my-2'
-          placeholder=' Ingrese su nombre'
-        />
-        {errors.nombre && (
-          <p className='text-red-500'>Se necesita nombre</p>
-        )}
-        <input
-          type="text"
-          {...register("apellido", { required: true })}
-          className='w-full bg-${theme === "dark" ? "dark" : ""}`} text-${theme === "dark" ? "dark" : ""}`} text-white px4 py-2 rounded-md my-2'
-          placeholder=' Ingrese su apellido'
-        />
-        {errors.apellido && (
-          <p className='text-red-500'>Se necesita apellido</p>
-        )}
+          </div>
+        ))}
+        <form onSubmit={onSubmit}>
+          <input
+            type="text"
+            {...register("nombre", { required: true })}
+            className={`w-full px-4 py-2 rounded-md my-2 ${theme === "dark" ? "bg-zinc-300 text-black" : "bg-zinc-500 text-white"}`}
+            placeholder=' Ingrese su nombre'
+          />
+          {errors.nombre && (
+            <p className='text-red-500'>Se necesita nombre</p>
+          )}
+          <input
+            type="text"
+            {...register("apellido", { required: true })}
+            className={`w-full px-4 py-2 rounded-md my-2 ${theme === "dark" ? "bg-zinc-300 text-black" : "bg-zinc-500 text-white"}`}
+            placeholder=' Ingrese su apellido'
+          />
+          {errors.apellido && (
+            <p className='text-red-500'>Se necesita apellido</p>
+          )}
 
-        <input
-          type="text"
-          {...register("rut", { required: true })}
-          className='w-full bg-${theme === "dark" ? "dark" : ""}`} text-${theme === "dark" ? "dark" : ""}`} text-white px4 py-2 rounded-md my-2'
-          placeholder=' Ingrese su rut'
-          onBlur={(e) => {
-            const rutFormateado = formatearRut(e.target.value);
+          <input
+            type="text"
+            {...register("rut", { required: true })}
+            className={`w-full px-4 py-2 rounded-md my-2 ${theme === "dark" ? "bg-zinc-300 text-black" : "bg-zinc-500 text-white"}`}
+            placeholder=' Ingrese su rut'
+            onBlur={(e) => {
+              const rutFormateado = formatearRut(e.target.value);
 
-            if (rutFormateado !== "") {
-              e.target.value = rutFormateado; 
-            } else {
-              e.target.value = ""; 
-            }
-          }}
-        />
-        {errors.rut && (
-          <p className='text-red-500'>Se necesita rut</p>
-        )}
-        
-        <input
-          type="email"
-          {...register("correo", { required: true, pattern: { value: "([a-zA-Z0-9]([^ @&%$\\\/()=?¿!.,:;]?|\d?)+[a-zA-Z0-9][\.]){1,2}" } })}
-          className='w-full ${theme === "dark" ? "dark" : ""}`} text-${theme === "dark" ? "dark" : ""}`} text-white px4 py-2 rounded-md my-2'
-          placeholder=' Ingrese su correo'
-        />
-        {errors.correo && (
-          <p className='text-red-500'>Se necesita correo</p>
-        )}
-        <input
-          type="password"
-          {...register("password", { required: true })}
-          className='w-full bg-${theme === "dark" ? "dark" : ""}`} text-${theme === "dark" ? "dark" : ""}`} text-white px4 py-2 rounded-md my-2'
-          placeholder=' Ingrese su contraseña'
-        />
-        {errors.password && (
-          <p className='text-red-500'>Se necesita contraseña</p>
-        )}
-        <input
-          type="password"
-          {...register("confirmarPassword", { required: true, validate: value => value === watch('password') || "Las contraseñas no coinciden" })}
-          className='w-full bg-${theme === "dark" ? "dark" : ""}`} text-${theme === "dark" ? "dark" : ""}`} text-white px4 py-2 rounded-md my-2'
-          placeholder=' Confirme su contraseña'
-        />
-        {errors.confirmarPassword && (
-          <p className='text-red-500'>{errors.confirmarPassword.message}</p>
-        )}
-        {errors.confirmarPassword && (
-          <p className='text-red-500'>Se necesita confirmar contraseña</p>
-        )}
-        {/*TODO: Agregar formato al rut*/}
-        <input
-          type="text"
-          {...register("businessRut", { required: true })}
-          className='w-full bg-${theme === "dark" ? "dark" : ""}`} text-${theme === "dark" ? "dark" : ""}`} text-white px4 py-2 rounded-md my-2'
-          placeholder=' Ingrese el rut de su compañia'
-        />
-        <input
-          type="text"
-          {...register("businessName", { required: true })}
-          className='w-full bg-${theme === "dark" ? "dark" : ""}`} text-${theme === "dark" ? "dark" : ""}`} text-white px4 py-2 rounded-md my-2'
-          placeholder=' Ingrese el nombre de su compañia'
-        />
-        {errors.nombre && (
-          <p className='text-red-500'>Se necesita nombre de compañia</p>
-        )}
-        <button className='bg-zinc-400 px-3 py-1 rounded-lg' type="submit">Registrarse</button>
-      </form>
-      <p className='flex gap-x-2 justify-between text-${theme === "dark" ? "dark" : ""}`}'>
-        Ya tienes una cuenta? <Link to='/login' className='bg-sky-500 px-4 py-1 rounded-xl'>Ingresa aquí</Link>
-      </p>
-    </div></div>
+              if (rutFormateado !== "") {
+                e.target.value = rutFormateado;
+              } else {
+                e.target.value = "";
+              }
+            }}
+          />
+          {errors.rut && (
+            <p className='text-red-500'>Se necesita rut</p>
+          )}
+
+          <input
+            type="email"
+            {...register("correo", { required: true, pattern: { value: "([a-zA-Z0-9]([^ @&%$\\\/()=?¿!.,:;]?|\d?)+[a-zA-Z0-9][\.]){1,2}" } })}
+            className={`w-full px-4 py-2 rounded-md my-2 ${theme === "dark" ? "bg-zinc-300 text-black" : "bg-zinc-500 text-white"}`}
+            placeholder=' Ingrese su correo'
+          />
+          {errors.correo && (
+            <p className='text-red-500'>Se necesita correo</p>
+          )}
+          <input
+            type="password"
+            {...register("password", { required: true })}
+            className={`w-full px-4 py-2 rounded-md my-2 ${theme === "dark" ? "bg-zinc-300 text-black" : "bg-zinc-500 text-white"}`}
+            placeholder=' Ingrese su contraseña'
+          />
+          {errors.password && (
+            <p className='text-red-500'>Se necesita contraseña</p>
+          )}
+          <input
+            type="password"
+            {...register("confirmarPassword", { required: true, validate: value => value === watch('password') || "Las contraseñas no coinciden" })}
+            className={`w-full px-4 py-2 rounded-md my-2 ${theme === "dark" ? "bg-zinc-300 text-black" : "bg-zinc-500 text-white"}`}
+            placeholder=' Confirme su contraseña'
+          />
+          {errors.confirmarPassword && (
+            <p className='text-red-500'>{errors.confirmarPassword.message}</p>
+          )}
+          {errors.confirmarPassword && (
+            <p className='text-red-500'>Se necesita confirmar contraseña</p>
+          )}
+          {/*TODO: Agregar formato al rut*/}
+          <input
+            type="text"
+            {...register("businessRut", { required: true })}
+            className={`w-full px-4 py-2 rounded-md my-2 ${theme === "dark" ? "bg-zinc-300 text-black" : "bg-zinc-500 text-white"}`}
+            placeholder=' Ingrese el rut de su compañia'
+          />
+          <input
+            type="text"
+            {...register("businessName", { required: true })}
+            className={`w-full px-4 py-2 rounded-md my-2 ${theme === "dark" ? "bg-zinc-300 text-black" : "bg-zinc-500 text-white"}`}
+            placeholder=' Ingrese el nombre de su compañia'
+          />
+
+          {errors.nombre && (
+            <p className='text-red-500'>Se necesita nombre de compañia</p>
+          )}
+          <button className='bg-indigo-500 px-3 py-1 rounded-lg text-white' type="submit">Registrarse</button>
+        </form>
+        <p className={`flex gap-x-2 justify-between ${theme === "dark" ? "text-black" : "text-black"}`}>
+          Ya tienes una cuenta? <Link to='/login' className={`px-4 py-1 rounded-xl ${theme === "dark" ? "bg-zinc-700 text-white" : "bg-zinc-700 text-white"}`}>Ingresa aquí</Link>
+        </p>
+      </div></div>
   );
 }
 

@@ -16,16 +16,19 @@ function Navbar() {
             <ul className="flex gap-x-2">
                 {isAuthenticated ? (
                     <>
-                        <li className='text-center px-3 py-1'>
+                        <li className='text-center px-9 py-1'>
                             Bienvenido {usuario.nombre}!
                         </li>
-                        <li className='bg-cyan-700 px-3 py-1 rounded-lg'>
+                        <li className='bg-cyan-700 px-3 py-1 rounded-lg h-8 text-white'>
                             <Link to='/perfil'>Perfil</Link>
                         </li>
 
                         {hasRole('admin') && (
                             <>
-                                <li className='bg-zinc-400 px-3 py-1 rounded-lg'>
+                                <li className='bg-lime-700 px-3 py-1 rounded-lg h-8 text-white'>
+                                    <Link to='/RegistrarUsuario'>Agregar usuario</Link>
+                                </li>
+                                <li className='bg-zinc-400 px-3 py-1 rounded-lg h-8 text-white'>
                                     <Link to='/ListarUsuarios'>Lista de usuarios</Link>
                                 </li>
                             </>
@@ -33,22 +36,22 @@ function Navbar() {
 
                         {hasRole('representante') && (
                             <>
-                                <li className='bg-lime-700 px-3 py-1 rounded-lg'>
+                                <li className='bg-lime-700 px-3 py-1 rounded-lg h-8 text-white'>
                                     <Link to='/RegistrarEmpleado'>Agregar empleado</Link>
                                 </li>
                             </>
                         )}
-                        <li className="bg-red-700 px-4 py-1 rounded-lg">
+                        <li className="bg-red-700 px-3 py-1 rounded-lg h-8 text-white">
                             <Link to='/' onClick={() => { logout(); }}>Cerrar Sesión</Link>
                         </li>
                     </>
                 ) : (
                     <>
-                        <li>
-                            <Link to='/login' className="bg-indigo-500 px-4 py-1 rounded-sm">Ingresar</Link>
+                        <li className="bg-indigo-500 px-3 py-1 rounded-lg h-8 text-white">
+                            <Link to='/login' >Ingresar</Link>
                         </li>
-                        <li>
-                            <Link to='/registro' className="bg-indigo-500 px-4 py-1 rounded-sm">Registrarse</Link>
+                        <li className="bg-indigo-500 px-3 py-1  h-8 rounded-lg text-white">
+                            <Link to='/registro' >Registrarse</Link>
                         </li>
                     </>
                 )}
