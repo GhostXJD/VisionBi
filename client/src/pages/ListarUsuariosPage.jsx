@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { deleteUsuarioRequest, getUsuariosRequest } from '../api/usuarios';
 import UsuarioCard from "../components/UsuarioCard";
 
@@ -47,5 +47,3 @@ function ListarUsuariosPage() {
 }
 
 export default ListarUsuariosPage;
-
-  

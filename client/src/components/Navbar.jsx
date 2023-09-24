@@ -1,36 +1,17 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { useEffect, useState } from "react";
-import logo from "../images/visionBI (1).png"
+import { useTheme } from "../context/ThemeContext"; // Importa el contexto del tema
+import logo from "../images/visionBI (1).png";
 
 function Navbar() {
     const { isAuthenticated, logout, usuario, hasRole } = useAuth();
-
-    const [theme, setTheme] = useState(() => {
-        if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-            return "dark";
-        }
-
-        return "light";
-    });
-    useEffect(() => {
-        if (theme === "dark") {
-            document.querySelector('html').classList.add('dark');
-        } else {
-            document.querySelector('html').classList.remove('dark');
-        }
-    }, [theme])
-
-    const handleChangeTheme = () => {
-        setTheme(prevTheme => prevTheme === "light" ? "dark" : "light");
-    }
+    const { theme, toggleTheme } = useTheme(); // Usa el estado del tema y la función toggleTheme del contexto del tema
 
     return (
-        <nav className="bg-zinc-700 my-3 flex justify-between py-5 px-10 rounded-lg">
+        <nav className={` my-3 flex justify-between py-5 px-10 rounded-lg ${theme === "dark" ? "dark" : ""}`}>
             <Link to='/'>
                 <img src={logo} alt="Logo"  />
             </Link>
-
 
             <ul className="flex gap-x-2">
                 {isAuthenticated ? (
@@ -75,8 +56,8 @@ function Navbar() {
                     </>
                 )}
                 <button
-                    className='text-center px-3 py-1 h-8 bg-slate-200 rounded-3xl hover:bg-slate-300 dark:bg-zinc-800 dark:hover:bg-slate-900'
-                    onClick={handleChangeTheme}
+                    className={`text-center px-3 py-1 h-8 bg-slate-200 rounded-3xl hover:bg-slate-300 dark:bg-zinc-800 dark:hover:bg-slate-900`}
+                    onClick={toggleTheme} // Utiliza la función toggleTheme para cambiar el tema
                 >
                     <div className="flex items-center space-x-2 ">
                         <div>
@@ -102,7 +83,6 @@ function Navbar() {
                         </div>
                     </div>
                 </button>
-
             </ul>
         </nav>
     );

@@ -4,12 +4,14 @@ import { useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import Swal from 'sweetalert2'
 import { createCompanyRequest } from '../api/company';
+import { useTheme } from '../context/ThemeContext';
 
 function RegistroPage() {
 
   const { register, handleSubmit, formState: { errors }, watch } = useForm();
   const { signup, isAuthenticated, errors: registroError } = useAuth();
   const navigate = useNavigate();
+  const { theme } = useTheme();
 
   useEffect(() => {
     if (isAuthenticated) navigate('/inicio')
@@ -83,18 +85,19 @@ function RegistroPage() {
 
 
   return (
-    <div className='flex h-screen items-center justify-center'>
-    <div  className='bg-zinc-800 max-w-md p-10 rounded-md'>
-      {registroError.map((error, i) => (
-        <div className='bg-red-500 p-2 text-white text-center my-2' key={i}>
-          {error}
+        <div className={`flex h-screen items-center justify-center bg-${theme === 'dark' ? 'dark' : ''}`}>
+      <div className={`max-w-md p-10 rounded-md bg-${theme === 'dark' ? 'zinc-800' : 'zinc-300'}`}>
+        {registroError.map((error, i) => (
+          <div className='bg-red-500 p-2 text-white text-center my-2' key={i}>
+            {error}
+
         </div>
       ))}
       <form onSubmit={onSubmit}>
         <input
           type="text"
           {...register("nombre", { required: true })}
-          className='w-full bg-zinc-700 text-white px4 py-2 rounded-md my-2'
+          className='w-full bg-${theme === "dark" ? "dark" : ""}`} text-${theme === "dark" ? "dark" : ""}`} px4 py-2 rounded-md my-2'
           placeholder=' Ingrese su nombre'
         />
         {errors.nombre && (
@@ -103,7 +106,7 @@ function RegistroPage() {
         <input
           type="text"
           {...register("apellido", { required: true })}
-          className='w-full bg-zinc-700 text-white px4 py-2 rounded-md my-2'
+          className='w-full bg-${theme === "dark" ? "dark" : ""}`} text-${theme === "dark" ? "dark" : ""}`} text-white px4 py-2 rounded-md my-2'
           placeholder=' Ingrese su apellido'
         />
         {errors.nombre && (
@@ -113,7 +116,7 @@ function RegistroPage() {
         <input
           type="text"
           {...register("rut", { required: true })}
-          className='w-full bg-zinc-700 text-white px4 py-2 rounded-md my-2'
+          className='w-full bg-${theme === "dark" ? "dark" : ""}`} text-${theme === "dark" ? "dark" : ""}`} text-white px4 py-2 rounded-md my-2'
           placeholder=' Ingrese su rut'
           onBlur={(e) => {
             const rutFormateado = formatearRut(e.target.value);
@@ -132,7 +135,7 @@ function RegistroPage() {
         <input
           type="email"
           {...register("correo", { required: true, pattern: { value: "([a-zA-Z0-9]([^ @&%$\\\/()=?¿!.,:;]?|\d?)+[a-zA-Z0-9][\.]){1,2}" } })}
-          className='w-full bg-zinc-700 text-white px4 py-2 rounded-md my-2'
+          className='w-full ${theme === "dark" ? "dark" : ""}`} text-${theme === "dark" ? "dark" : ""}`} text-white px4 py-2 rounded-md my-2'
           placeholder=' Ingrese su correo'
         />
         {errors.correo && (
@@ -141,7 +144,7 @@ function RegistroPage() {
         <input
           type="password"
           {...register("password", { required: true })}
-          className='w-full bg-zinc-700 text-white px4 py-2 rounded-md my-2'
+          className='w-full bg-${theme === "dark" ? "dark" : ""}`} text-${theme === "dark" ? "dark" : ""}`} text-white px4 py-2 rounded-md my-2'
           placeholder=' Ingrese su contraseña'
         />
         {errors.password && (
@@ -150,7 +153,7 @@ function RegistroPage() {
         <input
           type="password"
           {...register("confirmarPassword", { required: true, validate: value => value === watch('password') || "Las contraseñas no coinciden" })}
-          className='w-full bg-zinc-700 text-white px4 py-2 rounded-md my-2'
+          className='w-full bg-${theme === "dark" ? "dark" : ""}`} text-${theme === "dark" ? "dark" : ""}`} text-white px4 py-2 rounded-md my-2'
           placeholder=' Confirme su contraseña'
         />
         {errors.confirmarPassword && (
@@ -163,13 +166,13 @@ function RegistroPage() {
         <input
           type="text"
           {...register("businessRut", { required: true })}
-          className='w-full bg-zinc-700 text-white px4 py-2 rounded-md my-2'
+          className='w-full bg-${theme === "dark" ? "dark" : ""}`} text-${theme === "dark" ? "dark" : ""}`} text-white px4 py-2 rounded-md my-2'
           placeholder=' Ingrese el rut de su compañia'
         />
         <input
           type="text"
           {...register("businessName", { required: true })}
-          className='w-full bg-zinc-700 text-white px4 py-2 rounded-md my-2'
+          className='w-full bg-${theme === "dark" ? "dark" : ""}`} text-${theme === "dark" ? "dark" : ""}`} text-white px4 py-2 rounded-md my-2'
           placeholder=' Ingrese el nombre de su compañia'
         />
         {errors.nombre && (
@@ -177,7 +180,7 @@ function RegistroPage() {
         )}
         <button className='bg-zinc-400 px-3 py-1 rounded-lg' type="submit">Registrarse</button>
       </form>
-      <p className='flex gap-x-2 justify-between text-sky-100'>
+      <p className='flex gap-x-2 justify-between text-${theme === "dark" ? "dark" : ""}`}'>
         Ya tienes una cuenta? <Link to='/login' className='bg-sky-500 px-4 py-1 rounded-xl'>Ingresa aquí</Link>
       </p>
     </div></div>
