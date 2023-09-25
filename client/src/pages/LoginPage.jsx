@@ -1,22 +1,10 @@
 //Imports 
-import { useForm } from 'react-hook-form'
 import { useAuth } from '../context/AuthContext';
 import { Link } from 'react-router-dom';
 import * as React from 'react';
 import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
-//import Alert from '@mui/material/Alert';
-//import Box from '@mui/material/Box';
-//import Input from '@mui/material/Input';
-//import FilledInput from '@mui/material/FilledInput';
-//import OutlinedInput from '@mui/material/OutlinedInput';
-//import InputLabel from '@mui/material/InputLabel';
-//import FormHelperText from '@mui/material/FormHelperText';
-//import FormControl from '@mui/material/FormControl';
-//import { useState } from 'react';
-//import { useEffect } from 'react';
-//import { set } from 'zod';
 import TextField from '@mui/material/TextField';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
@@ -24,12 +12,19 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Button, Typography } from '@mui/material';
 import { useTheme } from '../context/ThemeContext';
+import { useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
+import styled from "styled-components";
 
 function LoginPage() {
   //Constants
-  const { register, handleSubmit, formState: { errors } } = useForm();
-  const { signin, errors: signinErrors } = useAuth();
+  const { signin, errors: signinErrors, isAuthenticated } = useAuth();
   const { theme } = useTheme();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isAuthenticated) navigate('/inicio')
+  }, [isAuthenticated])
 
   const formik = useFormik({
     initialValues: {
@@ -50,22 +45,13 @@ function LoginPage() {
     }),
 
     onSubmit: async (values, helpers) => {
-
-      for (const errores of signinErrors) {
-        if (errores == "Correo incorrecto") {
-          formik.setFieldError('correo', 'Email is incorrect');
-        } else if (errores == "Contraseña incorrecta") {
-          formik.setFieldError('password', 'Password is incorrect');
-        }
-      }
       try {
         const userLogin = {
           correo: values.correo,
           password: values.password
         }
-        signin(userLogin);
-
-
+        await signin(userLogin);
+        navigate("/inicio")
 
       } catch (err) {
         helpers.setStatus({ success: false });
@@ -75,6 +61,17 @@ function LoginPage() {
     }
   });
 
+  useEffect(() => {
+    if (signinErrors.length > 0) {
+      for (const errores of signinErrors) {
+        if (errores == "Correo incorrecto") {
+          formik.setFieldError('correo', 'Email is incorrect');
+        } else if (errores == "Contraseña incorrecta") {
+          formik.setFieldError('password', 'Password is incorrect');
+        }
+      }
+    }
+  }, [signinErrors]);
 
   const [showPassword, setShowPassword] = React.useState(false);
 
@@ -82,7 +79,6 @@ function LoginPage() {
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
-
 
   };
 
@@ -188,6 +184,12 @@ function LoginPage() {
     </div >
   )
 }
+
+const Title = styled.h1`
+  font-size: 1.5em;
+  text-align: center;
+  color: #BF4F74;
+`;
 export default LoginPage
 
 

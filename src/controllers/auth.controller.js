@@ -112,9 +112,13 @@ export const verifyToken = async (req, res) => {
 
         return res.json({
             id: usuarioFound._id,
+            rut: usuarioFound.rut,
             nombre: usuarioFound.nombre,
             apellido: usuarioFound.apellido,
-            correo: usuarioFound.correo
+            correo: usuarioFound.correo,
+            active: usuarioFound.active,
+            tipoUsuario: usuarioFound.tipoUsuario,
+            company: usuarioFound.company
         });
     })
 };

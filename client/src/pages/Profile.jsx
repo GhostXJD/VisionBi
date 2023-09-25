@@ -24,37 +24,37 @@ function Profile() {
           </p>
         </div>
         <div className="grid grid-cols-2 gap-4 px-2 w-full">
-        <div className="flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-zinc-700 dark:shadow-none">
-          <p className="text-sm text-gray-600">Nombre</p>
-          <p className="text-base font-medium text-zinc-700 dark:text-white">
-            {usuario.nombre}
-          </p>
-        </div>
+          <div className="flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-zinc-700 dark:shadow-none">
+            <p className="text-sm text-gray-600">Nombre</p>
+            <p className="text-base font-medium text-zinc-700 dark:text-white">
+              {usuario.nombre}
+            </p>
+          </div>
 
           <div className="flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-zinc-700 dark:shadow-none">
             <p className="text-sm text-gray-600">Apellidos</p>
             <p className="text-base font-medium text-zinc-700 dark:text-white">
-            {usuario.apellido}
+              {usuario.apellido}
             </p>
           </div>
 
           <div className="flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-zinc-700 dark:shadow-none">
             <p className="text-sm text-gray-600">Correo electronico</p>
             <p className="text-base font-medium text-zinc-700 dark:text-white">
-            {usuario.correo}
+              {usuario.correo}
             </p>
           </div>
 
           <div className="flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-zinc-700 dark:shadow-none">
             <p className="text-sm text-gray-600">Rut</p>
             <p className="text-base font-medium text-zinc-700 dark:text-white">
-            {usuario.rut}
+              {usuario.rut}
             </p>
           </div>
           <div className="flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-zinc-700 dark:shadow-none">
             <p className="text-sm text-gray-600">Compañia</p>
             <p className="text-base font-medium text-zinc-700 dark:text-white">
-            {usuario.company}
+              {usuario.company}
             </p>
           </div>
 
@@ -67,7 +67,6 @@ function Profile() {
 
         </div>
       </div>
-      <p className="font-normal text-zinc-700 mt-20 mx-auto w-max">Por cualquier error contactarse con <a href="https://horizon-ui.com?ref=tailwindcomponents.com" rel="noreferrer" className="text-brand-500 font-bold">VisionBI</a></p>
     </div>
   )
 }
