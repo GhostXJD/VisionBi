@@ -1,4 +1,13 @@
+import { useAuth } from '../context/AuthContext'
+import { useEffect } from 'react';
+
 function Profile() {
+  const { isAuthenticated, usuario } = useAuth();
+
+  // Redirige al usuario a la página de inicio si no está autenticado
+  useEffect(() => {
+    if (!isAuthenticated) navigate('/inicio');
+  }, [isAuthenticated]);
   return (
     <div className="flex flex-col justify-center items-center h-[70vh]">
       <div className="relative flex flex-col items-center rounded-[20px] w-[700px] max-w-[95%] mx-auto bg-white bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-zinc-800 dark:text-white dark:!shadow-none p-3">
@@ -15,44 +24,44 @@ function Profile() {
           </p>
         </div>
         <div className="grid grid-cols-2 gap-4 px-2 w-full">
-          <div className="flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-zinc-700 dark:shadow-none">
-            <p className="text-sm text-gray-600">Nombre</p>
-            <p className="text-base font-medium text-zinc-700 dark:text-white">
-              Juanito
-            </p>
-          </div>
+        <div className="flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-zinc-700 dark:shadow-none">
+          <p className="text-sm text-gray-600">Nombre</p>
+          <p className="text-base font-medium text-zinc-700 dark:text-white">
+            {usuario.nombre}
+          </p>
+        </div>
 
           <div className="flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-zinc-700 dark:shadow-none">
             <p className="text-sm text-gray-600">Apellidos</p>
             <p className="text-base font-medium text-zinc-700 dark:text-white">
-              Perez Perez
+            {usuario.apellido}
             </p>
           </div>
 
           <div className="flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-zinc-700 dark:shadow-none">
             <p className="text-sm text-gray-600">Correo electronico</p>
             <p className="text-base font-medium text-zinc-700 dark:text-white">
-              juanitoperez@gmail.com
+            {usuario.correo}
             </p>
-          </div> 
+          </div>
 
           <div className="flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-zinc-700 dark:shadow-none">
             <p className="text-sm text-gray-600">Rut</p>
             <p className="text-base font-medium text-zinc-700 dark:text-white">
-              11.111.111-1
+            {usuario.rut}
             </p>
           </div>
           <div className="flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-zinc-700 dark:shadow-none">
             <p className="text-sm text-gray-600">Compañia</p>
             <p className="text-base font-medium text-zinc-700 dark:text-white">
-              Machupichu
+            {usuario.company}
             </p>
           </div>
 
           <div className="flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-zinc-700 dark:shadow-none">
             <p className="text-sm text-gray-600">Cargo</p>
             <p className="text-base font-medium text-zinc-700 dark:text-white">
-              Representante
+              {usuario.tipoUsuario}
             </p>
           </div>
 
