@@ -1,10 +1,9 @@
 import { Link } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
 
 function SideMenu() {
-    const { logout } = useAuth();
-  return (
-    <aside className="flex flex-col w-64 h-screen px-5 py-1 overflow-y-auto bg-[#27272a] text-white border-r rtl:border-r-0 rtl:border-l  dark:border-gray-700 dark:bg">
+
+    return (
+        <aside className="flex flex-col w-64 h-screen px-5 py-1 overflow-y-auto bg-[#27272a] text-white border-r rtl:border-r-0 rtl:border-l  dark:border-gray-700 dark:bg">
 
             <div className="flex flex-col justify-between flex-1 mt-6">
                 <nav className="-mx-3 space-y-6 ">
@@ -67,18 +66,10 @@ function SideMenu() {
                             <span className="mx-2 text-sm font-medium">Perfil</span>
                         </Link>
                     </div>
-                    <a onClick={() => { logout(); }} className="flex items-center px-3 py-2 text-red-600 transition-colors duration-300 transform rounded-lg dark:text-red-200 hover:bg-red-100 dark:hover:bg-red-800 dark:hover:text-red-200 hover:text-red-700" href="#">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                        </svg>
-
-                        <Link to='/' > <span className="mx-2 text-sm font-medium">Cerrar Sesión</span> </Link>
-                    </a>
-
                 </nav>
             </div>
         </aside>
-  )
+    )
 }
 
 export default SideMenu
