@@ -4,7 +4,7 @@ import { useAuth } from "../context/AuthContext";
 function SideMenu() {
     const { logout } = useAuth();
   return (
-    <aside className="flex flex-col w-64 h-screen px-5 py-1 overflow-y-auto bg-gray-800 text-white border-r rtl:border-r-0 rtl:border-l  dark:border-gray-700 dark:bg">
+    <aside className="flex flex-col w-64 h-screen px-5 py-1 overflow-y-auto bg-[#27272a] text-white border-r rtl:border-r-0 rtl:border-l  dark:border-gray-700 dark:bg">
 
             <div className="flex flex-col justify-between flex-1 mt-6">
                 <nav className="-mx-3 space-y-6 ">

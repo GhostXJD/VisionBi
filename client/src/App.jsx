@@ -18,8 +18,8 @@ function App() {
     <AuthProvider>
       <ThemeProvider> 
         <BrowserRouter>
+          <Navbar />
           <main className='container mx-auto px-1'>
-            <Navbar />
             <Routes>
               {/* Rutas publicas */}
               <Route path='/' element={<PresentacionPage />} />
