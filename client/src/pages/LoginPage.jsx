@@ -84,8 +84,8 @@ function LoginPage() {
 
 
   return (
-    <div className='flex py-6  items-center justify-right h-[70vh]'>
-      <div className={` max-w-md w-full p-10 rounded-md ${theme === 'dark' ? "dark" : "bg-white"}`}>
+    <div className={`flex  h-[80vh] items-center justify-center ${theme === 'dark' ? 'dark' : ''}`}>
+      <div className={` max-w-md w-full p-10 rounded-md ${theme === 'dark' ? "#3b0764" : "bg-white"}`}>
         <grid>
           <Stack
             spacing={1}
@@ -185,11 +185,6 @@ function LoginPage() {
   )
 }
 
-const Title = styled.h1`
-  font-size: 1.5em;
-  text-align: center;
-  color: #BF4F74;
-`;
 export default LoginPage
 
 
