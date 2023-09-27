@@ -15,12 +15,23 @@ import { useTheme } from '../context/ThemeContext';
 import { useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import styled from "styled-components";
+import './LoginStyle.css';
+import vision from '../images/visionBI (1).png';
+import { useState } from 'react';
+import Checkbox from '@mui/material/Checkbox';
+
+
 
 function LoginPage() {
   //Constants
   const { signin, errors: signinErrors, isAuthenticated } = useAuth();
   const { theme } = useTheme();
   const navigate = useNavigate();
+  const { checked, setChecked } = useState(false)
+
+  const handleCheckboxChange = (event) => {
+    setChecked(event.target.checked);
+  }
 
   useEffect(() => {
     if (isAuthenticated) navigate('/inicio')
@@ -84,104 +95,124 @@ function LoginPage() {
 
 
   return (
+
     <div className={`flex  h-[80vh] items-center justify-center ${theme === 'dark' ? 'dark' : ''}`}>
       <div className={` max-w-md w-full p-10 rounded-md ${theme === 'dark' ? "#3b0764" : "bg-white"}`}>
-        <grid>
-          <Stack
-            spacing={1}
-            sx={{ mb: 3 }}
+
+        <div className="LoginCard">
+          <div className="LoginImg">
+            <img src={vision} alt="Descripción de la imagen" />
+          </div>
+          <div className="LoginMsg">
+            <h2 className="LoginTxt1"> Hi, Welcome Back</h2>
+            <span className="LoginTxt2">Enter your credentials to continue</span>
+          </div>
+
+          <div className="Separacion"></div>
+          <hr className="Recta" />
+          <div className="Separacion"></div>
+
+          <form
+            noValidate
+            onSubmit={formik.handleSubmit}
           >
-            <Typography variant="h4">
-              Login
-            </Typography>
-            <Typography
-              color="text.secondary"
-              variant="body2"
-            >
-              Dont have an account?
-              <Link to='/registro'
-                underline="hover"
-                variant="subtitle2"
+
+            <Stack spacing={3}>
+              <TextField
+                error={!!(formik.touched.correo && formik.errors.correo)}
+                fullWidth
+                helperText={formik.touched.correo && formik.errors.correo}
+                label="Email Address"
+                name="correo"
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
+                type="email"
+                value={formik.values.correo}
+                InputProps={{
+                  sx: { borderRadius: 3 }
+                }}
+              />
+
+              <TextField
+                error={!!(formik.touched.password && formik.errors.password)}
+                fullWidth
+                helperText={formik.touched.password && formik.errors.password}
+                label="Password"
+                name="password"
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
+                type={showPassword ? 'text' : 'password'}
+                value={formik.values.password}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                  sx: { borderRadius: 3 }
+                }}
+              />
+            </Stack>
+
+            <div className='Final'>
+              <div className='Remember'>
+                <div className='Checkbox'>
+                  <Checkbox
+                    checked={checked}
+                    onChange={handleCheckboxChange}
+                    color="primary"
+                  />
+                </div>
+                <div className='RememberSpan'>
+                  <span>Remember me</span>
+                </div>
+              </div>
+              <h6 className='Forgot'>
+                Forgot Password?
+              </h6>
+            </div>
+
+
+            {formik.errors.submit && (
+              <Typography
+                color="error"
+                sx={{ mt: 3 }}
+                variant="body2"
               >
-                Register
-              </Link>
-            </Typography>
-          </Stack>
-        </grid>
-
-        <form
-          noValidate
-          onSubmit={formik.handleSubmit}
-        >
-
-          <Stack spacing={3}>
-            <TextField
-              error={!!(formik.touched.correo && formik.errors.correo)}
+                {formik.errors.submit}
+              </Typography>
+            )}
+            {/* Botón de ingresar */}
+            
+            <Button
               fullWidth
-              helperText={formik.touched.correo && formik.errors.correo}
-              label="Email Address"
-              name="correo"
-              onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
-              type="email"
-              value={formik.values.correo}
-
-            />
-            <TextField
-              error={!!(formik.touched.password && formik.errors.password)}
-              fullWidth
-              helperText={formik.touched.password && formik.errors.password}
-              label="Password"
-              name="password"
-              onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
-              type={showPassword ? 'text' : 'password'}
-              value={formik.values.password}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
-                      edge="end"
-                    >
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-            />
-
-          </Stack>
-          {formik.errors.submit && (
-            <Typography
-              color="error"
+              size="large"
               sx={{ mt: 3 }}
-              variant="body2"
+              type="submit"
+              variant="contained"
             >
-              {formik.errors.submit}
-            </Typography>
-          )}
-          {/* Botón de ingresar */}
-          <Button
-            fullWidth
-            size="large"
-            sx={{ mt: 3 }}
-            type="submit"
-            variant="contained"
-          >
-            Continue
-          </Button>
+              Sing in
+            </Button>
 
-        </form>
-
-        <p hidden className='flex gap-x-2 justify-between'>
-          No tienes una cuenta? <Link hidden to='/registro'
-            className='bg-sky-500 px-4 py-1 rounded-xl'>Crear una cuenta</Link>
-        </p>
+          </form>
+          <div className="Separacion"></div>
+          <hr className="Recta" />
+          <div className="Separacion"></div>
+          <div className='NoAccount'>
+            <a href="" >
+              Don't have an account?
+            </a>
+          </div>
+        </div>
       </div>
-    </div >
+    </div>
   )
 }
 
