@@ -15,7 +15,6 @@ import { useTheme } from '../context/ThemeContext';
 import { useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import styled from "styled-components";
-import './LoginStyle.css';
 import vision from '../images/visionBI (1).png';
 import { useState } from 'react';
 import Checkbox from '@mui/material/Checkbox';
@@ -62,7 +61,7 @@ function LoginPage() {
           password: values.password
         }
         await signin(userLogin);
-        navigate("/inicio")
+        
 
       } catch (err) {
         helpers.setStatus({ success: false });
@@ -79,6 +78,8 @@ function LoginPage() {
           formik.setFieldError('correo', 'Email is incorrect');
         } else if (errores == "Contraseña incorrecta") {
           formik.setFieldError('password', 'Password is incorrect');
+        }else{
+          navigate("/inicio")
         }
       }
     }
@@ -108,11 +109,11 @@ function LoginPage() {
             <span className="LoginTxt2">Enter your credentials to continue</span>
           </div>
 
-          <div className="Separacion"></div>
-          <hr className="Recta" />
-          <div className="Separacion"></div>
+          <div className="LoginSeparacion"></div>
+          <hr className="LoginRecta" />
+          <div className="LoginSeparacion"></div>
 
-          <form
+          <form className='LoginForm'
             noValidate
             onSubmit={formik.handleSubmit}
           >
@@ -161,20 +162,20 @@ function LoginPage() {
               />
             </Stack>
 
-            <div className='Final'>
-              <div className='Remember'>
-                <div className='Checkbox'>
+            <div className='LoginFinal'>
+              <div className='LoginRemember'>
+                <div className='LoginCheckbox'>
                   <Checkbox
                     checked={checked}
                     onChange={handleCheckboxChange}
                     color="primary"
                   />
                 </div>
-                <div className='RememberSpan'>
+                <div className='LoginRememberSpan'>
                   <span>Remember me</span>
                 </div>
               </div>
-              <h6 className='Forgot'>
+              <h6 className='LoginForgot'>
                 Forgot Password?
               </h6>
             </div>
@@ -202,10 +203,10 @@ function LoginPage() {
             </Button>
 
           </form>
-          <div className="Separacion"></div>
-          <hr className="Recta" />
-          <div className="Separacion"></div>
-          <div className='NoAccount'>
+          <div className="LoginSeparacion"></div>
+          <hr className="LoginRecta" />
+          <div className="LoginSeparacion"></div>
+          <div className='LoginNoAccount'>
             <a href="" >
               Don't have an account?
             </a>
