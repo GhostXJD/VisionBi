@@ -5,14 +5,12 @@ import Drawer from '@mui/material/Drawer';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
-import SideMenu from './SideMenu';
+import SideMenu from './SideMenu'
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import logo from "../images/visionBI (1).png";
@@ -41,7 +39,7 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
 const AppBar = styled(MuiAppBar, {
     shouldForwardProp: (prop) => prop !== 'open',
 })(({ theme, open }) => ({
-    backgroundColor: "#403E44",
+    backgroundColor: "#27272a",
     transition: theme.transitions.create(['margin', 'width'], {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
@@ -57,7 +55,7 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 const DrawerHeader = styled('div')(({ theme }) => ({
-    backgroundColor: "#202020",
+    backgroundColor: "#27272a",
     display: 'flex',
     alignItems: 'center',
     padding: theme.spacing(0, 1),
@@ -66,7 +64,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
     justifyContent: 'flex-end',
 }));
 
-export default function Navbar() {
+export default function PersistentDrawerLeft() {
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
     const { isAuthenticated, logout, usuario, hasRole } = useAuth();
@@ -84,63 +82,64 @@ export default function Navbar() {
             <CssBaseline />
             <AppBar position="fixed" open={open}>
                 <Toolbar>
-                    <ul className="flex gap-x-2">
-                        <Typography variant="h6" noWrap component="div">
-                            VisionBi
-                        </Typography>
-                        {isAuthenticated ? (
-                            <>
-                                <IconButton
-                                    color="inherit"
-                                    aria-label="open drawer"
-                                    onClick={handleDrawerOpen}
-                                    edge="start"
-                                    sx={{ mr: 2, ...(open && { display: 'none' }) }}
-                                >
-                                    <MenuIcon />
-                                </IconButton>
-                                <li className='text-center px-9 py-1'>
-                                    Bienvenido {usuario.nombre}!
-                                </li>
-                                <li className='bg-cyan-700 px-3 py-1 rounded-lg h-8 text-white'>
+                    <Link to='/inicio'>
+                        <img src={logo} alt="Logo" className='logo-img' />
+                    </Link>
+                    {isAuthenticated ? (
+                        <>
+                            <IconButton
+                                color="inherit"
+                                aria-label="open drawer"
+                                onClick={handleDrawerOpen}
+                                edge="start"
+                                sx={{ mr: 2, ...(open && { display: 'none' }) }}
+                            >
+                                <MenuIcon />
+                            </IconButton>
+                            <li className='text-center px-9 py-10'>
+                                Bienvenido {usuario.nombre}!
+                            </li>
+                            <div className='ml-auto'>
+                                <li className='bg-cyan-700 px-3 py-1 rounded-lg h-8 scale-x-95 text-white'>
                                     <Link to='/perfil'>Perfil</Link>
                                 </li>
-
-                                {hasRole('admin') && (
-                                    <>
-                                        <li className='bg-zinc-400 px-3 py-1 rounded-lg h-8 text-white'>
-                                            <Link to='/ListarUsuarios'>Lista de usuarios</Link>
-                                        </li>
-                                    </>
-                                )}
-
-                                {hasRole('representante') && (
-                                    <>
-                                        <li className='bg-lime-700 px-3 py-1 rounded-lg h-8 text-white'>
-                                            <Link to='/RegistrarEmpleado'>Agregar empleado</Link>
-                                        </li>
-                                    </>
-                                )}
-                                <li className="bg-red-700 px-3 py-1 rounded-lg h-8 text-white">
-                                    <Link to='/' onClick={() => { logout(); }}>Cerrar Sesión</Link>
-                                </li>
-                            </>
-                        ) : (
-                            <>
+                            </div>
+                            {hasRole('admin') && (
+                                <>
+                                    <li className='bg-zinc-400 px-3 py-1 rounded-lg h-8 text-white'>
+                                        <Link to='/ListarUsuarios'>Lista de usuarios</Link>
+                                    </li>
+                                </>
+                            )}
+                            {hasRole('representante') && (
+                                <>
+                                    <li className='bg-lime-700 px-3 py-1 rounded-lg h-8 text-white'>
+                                        <Link to='/RegistrarEmpleado'>Agregar empleado</Link>
+                                    </li>
+                                </>
+                            )}
+                            <li className="bg-red-700 px-3 py-1 rounded-lg h-8 text-white">
+                                <Link to='/' onClick={() => { logout(); }}>Cerrar Sesión</Link>
+                            </li>
+                        </>
+                    ) : (
+                        <>
+                            <div className='ml-auto'>
                                 <li className="bg-indigo-500 px-3 py-1 rounded-lg h-8 text-white">
                                     <Link to='/login' >Ingresar</Link>
                                 </li>
-                                <li className="bg-indigo-500 px-3 py-1  h-8 rounded-lg text-white">
-                                    <Link to='/registro' >Registrarse</Link>
-                                </li>
-                            </>
-                        )}
-                    </ul>
+                            </div>
+                            <li className="bg-indigo-500 px-3 py-1  h-8 rounded-lg text-white">
+                                <Link to='/registro' >Registrarse</Link>
+                            </li>
+
+                        </>
+                    )}
+
                 </Toolbar>
             </AppBar>
             <Drawer
                 sx={{
-                    backgroundColor: "#202020",
                     width: drawerWidth,
                     flexShrink: 0,
                     '& .MuiDrawer-paper': {
@@ -157,10 +156,7 @@ export default function Navbar() {
                         {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
                     </IconButton>
                 </DrawerHeader>
-                <Divider />
-
                 <SideMenu />
-
             </Drawer>
             <Main open={open}>
                 <DrawerHeader />

@@ -12,3 +12,12 @@ body {
     background-color: #202020;
     color: #ffffff;
 }
+
+.logo-img{
+    width: 100px;
+    margin-right: 20px;
+}
+
+li{
+    list-style: none;
+}
