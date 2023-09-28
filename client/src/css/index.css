@@ -3,14 +3,29 @@
 @tailwind utilities;
 
 body {
-    background-color: #ffffff;
+    background-color: #fff0ff;
     color: #000000;
 }
-
+aside {
+	background-color: #ffffff;
+    color: #000000;
+}
 /* Estilos para el tema oscuro */
 .dark body {
-    background-color: #202020;
+    background-color: #181818;
     color: #ffffff;
+}
+.dark aside {
+    background-color: #181818;
+    color: #ffffff;
+}
+
+.css-1yy3cs7 .css-l1mejo {
+	background: transparent;
+}
+
+.css-ttn1xo .css-l1mejo{
+	background: transparent;
 }
 
 .logo-img{

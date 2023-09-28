@@ -16,6 +16,7 @@ import RegistroEmpleadoPage from './pages/RegistroEmpleadoPage';
 import ListarEmpleadosPage from './pages/ListarEmpleadosPage';
 
 function App() {
+
   return (
     <AuthProvider>
       <ThemeProvider> 
