@@ -1,8 +1,12 @@
 import { Link } from "react-router-dom";
 import { useTheme } from '../context/ThemeContext';
+import { useAuth } from "../context/AuthContext";
+import ListAltIcon from '@mui/icons-material/ListAlt';
+import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 
 function SideMenu() {
-const theme = useTheme()
+    const theme = useTheme()
+    const { hasRole } = useAuth();
     return (
         <aside className={`flex flex-col w-64 h-screen px-5 py-1 overflow-y-auto  text-white border-r rtl:border-r-0 rtl:border-l ${theme === "dark" ? "bg-black text-white" : "bg-white text-black"}`}>
 
@@ -66,6 +70,26 @@ const theme = useTheme()
 
                             <span className="mx-2 text-sm font-medium">Perfil</span>
                         </Link>
+                        {hasRole('admin') && (
+                            <>
+                                <li className="mx-2 text-sm font-medium">
+                                    <ListAltIcon className="" />
+                                    <Link to='/ListarUsuarios'><span className="mx-2 text-sm font-medium">Listar usuarios</span></Link>
+                                </li>
+                            </>
+                        )}
+                        {hasRole('representante') && (
+                            <>
+                                <li>
+                                    <PersonAddAlt1Icon />
+                                    <Link to='/RegistrarEmpleado'><span className="mx-2 text-sm font-medium">Agregar empleado</span></Link> 
+                                </li>
+                                <li>
+                                    <ListAltIcon className="" />
+                                    <Link to='/ListarEmpleados'><span className="mx-2 text-sm font-medium">Listar empleados</span></Link>
+                                </li>
+                            </>
+                        )}
                     </div>
                 </nav>
             </div>

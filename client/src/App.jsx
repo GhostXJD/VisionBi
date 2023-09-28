@@ -43,7 +43,7 @@ function App() {
             {/* Rutas Representante */}
             <Route element={<ProtectedRoute role='representante'/>}>
               <Route path='/RegistrarEmpleado' element={<RegistroEmpleadoPage />} />
-              <Route path='ListarEmpleados' element={<ListarEmpleadosPage />} />
+              <Route path='/ListarEmpleados' element={<ListarEmpleadosPage />} />
             </Route>
 
             <Route path='/csvDatos' element={<h1>Datos</h1>} />

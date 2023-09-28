@@ -41,7 +41,7 @@ export default function DataTable() {
     return (
         <div>
             <Navbar />
-            <div style={{ height: 800, width: '100%', backgroundColor: 'white' }}>
+            <div style={{ height: 600, width: '100%', backgroundColor: 'white' }}>
                 <DataGrid
                     rows={usuarios.map((user, index) =>({
                         id: index + 1,

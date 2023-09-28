@@ -132,21 +132,7 @@ export default function PersistentDrawerLeft() {
                                         </svg>
                                     </div>
                                 </div>
-                            </button> 
-                            {hasRole('admin') && (
-                                <>
-                                    <li className='bg-zinc-400 px-3 py-1 rounded-lg h-8 text-white'>
-                                        <Link to='/ListarUsuarios'>Lista de usuarios</Link>
-                                    </li>
-                                </>
-                            )}
-                            {hasRole('representante') && (
-                                <>
-                                    <li className='bg-lime-700 px-3 py-1 rounded-lg h-8 text-white'>
-                                        <Link to='/RegistrarEmpleado'>Agregar empleado</Link>
-                                    </li>
-                                </>
-                            )}
+                            </button>
                             <li className="bg-red-700 px-3 py-1 rounded-lg h-8 text-white">
                                 <Link to='/' onClick={() => { logout(); }}>Cerrar Sesión</Link>
                             </li>

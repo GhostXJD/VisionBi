@@ -4,6 +4,7 @@ import { useEffect, } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createUsuarioRequest } from '../api/usuarios'
 import Swal from 'sweetalert2'
+import Navbar from '../components/Navbar';
 
 function RegistroEmpleadoPage() {
 
