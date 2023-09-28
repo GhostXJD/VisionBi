@@ -41,7 +41,7 @@ export const createUsuario = async (req, res) => {
 
 export const getUsuarios = async (req, res) => {
     try {
-        const usuarios = await usuario.find().select('rut nombre apellido correo tipoUsuario active');
+        const usuarios = await usuario.find().select('rut nombre apellido correo active tipoUsuario company');
         res.json(usuarios)
     } catch (error) {
         res.status(500).json({ message: error.message });
