@@ -68,13 +68,13 @@ function SideMenu() {
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                             </svg>
 
-                            <span className="mx-2 text-sm font-medium">Perfil</span>
+                            <span className="mx-2 text-sm font-medium">Profile</span>
                         </Link>
                         {hasRole('admin') && (
                             <>
                                 <li className="mx-2 text-sm font-medium">
                                     <ListAltIcon className="" />
-                                    <Link to='/ListarUsuarios'><span className="mx-2 text-sm font-medium">Listar usuarios</span></Link>
+                                    <Link to='/ListarUsuarios'><span className="mx-2 text-sm font-medium">List users</span></Link>
                                 </li>
                             </>
                         )}
@@ -82,11 +82,11 @@ function SideMenu() {
                             <>
                                 <li>
                                     <PersonAddAlt1Icon />
-                                    <Link to='/RegistrarEmpleado'><span className="mx-2 text-sm font-medium">Agregar empleado</span></Link> 
+                                    <Link to='/RegistrarEmpleado'><span className="mx-2 text-sm font-medium">Add employee</span></Link> 
                                 </li>
                                 <li>
                                     <ListAltIcon className="" />
-                                    <Link to='/ListarEmpleados'><span className="mx-2 text-sm font-medium">Listar empleados</span></Link>
+                                    <Link to='/ListarEmpleados'><span className="mx-2 text-sm font-medium">List employees</span></Link>
                                 </li>
                             </>
                         )}

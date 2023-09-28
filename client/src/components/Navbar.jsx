@@ -19,6 +19,7 @@ const appBarHeight = 116; // Establece la altura de la parte superior
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
     ({ theme, open }) => ({
+
         flexGrow: 1,
         padding: theme.spacing(3),
         transition: theme.transitions.create('margin', {
@@ -39,7 +40,7 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
 const AppBar = styled(MuiAppBar, {
     shouldForwardProp: (prop) => prop !== 'open',
 })(({ theme, open }) => ({
-    backgroundColor: theme === 'dark' ? 'light' : '#151515', // Cambia el color de fondo según el tema
+    backgroundColor: theme === 'dark' ? '#fff' : '', // Cambia el color de fondo según el tema
     transition: theme.transitions.create(['margin', 'width'], {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
@@ -55,7 +56,6 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 const DrawerHeader = styled('div')(({ theme }) => ({
-    backgroundColor: theme === 'dark' ? 'light' : '#151515', 
     display: 'flex',
     alignItems: 'center',
     padding: theme.spacing(0),
@@ -66,9 +66,9 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }));
 
 export default function PersistentDrawerLeft() {
-    const {toggleTheme, theme} = useTheme();
+    const { toggleTheme, theme } = useTheme();
     const [open, setOpen] = React.useState(false);
-    const { isAuthenticated, logout, usuario, hasRole } = useAuth();
+    const { isAuthenticated, logout, usuario } = useAuth();
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -97,16 +97,17 @@ export default function PersistentDrawerLeft() {
                             >
                                 <MenuIcon />
                             </IconButton>
-                            <li className='text-center px-9 py-10'>
+
+                            <li className={`text-center px-9 py-10 font-bold text-gray-500  dark:text-white`}>
                                 Bienvenido {usuario.nombre}!
                             </li>
                             <div className='ml-auto'>
                                 <li className='bg-cyan-700 px-3 py-1 rounded-lg h-8 scale-x-95 text-white'>
-                                    <Link to='/perfil'>Perfil</Link>
+                                    <Link to='/perfil'>Profile</Link>
                                 </li>
                             </div>
                             <button
-                                className={`text-center px-3 py-1 h-8 bg-slate-200 rounded-3xl hover:bg-slate-300 dark:bg-zinc-800 dark:hover:bg-zinc-700`}
+                                className={`text-center px-3 py-1 h-8 bg-[#4b1c71] rounded-3xl hover:bg-[#7f4ca5]  dark:bg-[#b57edc] dark:hover:bg-[#dbb6ee]`}
                                 onClick={toggleTheme} // Utiliza la función toggleTheme para cambiar el tema
                             >
                                 <div className="flex items-center space-x-2 ">
@@ -132,23 +133,23 @@ export default function PersistentDrawerLeft() {
                                         </svg>
                                     </div>
                                 </div>
-                            </button>
+                            </button>     
                             <li className="bg-red-700 px-3 py-1 rounded-lg h-8 text-white">
-                                <Link to='/' onClick={() => { logout(); }}>Cerrar Sesión</Link>
+                                <Link to='/' onClick={() => { logout(); }}>Sign out</Link>
                             </li>
                         </>
                     ) : (
                         <>
                             <div className='ml-auto'>
-                                <li className="bg-indigo-500 px-3 py-1 rounded-lg h-8 text-white">
-                                    <Link to='/login' >Ingresar</Link>
+                                <li className="bg-[#dbb6ee] px-3 py-1 rounded-lg h-8 text-white">
+                                    <Link to='/login' >Sign in</Link>
                                 </li>
                             </div>
-                            <li className="bg-indigo-500 px-3 py-1  h-8 rounded-lg text-white">
-                                <Link to='/registro' >Registrarse</Link>
+                            <li className="bg-[#b57edc] px-3 py-1  h-8 rounded-lg text-white">
+                                <Link to='/registro' >Account</Link>
                             </li>
                             <button
-                                className={`text-center px-3 py-1 h-8 bg-slate-200 rounded-3xl hover:bg-slate-300 dark:bg-zinc-800 dark:hover:bg-zinc-700`}
+                                className={`text-center px-3 py-1 h-8 bg-[#4b1c71] rounded-3xl hover:bg-[#7f4ca5]  dark:bg-[#b57edc] dark:hover:bg-[#dbb6ee]`}
                                 onClick={toggleTheme} // Utiliza la función toggleTheme para cambiar el tema
                             >
                                 <div className="flex items-center space-x-2 ">

@@ -16,6 +16,7 @@ import { useNavigate } from 'react-router-dom';
 import vision from '../images/visionBI (1).png';
 import { useState } from 'react';
 import Checkbox from '@mui/material/Checkbox';
+import { Link } from "react-router-dom";
 
 
 
@@ -93,10 +94,10 @@ function LoginPage() {
 
   return (
 
-    <div className={`flex  h-[80vh] items-center justify-center ${theme === 'dark' ? 'dark' : ''}`}>
+    <div className={`flex  h-[100vh]  items-center justify-center ${theme === 'dark' ? 'dark' : ''}`}  >
       <div className={` max-w-md w-full p-10 rounded-md ${theme === 'dark' ? "#3b0764" : "bg-white"}`}>
 
-        <div className={`LoginCard ${theme === 'dark' ? 'bg-zinc-800' : 'bg-white border-black'}`}>
+        <div className={`LoginCard ${theme === 'dark' ? 'bg-zinc-800' : 'bg-white border-black'}`}style={{ border: '2px dashed #b57edc' }}>
           <div className="LoginImg">
             <img src={vision} alt="Descripción de la imagen"/>
           </div>
@@ -203,9 +204,9 @@ function LoginPage() {
           <hr className="LoginRecta" />
           <div className="LoginSeparacion"></div>
           <div className='LoginNoAccount'>
-            <a href="" >
+            <Link to='/registro' >
               Don't have an account?
-            </a>
+            </Link>
           </div>
         </div>
       </div>

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Navbar from '../components/Navbar';
 import { useState, useEffect } from 'react';
 import { getUsuariosRequest } from '../api/usuarios';

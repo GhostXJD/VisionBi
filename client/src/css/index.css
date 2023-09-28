@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-    background-color: #fff0ff;
+    background-color: #ffffff;
     color: #000000;
 }
 aside {
@@ -20,10 +20,24 @@ aside {
     color: #ffffff;
 }
 
+.css-hyum1k-MuiToolbar-root{
+	background-color: #ffffff;
+}
+.dark .css-hyum1k-MuiToolbar-root{
+	background-color: #181818;
+}
+
+.css-ngpvd6{
+	background-color: #ffffff;
+}
+
+.dark .css-ngpvd6{
+	background-color: #181818;
+}
+/*Cuadrado chico */
 .css-1yy3cs7 .css-l1mejo {
 	background: transparent;
 }
-
 .css-ttn1xo .css-l1mejo{
 	background: transparent;
 }
