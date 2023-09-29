@@ -60,9 +60,9 @@ function LoginPage() {
           correo: values.correo,
           password: values.password
         }
+        
         await signin(userLogin);
         
-
       } catch (err) {
         helpers.setStatus({ success: false });
         helpers.setErrors({ submit: err.message });
@@ -96,7 +96,6 @@ function LoginPage() {
 
 
   return (
-
     <div className={`flex  h-[80vh] items-center justify-center ${theme === 'dark' ? 'dark' : ''}`}>
       <div className={` max-w-md w-full p-10 rounded-md ${theme === 'dark' ? "#3b0764" : "bg-white"}`}>
 
@@ -117,6 +116,8 @@ function LoginPage() {
             noValidate
             onSubmit={formik.handleSubmit}
           >
+
+
 
             <Stack spacing={3}>
               <TextField
@@ -206,11 +207,13 @@ function LoginPage() {
           <div className="LoginSeparacion"></div>
           <hr className="LoginRecta" />
           <div className="LoginSeparacion"></div>
+
           <div className='LoginNoAccount'>
             <a href="" >
               Don't have an account?
             </a>
           </div>
+          
         </div>
       </div>
     </div>
