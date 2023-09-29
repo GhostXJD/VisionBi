@@ -6,11 +6,40 @@ body {
 	background-color: #ffffff;
 	color: #000000;
 }
-
+aside {
+	background-color: #ffffff;
+    color: #000000;
+}
 /* Estilos para el tema oscuro */
 .dark body {
-	background-color: #202020;
-	color: #ffffff;
+    background-color: #181818;
+    color: #ffffff;
+}
+.dark aside {
+    background-color: #181818;
+    color: #ffffff;
+}
+
+.css-hyum1k-MuiToolbar-root{
+	background-color: #ffffff;
+}
+.dark .css-hyum1k-MuiToolbar-root{
+	background-color: #181818;
+}
+
+.css-ngpvd6{
+	background-color: #ffffff;
+}
+
+.dark .css-ngpvd6{
+	background-color: #181818;
+}
+/*Cuadrado chico */
+.css-1yy3cs7 .css-l1mejo {
+	background: transparent;
+}
+.css-ttn1xo .css-l1mejo{
+	background: transparent;
 }
 
 .logo-img {

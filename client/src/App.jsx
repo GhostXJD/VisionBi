@@ -1,24 +1,27 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeContext';
-
+import ProtectedRoute from './ProtectedRoute'
+// Rutas Publicas
 import PresentacionPage from './pages/PresentacionPage'
 import LoginPage from './pages/LoginPage';
 import RegistroPage from './pages/RegistroPage';
+// Rutas usuarios logueados
 import HomePage from './pages/HomePage';
 import Profile from './pages/Profile';
+// Rutas admin
 import ListarUsuariosPage from './pages/ListarUsuariosPage';
-
-import ProtectedRoute from './ProtectedRoute'
-import Navbar from './components/Navbar';
+// Rutas representante
 import RegistroEmpleadoPage from './pages/RegistroEmpleadoPage';
+import ListarEmpleadosPage from './pages/ListarEmpleadosPage';
 
 function App() {
+
   return (
     <AuthProvider>
       <ThemeProvider> 
         <BrowserRouter>
-          <Navbar />
+          
           <main className='container mx-auto px-1'>
             <Routes>
               {/* Rutas publicas */}
@@ -40,6 +43,7 @@ function App() {
             {/* Rutas Representante */}
             <Route element={<ProtectedRoute role='representante'/>}>
               <Route path='/RegistrarEmpleado' element={<RegistroEmpleadoPage />} />
+              <Route path='/ListarEmpleados' element={<ListarEmpleadosPage />} />
             </Route>
 
             <Route path='/csvDatos' element={<h1>Datos</h1>} />
