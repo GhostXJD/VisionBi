@@ -14,6 +14,8 @@ import SideMenu from './SideMenu'
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import logo from "../images/visionBI (1).png";
+import { purple } from '@mui/material/colors';
+
 const drawerWidth = 257;
 const appBarHeight = 116; // Establece la altura de la parte superior
 
@@ -89,11 +91,10 @@ export default function PersistentDrawerLeft() {
                     {isAuthenticated ? (
                         <>
                             <IconButton
-                                color="inherit"
                                 aria-label="open drawer"
                                 onClick={handleDrawerOpen}
                                 edge="start"
-                                sx={{ mr: 2, ...(open && { display: 'none' }) }}
+                                sx={{ color: purple[300], mr: 2, ...(open && { display: 'none' }) }}
                             >
                                 <MenuIcon />
                             </IconButton>
@@ -146,7 +147,7 @@ export default function PersistentDrawerLeft() {
                                 </li>
                             </div>
                             <li className="bg-[#b57edc] px-3 py-1  h-8 rounded-lg text-white">
-                                <Link to='/registro' >Account</Link>
+                                <Link to='/registro' >Sign up</Link>
                             </li>
                             <button
                                 className={`text-center px-3 py-1 h-8 bg-[#4b1c71] rounded-3xl hover:bg-[#7f4ca5]  dark:bg-[#b57edc] dark:hover:bg-[#dbb6ee]`}
@@ -194,7 +195,7 @@ export default function PersistentDrawerLeft() {
                 open={open}
             >
                 <DrawerHeader>
-                    <IconButton onClick={handleDrawerClose}>
+                    <IconButton onClick={handleDrawerClose} sx={{color: purple[300]}}>
                         {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
                     </IconButton>
                 </DrawerHeader>
@@ -202,6 +203,7 @@ export default function PersistentDrawerLeft() {
             </Drawer>
             <Main open={open}>
                 <DrawerHeader />
+                
             </Main>
         </Box>
     );

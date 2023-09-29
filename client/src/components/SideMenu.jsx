@@ -72,7 +72,7 @@ function SideMenu() {
                         </Link>
                         {hasRole('admin') && (
                             <>
-                                <li className="mx-2 text-sm font-medium">
+                                <li className="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-[#7f3ca5]">
                                     <ListAltIcon className="" />
                                     <Link to='/ListarUsuarios'><span className="mx-2 text-sm font-medium">List users</span></Link>
                                 </li>
@@ -80,11 +80,11 @@ function SideMenu() {
                         )}
                         {hasRole('representante') && (
                             <>
-                                <li>
+                                <li className="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-[#7f3ca5]">
                                     <PersonAddAlt1Icon />
                                     <Link to='/RegistrarEmpleado'><span className="mx-2 text-sm font-medium">Add employee</span></Link> 
                                 </li>
-                                <li>
+                                <li className="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-[#7f3ca5]">
                                     <ListAltIcon className="" />
                                     <Link to='/ListarEmpleados'><span className="mx-2 text-sm font-medium">List employees</span></Link>
                                 </li>

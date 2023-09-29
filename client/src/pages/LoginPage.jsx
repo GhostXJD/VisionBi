@@ -99,7 +99,7 @@ function LoginPage() {
 
         <div className={`LoginCard ${theme === 'dark' ? 'bg-zinc-800' : 'bg-white border-black'}`}style={{ border: '2px dashed #b57edc' }}>
           <div className="LoginImg">
-            <img src={vision} alt="Descripción de la imagen"/>
+            <Link to="/"><img src={vision} alt="Descripción de la imagen"/></Link>
           </div>
           <div className="LoginMsg">
             <h2 className="LoginTxt1"> Hi, Welcome Back</h2>

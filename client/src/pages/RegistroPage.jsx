@@ -1,8 +1,6 @@
-import { useForm } from 'react-hook-form';
 import { useAuth } from '../context/AuthContext'
 import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import Swal from 'sweetalert2'
 import { createCompanyRequest } from '../api/company';
 import { useTheme } from '../context/ThemeContext';
 import vision from '../images/visionBI (1).png';
@@ -18,7 +16,6 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 function RegistroPage() {
 
-  const { register, handleSubmit, formState: { errors }, watch } = useForm();
   const [rutError, setRutError] = useState("");
   const [rutErrorBusiness, setRutErrorBusiness] = useState("");
   const { signup, isAuthenticated, errors: registroError } = useAuth();
@@ -195,7 +192,7 @@ function RegistroPage() {
 
             await signup(userData);
             await createCompanyRequest(companyData);
-
+            
           } else {
             setRutError("This RUT does not exist");
           }
@@ -236,7 +233,7 @@ function RegistroPage() {
         <div className="RegistroCard">
           <div className="RegistroPrueba">
             <div className="LoginImg">
-              <img src={vision} alt="Descripción de la imagen" />
+              <Link to="/"><img src={vision} alt="Descripción de la imagen" /></Link>
             </div>
             <div className="RegistroMsg">
               <h2 className='RegistroTxt1'>Sign up</h2>
@@ -441,9 +438,9 @@ function RegistroPage() {
             <div className="LoginSeparacion"></div>
 
             <div className='RegistroAlredyAccount'>
-              <a href="" >
+              <Link to="/login" >
                 Already have an account?
-              </a>
+              </Link>
             </div>
 
           </div>
