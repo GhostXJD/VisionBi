@@ -95,7 +95,7 @@ function LoginPage() {
   return (
 
     <div className={`flex  h-[100vh]  items-center justify-center ${theme === 'dark' ? 'dark' : ''}`}  >
-      <div className={` max-w-md w-full p-10 rounded-md ${theme === 'dark' ? "#3b0764" : "bg-white"}`}>
+      <div className={` max-w-md w-full rounded-md ${theme === 'dark' ? "#3b0764" : "bg-white"}`}>
 
         <div className={`LoginCard ${theme === 'dark' ? 'bg-zinc-800' : 'bg-white border-black'}`}style={{ border: '2px dashed #b57edc' }}>
           <div className="LoginImg">

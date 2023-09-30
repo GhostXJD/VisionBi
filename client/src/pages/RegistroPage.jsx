@@ -229,7 +229,7 @@ function RegistroPage() {
 
   return (
     <div className={`flex  h-[80vh] items-center justify-center ${theme === 'dark' ? 'dark' : ''}`}>
-      <div className={` max-w-md w-full p-10 rounded-md ${theme === 'dark' ? "#3b0764" : "bg-white"}`}>
+      <div className={` max-w-md w-full rounded-md ${theme === 'dark' ? "#3b0764" : "bg-white"}`}>
         <div className="RegistroCard">
           <div className="RegistroPrueba">
             <div className="LoginImg">
