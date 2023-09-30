@@ -1,4 +1,5 @@
-@tailwind base;
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
@@ -140,6 +141,7 @@ li {
 	min-height: 0px;
 	max-width: none;
 	min-width: 0px;
+	font-family: 'Poppins', sans-serif;
 
 	/* Positioning */
 	justify-content: center;
@@ -169,7 +171,7 @@ li {
 	margin: 0px 0px 0.35em;
 	font-size: 1.5rem;
 	font-weight: 700;
-	font-family: Poppins, sans-serif;
+	font-family: 'Poppins', sans-serif;
 	line-height: 1.2;
 	color: rgb(103, 58, 183);
 
@@ -183,7 +185,7 @@ li {
 	margin: 8px 0px 0px;
 	color: rgb(105, 117, 134);
 	font-weight: 400;
-	font-family: Roboto, sans-serif;
+	font-family: 'Poppins', sans-serif;
 	line-height: 1.66;
 	font-size: 16px;
 	text-align: inherit;
@@ -219,6 +221,7 @@ li {
 	background-position: 0% 0%;
 	background-repeat: repeat;
 	color: rgb(54, 65, 82);
+	font-family: 'Poppins', sans-serif;
 
 	/* Box */
 	height: 256.5px;
@@ -377,7 +380,7 @@ li {
 
 .RegistroCard {
 	/* Font & Text */
-	font-family: Roboto, sans-serif;
+	font-family: 'Poppins', sans-serif;
 	font-size: 14px;
 	font-style: normal;
 	font-variant: normal;
@@ -537,7 +540,7 @@ li {
 	margin: 8px 0px 0px;
 	color: rgb(105, 117, 134);
 	font-weight: 400;
-	font-family: Roboto, sans-serif;
+	font-family: Poppins, sans-serif;
 	line-height: 1.66;
 	font-size: 16px;
 	text-align: inherit;
@@ -563,4 +566,109 @@ li {
 	align-items: center;
 	font-weight: bold;
 
+}
+
+/*ESTILOS REGISTRO USUARIO EMPLEADO*/
+.registroEmpCard {
+	/* Font & Text */
+	font-family: 'Poppins', sans-serif;
+	font-size: 14px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 400;
+	letter-spacing: normal;
+	line-height: 18.676px;
+	text-decoration: none solid rgb(54, 65, 82);
+	text-align: start;
+	text-indent: 0px;
+	text-transform: none;
+	vertical-align: baseline;
+	white-space: normal;
+	word-spacing: 0px;
+	
+
+	/* Color & Background */
+	background-attachment: scroll;
+	background-color: #ffffff;
+	background-image: none;
+	background-position: 0% 0%;
+	background-repeat: repeat;
+	color: rgb(54, 65, 82);
+
+	/* Box */
+	width: 1600px;
+	height: 450px;
+	border: 0px none rgb(54, 65, 82);
+	border-top: 0px none rgb(54, 65, 82);
+	border-right: 0px none rgb(54, 65, 82);
+	border-bottom: 0px none rgb(54, 65, 82);
+	border-left: 0px none rgb(54, 65, 82);
+	margin: 0px;
+	padding: 24px;
+	max-height: none;
+	min-height: 0px;
+	max-width: none;
+	min-width: 0px;
+	margin-top: 20px;
+
+	/* Positioning */
+	position: static;
+	top: auto;
+	bottom: auto;
+	right: auto;
+	left: auto;
+	float: none;
+	display: block;
+	clear: none;
+	z-index: auto;
+	/* List */
+	list-style-image: none;
+	list-style-type: disc;
+	list-style-position: outside;
+
+	/* Table */
+	border-collapse: separate;
+	border-spacing: 0px 0px;
+	caption-side: top;
+	empty-cells: show;
+	table-layout: auto;
+
+	/* Miscellaneous */
+	overflow: visible;
+	cursor: auto;
+	visibility: visible;
+
+	/* Effects */
+	transform: none;
+	transition: all 0s ease 0s;
+	outline-offset: 0px;
+	box-sizing: border-box;
+	resize: none;
+	text-shadow: none;
+	text-overflow: clip;
+	word-wrap: normal;
+	box-shadow: none;
+	border-top-left-radius: 16px;
+	border-top-right-radius: 16px;
+	border-bottom-left-radius: 16px;
+	border-bottom-right-radius: 16px;
+}
+
+.regUserTittle{
+	font-size: 40px;
+	font-weight: bold;
+	color: #8F3C8A;
+	font-family: 'Poppins', sans-serif;
+	text-transform: uppercase;
+}
+h1{
+	font-size: 40px;
+	font-weight: bold;
+	color: #8F3C8A;
+	font-family: 'Poppins', sans-serif;
+	text-transform: uppercase;
+}
+li{
+	font-family: 'Poppins', sans-serif;
+	
 }

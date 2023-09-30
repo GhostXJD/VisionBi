@@ -6,7 +6,9 @@ function HomePage() {
         
         <div>
             <Navbar />
-            <div>homepage</div>
+            <div>
+                <h1>homepage</h1>
+                </div>
         </div>
     )
 }
