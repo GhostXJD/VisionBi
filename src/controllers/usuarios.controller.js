@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs'
 
 //Crear Usuario
 export const createUsuario = async (req, res) => {
-    const { rut, nombre, apellido, correo, password, active, tipoUsuario, company} = req.body;
+    const { rut, nombre, apellido, correo, password, active, tipoUsuario, company } = req.body;
     try {
         const usuarioFound = await usuario.findOne({ rut });
         if (usuarioFound)
@@ -68,13 +68,24 @@ export const deleteUsuario = async (req, res) => {
     }
 };
 
-/* TODO: Puede que cambie el update, cambiarlo una vez probado en el front*/
 export const updateUsuario = async (req, res) => {
     try {
-        const usuario = await usuario.findByIdAndUpdate(req.params.id, req.body, {
-            new: true,
-        });
+        let { rut, nombre, apellido, correo, password, active, tipoUsuario, company } = req.body
+        password = bcrypt.hashSync(password, 10)
+
+        await usuario.findByIdAndUpdate({ _id: req.params.id }, {
+            rut,
+            nombre,
+            apellido,
+            correo,
+            password,
+            active,
+            tipoUsuario,
+            company
+        })
+
         if (!usuario) return res.status(404).json({ message: "Usuario not found" });
+
         res.json(usuario);
     } catch (error) {
         res.status(404).json({ message: "Usuario not found" });

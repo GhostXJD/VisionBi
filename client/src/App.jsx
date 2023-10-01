@@ -2,15 +2,20 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeContext';
 import ProtectedRoute from './ProtectedRoute'
+
 // Rutas Publicas
 import PresentacionPage from './pages/PresentacionPage'
 import LoginPage from './pages/LoginPage';
 import RegistroPage from './pages/RegistroPage';
+
 // Rutas usuarios logueados
 import HomePage from './pages/HomePage';
 import Profile from './pages/Profile';
+import ChangePasswordPage from './pages/ChangePasswordPage';
+
 // Rutas admin
 import ListarUsuariosPage from './pages/ListarUsuariosPage';
+
 // Rutas representante
 import RegistroEmpleadoPage from './pages/RegistroEmpleadoPage';
 import ListarEmpleadosPage from './pages/ListarEmpleadosPage';
@@ -33,6 +38,7 @@ function App() {
               <Route element={<ProtectedRoute />}>
                 <Route path='/inicio' element={<HomePage />} />
                 <Route path='/perfil' element={<Profile />} />
+                <Route path='/perfil/ChangePassword' element={<ChangePasswordPage />} />
               </Route>
 
             {/* Rutas Admin */}

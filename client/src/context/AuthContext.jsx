@@ -1,5 +1,6 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import { registroRequest, loginRequest, verifyTokenRequet } from '../api/auth';
+import { createCompanyRequest } from '../api/company'
 import Cookies from 'js-cookie';
 
 export const AuthContext = createContext()
@@ -18,9 +19,10 @@ export const AuthProvider = ({ children }) => {
     const [errors, setErrors] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    const signup = async (usuario) => {
+    const signup = async (usuario, company) => {
         try {
             const res = await registroRequest(usuario)
+            await createCompanyRequest(company)
             setUsuario(res.data);
             setIsAuthenticated(true);
         } catch (error) {
@@ -100,7 +102,7 @@ export const AuthProvider = ({ children }) => {
             usuario,
             isAuthenticated,
             errors,
-            logout
+            logout,
         }}
         >
             {children}

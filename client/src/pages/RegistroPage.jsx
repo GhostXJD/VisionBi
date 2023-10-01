@@ -2,7 +2,6 @@
 import { useAuth } from '../context/AuthContext'
 import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { createCompanyRequest } from '../api/company';
 import { useTheme } from '../context/ThemeContext';
 import vision from '../images/visionBI (1).png';
 import Stack from '@mui/material/Stack';
@@ -191,8 +190,7 @@ function RegistroPage() {
               agent: values.rut
             }
 
-            await signup(userData);
-            await createCompanyRequest(companyData);
+            await signup(userData, companyData);
 
           } else {
             setRutError("This RUT does not exist");
@@ -215,7 +213,10 @@ function RegistroPage() {
           formik.setFieldError('correo', 'This email already exists');
         } else if (errores == "Este rut ya existe") {
           formik.setFieldError('rut', 'This RUT already exists');
-        } else {
+        } else if (errores == "Este RUT de empresa ya existe"){
+          formik.setFieldError('businessRut', 'This RUT already exists');
+        }
+        else {
           navigate("/inicio")
         }
       }
