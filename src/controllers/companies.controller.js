@@ -7,7 +7,7 @@ export const createCompany = async (req, res) => {
     try {
         const companyFound = await company.findOne({ businessRut });
         if (companyFound)
-            return res.status(404).json(['Este RUT ya existe']);
+            return res.status(404).json(['Este RUT de empresa ya existe']);
 
         const newCompany = new company({
             businessRut,

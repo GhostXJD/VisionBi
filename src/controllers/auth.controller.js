@@ -9,8 +9,10 @@ export const registro = async (req, res) => {
     const { rut, nombre, apellido, correo, password, active, tipoUsuario, company } = req.body;
     try {
         const usuarioFound = await usuario.findOne({ correo });
-        if (usuarioFound)
-            return res.status(404).json(['El correo ya existe']);
+        if (usuarioFound) return res.status(404).json(["El correo ya existe"]);
+
+        const rutFound = await usuario.findOne({ rut });
+        if (rutFound) return res.status(404).json(["Este rut ya existe"]);
 
         const passwordHashs = await bcrypt.hash(password, 10)
 

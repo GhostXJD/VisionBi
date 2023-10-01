@@ -1,3 +1,4 @@
+//TODO: Validar el rut de la compañia existente
 import { useAuth } from '../context/AuthContext'
 import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
@@ -18,7 +19,7 @@ function RegistroPage() {
 
   const [rutError, setRutError] = useState("");
   const [rutErrorBusiness, setRutErrorBusiness] = useState("");
-  const { signup, isAuthenticated, errors: registroError } = useAuth();
+  const { signup, errors: registroError, isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const { theme } = useTheme();
 
@@ -192,7 +193,7 @@ function RegistroPage() {
 
             await signup(userData);
             await createCompanyRequest(companyData);
-            
+
           } else {
             setRutError("This RUT does not exist");
           }
@@ -206,6 +207,22 @@ function RegistroPage() {
       }
     }
   });
+
+  useEffect(() => {
+    if (registroError.length > 0) {
+      for (const errores of registroError) {
+        if (errores == "El correo ya existe") {
+          formik.setFieldError('correo', 'This email already exists');
+        } else if (errores == "Este rut ya existe") {
+          formik.setFieldError('rut', 'This RUT already exists');
+        } else {
+          navigate("/inicio")
+        }
+      }
+    }
+  }, [registroError]);
+
+  
 
   const [showPassword, setShowPassword] = useState(false);
 
