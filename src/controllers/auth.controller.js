@@ -37,6 +37,7 @@ export const registro = async (req, res) => {
             nombre: userSaved.nombre,
             apellido: userSaved.apellido,
             correo: userSaved.correo,
+            password: userSaved.password,
             active: userSaved.active,
             tipoUsuario: userSaved.tipoUsuario,
             company: userSaved.company
@@ -67,6 +68,7 @@ export const login = async (req, res) => {
             nombre: usuarioFound.nombre,
             apellido: usuarioFound.apellido,
             correo: usuarioFound.correo,
+            password: usuarioFound.password,
             active: usuarioFound.active,
             tipoUsuario: usuarioFound.tipoUsuario,
             company: usuarioFound.company
@@ -95,6 +97,7 @@ export const profile = async (req, res) => {
         nombre: usuarioFound.nombre,
         apellido: usuarioFound.apellido,
         correo: usuarioFound.correo,
+        password: usuarioFound.password,
         active: usuarioFound.active,
         tipoUsuario: usuarioFound.tipoUsuario,
         company: usuarioFound.company
@@ -118,6 +121,7 @@ export const verifyToken = async (req, res) => {
             nombre: usuarioFound.nombre,
             apellido: usuarioFound.apellido,
             correo: usuarioFound.correo,
+            password: usuarioFound.password,
             active: usuarioFound.active,
             tipoUsuario: usuarioFound.tipoUsuario,
             company: usuarioFound.company

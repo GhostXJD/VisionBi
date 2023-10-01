@@ -2,7 +2,6 @@ import { useAuth } from '../context/AuthContext'
 import { useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import { Link } from 'react-router-dom';
-import Button from '@mui/material/Button';
 
 function Profile() {
   const { isAuthenticated, usuario } = useAuth();
