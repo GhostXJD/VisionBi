@@ -1,43 +1,67 @@
-import csvDato from '../models/csvDato.model.js'
+import csvDato from '../models/csvDato.model.js';
 
 export const getCsvDatos = async (req, res) => {
-    const csv = await csvDato.find({
-        usuario: req.usuario.id
-    }).populate('usuario')
-    res.json(csv);
+    try {
+        const csvDatos = await csvDato.find(req.params.id);
+        res.json(csvDatos);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 };
 
 export const createCsvDato = async (req, res) => {
-    const { codProducto, cantidadProducto, precioUnitario, descuento, total, fechaVenta } = req.body
+    const { archivoCSV, userUploader, company, date } = req.body;
 
-    const newCsv = new csvDato({
-        codProducto,
-        cantidadProducto,
-        precioUnitario,
-        descuento,
-        total,
-        fechaVenta,
-        usuario: req.usuario.id
-    })
-    const savedCsv = await newCsv.save();
-    res.json(savedCsv)
+    try {
+        const newCsvDato = new csvDato({
+            archivoCSV: archivoCSV,
+            userUploader: userUploader,
+            company: company,
+            date: new Date(),
+        });
+
+        const savedCsvDato = await newCsvDato.save();
+        res.json(savedCsvDato);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 };
 
 export const getCsvDato = async (req, res) => {
-    const csv = await csvDato.findById(req.params.id).populate('usuario')
-    if (!csv) return res.status(404).json({ message: 'Csv not found' })
-    res.json(csv)
+    try {
+        const csv = await csvDato.findById(req.params.id);
+        if (!csv) return res.status(404).json({ message: 'Csv not found' });
+        res.json(csv);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 };
 
-export const deleteCsvDatos = async (req, res) => {
-    const csv = await csvDato.findByIdAndDelete(req.params.id)
-    if (!csv) return res.status(404).json({ message: 'Csv not found' })
-    return res.sendStatus(204)
+export const updateCsvDato = async (req, res) => {
+    try {
+        const updatedCsv = await csvDato.findByIdAndUpdate(
+            req.params.id,
+            req.body,
+            {
+                new: true,
+            }
+        );
+
+        if (!updatedCsv) return res.status(404).json({ message: 'Csv not found' });
+
+        res.json(updatedCsv);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 };
-export const updateCsvDatos = async (req, res) => {
-    const csv = await csvDato.findByIdAndUpdate(req.params.id, req.body, {
-        new: true
-    })
-    if (!csv) return res.status(404).json({ message: 'Csv not found' })
-    res.json(csv)
+
+export const deleteCsvDato = async (req, res) => {
+    try {
+        const deletedCsv = await csvDato.findByIdAndDelete(req.params.id);
+        if (!deletedCsv) return res.status(404).json({ message: 'Csv not found' });
+        return res.sendStatus(204);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 };
+
