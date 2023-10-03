@@ -3,7 +3,6 @@ import Navbar from '../components/Navbar';
 function PresentacionPage() {
     return (
         <div>
-            <Navbar />
             <div className="py-16">
                 <div className="container m-auto px-6 md:px-12 xl:px-6">
                     <div className="space-y-6 md:space-y-0 md:flex md:gap-6 lg:items-center lg:gap-12">
@@ -29,8 +28,6 @@ function PresentacionPage() {
                     </div>
                 </div>
             </div>
-
-
 
             <section className="pt-20 pb-10 lg:pt-[120px] lg:pb-20">
                 <div className="container mx-auto">

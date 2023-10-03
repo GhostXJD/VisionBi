@@ -38,8 +38,6 @@ export default function DataTable() {
     ];
 
     return (
-        <div>
-            <Navbar />
             <div style={{ height: 600, width: '100%', backgroundColor: 'white' }}>
                 <DataGrid
                     rows={usuarios.map((user, index) =>({
@@ -61,6 +59,5 @@ export default function DataTable() {
                     checkboxSelection
                 />
             </div>
-        </div>
     );
 }

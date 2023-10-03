@@ -106,8 +106,7 @@ function ChangePasswordPage() {
     };
 
     return (
-        <div>
-            <Navbar />
+        
             <div className={`flex  h-[80vh] items-center justify-right justify-center`}>
                 <div className={` max-w-md w-full  rounded-md bg-slate-100 p-8`}>
                     <h1>Change Password</h1>
@@ -227,7 +226,6 @@ function ChangePasswordPage() {
                     </div>
                 </div>
             </div>
-        </div>
     )
 }
 

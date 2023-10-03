@@ -42,8 +42,6 @@ function ListarUsuariosPage() {
   if (usuarios.length === 0) return <h1>No hay usuarios</h1>;
 
   return (
-    <div>
-      <Navbar />
       <div className='grid grid-cols-3 gap-2'>
         {usuarios.map((usuario) => (
           <UsuarioCard
@@ -53,7 +51,6 @@ function ListarUsuariosPage() {
           />
         ))}
       </div>
-    </div>
   );
 }
 

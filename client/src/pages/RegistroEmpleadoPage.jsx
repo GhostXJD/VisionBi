@@ -135,8 +135,7 @@ function RegistroEmpleadoPage() {
     });
 
     return (
-        <div>
-            <Navbar />
+        
 
             <div className={`flex  h-[80vh] items-center justify-right`}>
                 <div className={` max-w-md w-full  rounded-md `}>
@@ -242,7 +241,7 @@ function RegistroEmpleadoPage() {
                     </div>
                 </div>
             </div>
-        </div>
+        
 
     );
 }

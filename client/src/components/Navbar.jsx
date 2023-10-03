@@ -11,7 +11,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { useTheme } from '../context/ThemeContext';
 import SideMenu from './SideMenu'
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import logo from "../images/visionBI (1).png";
 import { purple } from '@mui/material/colors';
@@ -67,11 +67,16 @@ const DrawerHeader = styled('div')(({ theme }) => ({
     justifyContent: 'flex-end',
 }));
 
-export default function PersistentDrawerLeft() {
+export default function PersistentDrawerLeft({children, hiddenRoutes}) {
     const { toggleTheme, theme } = useTheme();
     const [open, setOpen] = React.useState(false);
     const { isAuthenticated, logout, usuario } = useAuth();
+    const { pathname } = useLocation();
 
+    if (hiddenRoutes.find((hiddenRoute)=>pathname == hiddenRoute)) {
+        return children
+    }
+    
     const handleDrawerOpen = () => {
         setOpen(true);
     };
@@ -109,7 +114,7 @@ export default function PersistentDrawerLeft() {
                             </div>
                             <button
                                 className={`text-center px-3 py-1 h-8 bg-[#4b1c71] rounded-3xl hover:bg-[#7f4ca5]  dark:bg-[#b57edc] dark:hover:bg-[#dbb6ee]`}
-                                onClick={toggleTheme} // Utiliza la función toggleTheme para cambiar el tema
+                                onClick={toggleTheme}
                             >
                                 <div className="flex items-center space-x-2 ">
                                     <div>
@@ -203,7 +208,7 @@ export default function PersistentDrawerLeft() {
             </Drawer>
             <Main open={open}>
                 <DrawerHeader />
-                
+                {children}
             </Main>
         </Box>
     );
