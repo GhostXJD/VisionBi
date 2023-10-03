@@ -11,10 +11,11 @@ export const getCsvDatos = async (req, res) => {
 };
 
 export const createCsvDato = async (req, res) => {
+    
     const { archivoCSV, userUploader, company, date } = req.body;
 
     try {
-        console.log("archivoCSV", archivoCSV?.filename)
+        
         if (!archivoCSV) {
             return res.status(400).json({ message: 'Archivo CSV requerido' });
         }
