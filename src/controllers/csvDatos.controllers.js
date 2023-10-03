@@ -1,5 +1,5 @@
-import fs from 'fs';
 import csvDato from '../models/csvDato.model.js';
+
 
 export const getCsvDatos = async (req, res) => {
     try {
@@ -12,27 +12,22 @@ export const getCsvDatos = async (req, res) => {
 
 export const createCsvDato = async (req, res) => {
     
-    const { archivoCSV, userUploader, company, date } = req.body;
-
     try {
-        
-        if (!archivoCSV) {
+        if (!req.file) {
             return res.status(400).json({ message: 'Archivo CSV requerido' });
         }
         
-        const archivoCSVBuffer = fs.readFileSync(archivoCSV.path);
+        const { userUploader, company } = req.body;
 
         const newCsvDato = new csvDato({
-            archivoCSV: archivoCSVBuffer,
+            archivoCSV: req.file.buffer,
             userUploader: userUploader,
             company: company,
             date: new Date(),
         });
 
-        fs.unlinkSync(archivoCSV.path);
-
         const savedCsvDato = await newCsvDato.save();
-        res.json(savedCsvDato);
+        res.json(savedCsvDato);;
     } catch (error) {
         res.status(500).json({ message: error.message });
         console.log("error", error)

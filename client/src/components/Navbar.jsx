@@ -139,7 +139,7 @@ export default function PersistentDrawerLeft({ children, hiddenRoutes }) {
                                 </div>
                             </button>
                             <li className="border border-red-500 hover:border-red-300 bg-transparent  rounded-md text-red-500 hover:text-red-300 px-4 py-1  h-8">
-                                <Link to='/' onClick={() => { logout(); }}><LogoutIcon/>Log outñ</Link>
+                                <Link to='/' onClick={() => { logout(); }}><LogoutIcon/>Log out</Link>
                             </li>
                         </>
                     ) : (

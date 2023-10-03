@@ -2,7 +2,7 @@ import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { useAuth } from '../context/AuthContext';
-//import { useCsv } from '../context/CsvContext';
+import { useCsv } from '../context/CsvContext';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createCsvDatosRequest } from '../api/csvDatos'
@@ -22,7 +22,7 @@ const VisuallyHiddenInput = styled('input')({
 function HomePage() {
     const navigate = useNavigate();
     const { isAuthenticated, usuario } = useAuth();
-    //const { createCsv } = useCsv();
+    const { createCsv } = useCsv();
     const [archivoCSV, setArchivoCSV] = useState(null);
 
     useEffect(() => {
@@ -43,7 +43,7 @@ function HomePage() {
         formData.append('company', usuario.company);
         
         console.log("formData", Object.fromEntries(formData))
-        await createCsvDatosRequest(formData);
+        createCsv(formData);
     };
 
     return (
