@@ -1,6 +1,5 @@
 import { useAuth } from '../context/AuthContext'
 import { useEffect } from 'react';
-import Navbar from '../components/Navbar';
 import { Link } from 'react-router-dom';
 
 function Profile() {
@@ -62,7 +61,7 @@ function Profile() {
         </div>
 
         <div className="justify-center items-center py-3">
-          <li className='bg-cyan-700 px-3 py-1 rounded-lg h-8 scale-x-95 text-white'>
+          <li className='bg-[#8F3C8A] px-3 py-1 rounded-lg h-8 scale-x-95 text-white'>
             <Link to='ChangePassword'>Change password</Link>
           </li>
         </div>

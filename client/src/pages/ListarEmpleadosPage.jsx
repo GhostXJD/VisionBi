@@ -1,4 +1,3 @@
-import Navbar from '../components/Navbar';
 import { useState, useEffect } from 'react';
 import { getUsuariosRequest } from '../api/usuarios';
 import { DataGrid } from '@mui/x-data-grid';

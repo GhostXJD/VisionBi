@@ -1,8 +1,7 @@
 //TODO: Agregar diseño al formulario y darkmode
 import bcrypt from 'bcryptjs';
 import { useEffect, useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import Navbar from '../components/Navbar';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext'
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
@@ -106,126 +105,133 @@ function ChangePasswordPage() {
     };
 
     return (
-        
-            <div className={`flex  h-[80vh] items-center justify-right justify-center`}>
-                <div className={` max-w-md w-full  rounded-md bg-slate-100 p-8`}>
-                    <h1>Change Password</h1>
-                    <div className="">
-                        <form
-                            noValidate
-                            onSubmit={formik.handleSubmit}
-                        >
 
-                            <Stack spacing={3}>
-                                <TextField
-                                    error={!!(formik.touched.currentPassword && formik.errors.currentPassword)}
-                                    fullWidth
-                                    helperText={formik.touched.currentPassword && formik.errors.currentPassword}
-                                    label="Current Password"
-                                    name="currentPassword"
-                                    onBlur={formik.handleBlur}
-                                    onChange={formik.handleChange}
-                                    type={showCurrentPassword ? 'text' : 'password'}
-                                    value={formik.values.currentPassword}
-                                    InputProps={{
-                                        endAdornment: (
-                                            <InputAdornment position="end">
-                                                <IconButton
-                                                    aria-label="toggle currentPassword visibility"
-                                                    onClick={handleClickShowCurrentPassword}
-                                                    onMouseDown={handleMouseDownCurrentPassword}
-                                                    edge="end"
-                                                >
-                                                    {showCurrentPassword ? <VisibilityOff /> : <Visibility />}
-                                                </IconButton>
-                                            </InputAdornment>
-                                        ),
-                                        sx: { borderRadius: 3 }
-                                    }}
-                                />
-                                <TextField
-                                    error={!!(formik.touched.password && formik.errors.password)}
-                                    fullWidth
-                                    helperText={formik.touched.password && formik.errors.password}
-                                    label="Password"
-                                    name="password"
-                                    onBlur={formik.handleBlur}
-                                    onChange={formik.handleChange}
-                                    type={showPassword ? 'text' : 'password'}
-                                    value={formik.values.password}
-                                    InputProps={{
-                                        endAdornment: (
-                                            <InputAdornment position="end">
-                                                <IconButton
-                                                    aria-label="toggle password visibility"
-                                                    onClick={handleClickShowPassword}
-                                                    onMouseDown={handleMouseDownPassword}
-                                                    edge="end"
-                                                >
-                                                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                                                </IconButton>
-                                            </InputAdornment>
-                                        ),
-                                        sx: { borderRadius: 3 }
-                                    }}
-                                />
+        <div className={`flex  h-[80vh] items-center justify-right justify-center`}>
+            <div className={` max-w-md w-full  rounded-md p-8 bg-[#fff] `}style={{ border: '2px dashed #b57edc' }}>
+                <h1>Change Password</h1>
+                <div className="">
+                    <form
+                        noValidate
+                        onSubmit={formik.handleSubmit}
+                    >
 
-                                <TextField
-                                    error={!!(formik.touched.passwordC && (formik.errors.passwordC || formik.values.password !== formik.values.passwordC))}
-                                    fullWidth
-                                    helperText={
-                                        (formik.touched.passwordC && formik.errors.passwordC) ||
-                                        (formik.values.password !== formik.values.passwordC && 'Passwords do not match')
-                                    }
-                                    label="Confirm Password"
-                                    name="passwordC"
-                                    onBlur={formik.handleBlur}
-                                    onChange={formik.handleChange}
-                                    type={showPasswordC ? 'text' : 'password'}
-                                    value={formik.values.passwordC}
-                                    InputProps={{
-                                        endAdornment: (
-                                            <InputAdornment position="end">
-                                                <IconButton
-                                                    aria-label="toggle password visibility"
-                                                    onClick={handleClickShowPasswordC}
-                                                    onMouseDown={handleMouseDownPasswordC}
-                                                    edge="end"
-                                                >
-                                                    {showPasswordC ? <VisibilityOff /> : <Visibility />}
-                                                </IconButton>
-                                            </InputAdornment>
-                                        ),
-                                        sx: { borderRadius: 3 },
-                                    }}
-                                />
-                            </Stack>
+                        <Stack spacing={3}>
+                            <TextField
+                                error={!!(formik.touched.currentPassword && formik.errors.currentPassword)}
+                                fullWidth
+                                helperText={formik.touched.currentPassword && formik.errors.currentPassword}
+                                label="Current Password"
+                                name="currentPassword"
+                                onBlur={formik.handleBlur}
+                                onChange={formik.handleChange}
+                                type={showCurrentPassword ? 'text' : 'password'}
+                                value={formik.values.currentPassword}
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                aria-label="toggle currentPassword visibility"
+                                                onClick={handleClickShowCurrentPassword}
+                                                onMouseDown={handleMouseDownCurrentPassword}
+                                                edge="end"
+                                            >
+                                                {showCurrentPassword ? <VisibilityOff /> : <Visibility />}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                    sx: { borderRadius: 3 }
+                                }}
+                            />
+                            <TextField
+                                error={!!(formik.touched.password && formik.errors.password)}
+                                fullWidth
+                                helperText={formik.touched.password && formik.errors.password}
+                                label="Password"
+                                name="password"
+                                onBlur={formik.handleBlur}
+                                onChange={formik.handleChange}
+                                type={showPassword ? 'text' : 'password'}
+                                value={formik.values.password}
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                aria-label="toggle password visibility"
+                                                onClick={handleClickShowPassword}
+                                                onMouseDown={handleMouseDownPassword}
+                                                edge="end"
+                                            >
+                                                {showPassword ? <VisibilityOff /> : <Visibility />}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                    sx: { borderRadius: 3 }
+                                }}
+                            />
 
-                            {formik.errors.submit && (
-                                <Typography
-                                    color="error"
-                                    sx={{ mt: 3 }}
-                                    variant="body2"
-                                >
-                                    {formik.errors.submit}
-                                </Typography>
-                            )}
-                            <div>
-                                <Button
-                                    fullWidth
-                                    size="large"
-                                    sx={{ mt: 3 }}
-                                    type="submit"
-                                    variant="contained"
-                                    color="success"
-                                >
-                                    Change Password
-                                </Button>
-                            </div>
-                        </form>
-                    </div>
+                            <TextField
+                                error={!!(formik.touched.passwordC && (formik.errors.passwordC || formik.values.password !== formik.values.passwordC))}
+                                fullWidth
+                                helperText={
+                                    (formik.touched.passwordC && formik.errors.passwordC) ||
+                                    (formik.values.password !== formik.values.passwordC && 'Passwords do not match')
+                                }
+                                label="Confirm Password"
+                                name="passwordC"
+                                onBlur={formik.handleBlur}
+                                onChange={formik.handleChange}
+                                type={showPasswordC ? 'text' : 'password'}
+                                value={formik.values.passwordC}
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                aria-label="toggle password visibility"
+                                                onClick={handleClickShowPasswordC}
+                                                onMouseDown={handleMouseDownPasswordC}
+                                                edge="end"
+                                            >
+                                                {showPasswordC ? <VisibilityOff /> : <Visibility />}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                    sx: { borderRadius: 3 },
+                                }}
+                            />
+                        </Stack>
+
+                        {formik.errors.submit && (
+                            <Typography
+                                color="error"
+                                sx={{ mt: 3 }}
+                                variant="body2"
+                            >
+                                {formik.errors.submit}
+                            </Typography>
+                        )}
+                        <div>
+                            <Button
+                                fullWidth
+                                size="large"
+                                sx={{
+                                    mt: 3,
+                                    backgroundColor: '#8F3C8A', // Establece el color de fondo del botón
+                                    '&:hover': {
+                                        backgroundColor: '#b57edc', // Establece el color de fondo al pasar el mouse por encima
+                                    },
+                                }}
+                                type="submit"
+                                variant="contained"
+                                color="success"
+                            >
+                                Change Password
+                            </Button>
+
+                        </div>
+                    </form>
                 </div>
             </div>
+        </div>
     )
 }
 

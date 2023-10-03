@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext'
 import { deleteUsuarioRequest, getUsuariosRequest } from '../api/usuarios';
 import UsuarioCard from "../components/UsuarioCard";
-import Navbar from '../components/Navbar';
 
 function ListarUsuariosPage() {
   const [usuarios, setUsuarios] = useState([]);
