@@ -36,9 +36,19 @@ export const createCsvDato = async (req, res) => {
 
 export const getCsvDato = async (req, res) => {
     try {
-        const csv = await csvDato.findById(req.params.id);
-        if (!csv) return res.status(404).json({ message: 'Csv not found' });
-        res.json(csv);
+        const { company } = req.params;
+
+        const csvDatoRecord = await csvDato.findOne({ company });
+
+        if (!csvDatoRecord) {
+            return res.status(404).json({ message: 'Registro de CSV no encontrado' });
+        }
+
+        const csvDataBinary = Buffer.from(csvDatoRecord.archivoCSV, 'base64');
+
+        res.setHeader('Content-Type', 'text/csv');
+        res.setHeader('Content-Disposition', 'attachment; filename=archivo.csv');
+        res.send(csvDataBinary);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

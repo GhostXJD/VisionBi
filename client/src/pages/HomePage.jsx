@@ -1,4 +1,3 @@
-//TODO: Mostrar los datos del csv en el front
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
@@ -6,8 +5,10 @@ import { useAuth } from '../context/AuthContext';
 import { useCsv } from '../context/CsvContext';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getCsvDatosRequest } from '../api/csvDatos';
+import { getCsvDatoRequest } from '../api/csvDatos';
 import Papa from 'papaparse';
+import { DataGrid } from '@mui/x-data-grid';
+import Paper from '@mui/material/Paper';
 
 const VisuallyHiddenInput = styled('input')({
     clip: 'rect(0 0 0 0)',
@@ -33,41 +34,46 @@ function HomePage() {
     }, [isAuthenticated]);
 
     useEffect(() => {
-        getCsvs();
+        getCsv();
     }, []);
 
-    const getCsvs = async () => {
+    const getCsv = async () => {
+        console.log("Obteniendo datos del archivo CSV...");
         try {
-            const response = await getCsvDatosRequest();
+            const response = await getCsvDatoRequest(usuario.company);
             console.log("Respuesta de la API:", response);
-    
-            if (response && response.data && response.data[0] && response.data[0].archivoCSV) {
-                const archivoCSVData = response.data[0].archivoCSV;
-                const blob = new Blob([archivoCSVData.data], { type: archivoCSVData.type });
-    
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    const csvString = e.target.result;
-                    Papa.parse(csvString, {
-                        header: true,
-                        dynamicTyping: true,
-                        complete: (results) => {
-                            setCsvData(results.data);
-                        },
-                    });
-                };
-                reader.readAsText(blob);
-            } else {
-                console.error("La respuesta no contiene datos de archivoCSV.");
-            }
+            Papa.parse(response.data, {
+                complete: (parsedData) => {
+                    const data = parsedData.data;
+                    setCsvData(data);
+                },
+                header: true,
+                skipEmptyLines: true,
+            });
+
         } catch (error) {
-            console.error("Error al obtener los datos:", error);
+            console.log("Error al obtener los datos:", error);
         }
-    };    
+    };
 
     const handleFileChange = (event) => {
         const file = event.target.files[0];
         setArchivoCSV(file);
+
+        const reader = new FileReader();
+
+        reader.onload = (event) => {
+            const result = event.target.result;
+            Papa.parse(result, {
+                complete: (parsedData) => {
+                    const data = parsedData.data;
+                    setCsvData(data);
+                },
+                header: true,
+                skipEmptyLines: true,
+            });
+        };
+        reader.readAsText(file);
     };
 
     const onSubmit = async (event) => {
@@ -111,23 +117,20 @@ function HomePage() {
             {/* Mostrar los datos del CSV en una tabla */}
             <div>
                 <h2>Contenido del archivo CSV:</h2>
-                <table>
-                    <thead>
-                        {csvData.length > 0 &&
-                            Object.keys(csvData[0]).map((header) => (
-                                <th key={header}>{header}</th>
-                            ))}
-                    </thead>
-                    <tbody>
-                        {csvData.map((row, rowIndex) => (
-                            <tr key={rowIndex}>
-                                {Object.values(row).map((value, colIndex) => (
-                                    <td key={colIndex}>{value}</td>
-                                ))}
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+                <Paper elevation={3} style={{ height: 550, width: '100%' }}>
+                    <DataGrid
+                        rows={csvData.map((row, rowIndex) => ({
+                            id: rowIndex,
+                            ...row,
+                        }))}
+                        columns={csvData.length > 0 ? Object.keys(csvData[0]).map((header) => ({
+                            field: header,
+                            headerName: header,
+                            width: 150,
+                        })) : []}
+                        pageSize={5}
+                    />
+                </Paper>
             </div>
         </div>
     );
