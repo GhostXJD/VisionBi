@@ -14,6 +14,7 @@ import RegistroPage from './pages/RegistroPage';
 import HomePage from './pages/HomePage';
 import Profile from './pages/Profile';
 import ChangePasswordPage from './pages/ChangePasswordPage';
+import DashboardPage from './pages/DashboardPage';
 
 // Rutas admin
 import ListarUsuariosPage from './pages/ListarUsuariosPage';
@@ -43,6 +44,7 @@ function App() {
                     <Route path='/inicio' element={<HomePage />} />
                     <Route path='/perfil' element={<Profile />} />
                     <Route path='/perfil/ChangePassword' element={<ChangePasswordPage />} />
+                    <Route path='/dashboard' element={<DashboardPage />} />
                   </Route>
 
                   {/* Rutas Admin */}
