@@ -44,8 +44,8 @@ export default function DashboardPage() {
 
     for (let i = 0; i < csvData.length; i++) {
       const rowData = csvData[i];
-      const fecha = new Date(rowData.Fecha);
-      const valorTotal = rowData.Cantidad * rowData.Precio;
+      const fecha = new Date(rowData.date);
+      const valorTotal = rowData.quantity * rowData.price;
       chartData.push([fecha, valorTotal]);
     }
 
