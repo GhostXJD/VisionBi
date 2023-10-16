@@ -11,28 +11,40 @@ export const getCsvDatos = async (req, res) => {
 };
 
 export const createCsvDato = async (req, res) => {
-    
     try {
         if (!req.file) {
             return res.status(400).json({ message: 'Archivo CSV requerido' });
         }
-        
+
         const { userUploader, company } = req.body;
 
-        const newCsvDato = new csvDato({
-            archivoCSV: req.file.buffer,
-            userUploader: userUploader,
-            company: company,
-            date: new Date(),
-        });
+        // Verificar si ya existe un registro con el mismo userUploader y company
+        const existingCsvDato = await csvDato.findOne({ userUploader, company });
 
-        const savedCsvDato = await newCsvDato.save();
-        res.json(savedCsvDato);;
+        if (existingCsvDato) {
+            // Si existe, actualiza el registro existente con el nuevo archivo
+            existingCsvDato.archivoCSV = req.file.buffer;
+            existingCsvDato.date = new Date();
+            const updatedCsvDato = await existingCsvDato.save();
+            res.json(updatedCsvDato);
+        } else {
+            // Si no existe, crea un nuevo registro
+            const newCsvDato = new csvDato({
+                archivoCSV: req.file.buffer,
+                userUploader: userUploader,
+                company: company,
+                date: new Date(),
+            });
+
+            const savedCsvDato = await newCsvDato.save();
+            res.json(savedCsvDato);
+        }
     } catch (error) {
         res.status(500).json({ message: error.message });
-        console.log("error", error)
+        console.log("error", error);
     }
 };
+
 
 export const getCsvDato = async (req, res) => {
     try {

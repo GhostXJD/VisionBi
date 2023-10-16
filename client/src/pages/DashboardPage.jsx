@@ -2,17 +2,17 @@ import React, { useEffect, useState } from "react";
 import { Chart } from "react-google-charts";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router";
-import { getCsvDatoRequest } from '../api/csvDatos';
-import Papa from 'papaparse';
+import { getCsvDatoRequest } from "../api/csvDatos";
+import Papa from "papaparse";
 
 export default function DashboardPage() {
   const navigate = useNavigate();
   const { isAuthenticated, usuario } = useAuth();
   const [csvData, setCsvData] = useState([]);
-  const [dataAvailable, setDataAvailable] = useState(false); // Estado para verificar si los datos están disponibles
+  const [dataAvailable, setDataAvailable] = useState(false);
 
   useEffect(() => {
-    if (!isAuthenticated) navigate('/inicio');
+    if (!isAuthenticated) navigate("/inicio");
   }, [isAuthenticated]);
 
   useEffect(() => {
@@ -28,15 +28,39 @@ export default function DashboardPage() {
         complete: (parsedData) => {
           const data = parsedData.data;
           setCsvData(data);
-          setDataAvailable(true); // Marcamos que los datos están disponibles
+          setDataAvailable(true);
         },
         header: true,
         skipEmptyLines: true,
       });
     } catch (error) {
       console.log("Error al obtener los datos:", error);
-      setDataAvailable(false); // Marcamos que los datos no están disponibles
+      setDataAvailable(false);
     }
+  };
+
+  const transformDataForSalesByMonth = () => {
+    const chartData = [["Mes", "Valor Total"]];
+    const monthlySales = {};
+
+    for (let i = 0; i < csvData.length; i++) {
+      const rowData = csvData[i];
+      const fecha = new Date(rowData.date);
+      const month = fecha.getMonth() + 1;
+      const valorTotal = rowData.quantity * rowData.price;
+
+      if (monthlySales[month]) {
+        monthlySales[month] += valorTotal;
+      } else {
+        monthlySales[month] = valorTotal;
+      }
+    }
+
+    for (const month in monthlySales) {
+      chartData.push([month.toString(), monthlySales[month]]);
+    }
+
+    return chartData;
   };
 
   const transformDataForChart = () => {
@@ -52,10 +76,44 @@ export default function DashboardPage() {
     return chartData;
   };
 
+  const transformDataForSalesByState = () => {
+    const chartData = [["Estado", "Cantidad de Ventas"]];
+    const stateSales = {};
+
+    for (let i = 0; i < csvData.length; i++) {
+      const rowData = csvData[i];
+      const state = rowData.state;
+
+      if (stateSales[state]) {
+        stateSales[state]++;
+      } else {
+        stateSales[state] = 1;
+      }
+    }
+
+    for (const state in stateSales) {
+      chartData.push([state, stateSales[state]]);
+    }
+
+    return chartData;
+  };
+
   return (
     <div>
       {dataAvailable ? (
-        <Chart
+        <div>
+          <Chart
+            chartType="ColumnChart"
+            width="100%"
+            height="400px"
+            data={transformDataForSalesByMonth()}
+            options={{
+              title: "Ventas por Mes",
+              hAxis: { title: "Mes" },
+              vAxis: { title: "Valor Total" },
+            }}
+          />
+          <Chart
           chartType="LineChart"
           width="100%"
           height="400px"
@@ -72,6 +130,20 @@ export default function DashboardPage() {
             },
           }}
         />
+    
+
+          <Chart
+            chartType="BarChart"
+            width="100%"
+            height="400px"
+            data={transformDataForSalesByState()}
+            options={{
+              title: "Cantidad de Ventas por Estado",
+              hAxis: { title: "Estado" },
+              vAxis: { title: "Cantidad de Ventas" },
+            }}
+          />
+        </div>
       ) : (
         <p>Se requieren datos</p>
       )}
