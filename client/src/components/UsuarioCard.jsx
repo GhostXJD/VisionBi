@@ -8,7 +8,7 @@ function UsuarioCard({ usuario, onDeleteUsuario }) {
   };
 
   return (
-    <div className="bg-zinc-800 max-w-md w-full p-10 rounded-md">
+    <div className="bg-zinc-200 text-whitemax-w-md w-full p-10 rounded-md">
       <header className="flex justify-between">
         <h1 className="text-2xl font-bold">{usuario.nombre}</h1>
         <div className="flex gap-x-2 items-center">
@@ -23,9 +23,9 @@ function UsuarioCard({ usuario, onDeleteUsuario }) {
           </button>
         </div>
       </header>
-      <p className="text-slate-300">{usuario.rut}</p>
-      <p className="text-slate-300">{usuario.correo}</p>
-      <p className="text-slate-300">{usuario.tipoUsuario}</p>
+      <p className="text-gray-500">Rut: {usuario.rut}</p>
+      <p className="text-gray-500">E-mail: {usuario.correo}</p>
+      <p className="text-gray-500">Job: {usuario.tipoUsuario}</p>
     </div>
   )
 }

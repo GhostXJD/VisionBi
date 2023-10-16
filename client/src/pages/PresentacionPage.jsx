@@ -1,5 +1,4 @@
-
-function PresentacionPage() {
+function PresentationPage() {
     return (
         <div>
             <div className="py-16">
@@ -13,15 +12,15 @@ function PresentacionPage() {
                             />
                         </div>
                         <div className="md:7/12 lg:w-6/12">
-                            <h2 className="text-2xl font-bold md:text-4xl">Visión BI: Transformando Datos en Estrategia</h2>
-                            <p className="mt-6 ">
-                                En nuestra empresa, nuestra visión de Business Intelligence (BI) es la clave de nuestro éxito. Estamos dedicados a aprovechar la inteligencia de negocios para tomar decisiones informadas y estratégicas que nos permitan innovar y crear soluciones excepcionales.
+                            <h2 className="text-2xl font-bold md:text-4xl">BI Vision: Transforming Data into Strategy</h2>
+                            <p className="mt-6">
+                                In our company, our vision of Business Intelligence (BI) is the key to our success. We are dedicated to leveraging business intelligence to make informed and strategic decisions that enable us to innovate and create exceptional solutions.
                             </p>
-                            <p className="mt-4 ">
-                                ¿Cómo lo hacemos? Implementamos tecnologías avanzadas, procesos eficientes y una cultura orientada a datos que nos ayuda a recopilar, analizar y presentar datos de manera efectiva. Con nuestra Visión BI, estamos transformando datos en estrategia y logrando un futuro más brillante para nuestro negocio.
+                            <p className="mt-4">
+                                How do we do it? We implement advanced technologies, efficient processes, and a data-oriented culture that helps us collect, analyze, and present data effectively. With our BI Vision, we are transforming data into strategy and achieving a brighter future for our business.
                             </p>
-                            <p className="mt-4 ">
-                                Únete a nosotros en este emocionante viaje hacia la toma de decisiones informadas y el éxito empresarial sostenible.
+                            <p className="mt-4">
+                                Join us on this exciting journey toward informed decision-making and sustainable business success.
                             </p>
                         </div>
                     </div>
@@ -42,10 +41,10 @@ function PresentacionPage() {
                                 </div>
                                 <div>
                                     <h3 className="text-dark hover:text-primary mb-4 inline-block text-xl font-semibold sm:text-2xl lg:text-xl xl:text-2xl">
-                                        Nuestra Historia
+                                        Our History
                                     </h3>
                                     <p className="text-body-color text-base">
-                                        Descubre cómo comenzamos y cómo hemos crecido a lo largo de los años. Desde nuestros humildes comienzos hasta convertirnos en lo que somos hoy.
+                                        Discover how we started and how we've grown over the years. From our humble beginnings to what we are today.
                                     </p>
                                 </div>
                             </div>
@@ -61,13 +60,12 @@ function PresentacionPage() {
                                 </div>
                                 <div>
                                     <h3 className="text-dark hover:text-primary mb-4 inline-block text-xl font-semibold sm:text-2xl lg:text-xl xl:text-2xl">
-                                        Nuestra Visión y Misión
+                                        Our Vision and Mission
                                     </h3>
                                     <p className="text-body-color text-base">
-                                        Conoce nuestra visión para el futuro y nuestra misión para servir a nuestros clientes y la comunidad. Nos esforzamos por...
+                                        Learn about our vision for the future and our mission to serve our customers and the community. We strive to...
                                     </p>
                                 </div>
-
                             </div>
                         </div>
                         <div className="w-full px-4 md:w-1/2 lg:w-1/3">
@@ -81,20 +79,19 @@ function PresentacionPage() {
                                 </div>
                                 <div>
                                     <h3 className="text-dark hover:text-primary mb-4 inline-block text-xl font-semibold sm:text-2xl lg:text-xl xl:text-2xl">
-                                        Nuestros Valores
+                                        Our Values
                                     </h3>
                                     <p className="text-body-color text-base">
-                                        En nuestra empresa, nos guían principios fundamentales. Descubre cuáles son nuestros valores y cómo los aplicamos en todo lo que hacemos.
+                                        In our company, fundamental principles guide us. Discover what our values are and how we apply them in everything we do.
                                     </p>
                                 </div>
-
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
         </div>
-    )
+    );
 }
 
-export default PresentacionPage;
+export default PresentationPage;

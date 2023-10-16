@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Chart } from "react-google-charts";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router";
@@ -40,7 +40,7 @@ export default function DashboardPage() {
   };
 
   const transformDataForSalesByMonth = () => {
-    const chartData = [["Mes", "Valor Total"]];
+    const chartData = [["Month", "Total value"]];
     const monthlySales = {};
 
     for (let i = 0; i < csvData.length; i++) {
@@ -64,7 +64,7 @@ export default function DashboardPage() {
   };
 
   const transformDataForChart = () => {
-    const chartData = [["Fecha", "Valor Total"]];
+    const chartData = [["Date", "Total value"]];
 
     for (let i = 0; i < csvData.length; i++) {
       const rowData = csvData[i];
@@ -77,7 +77,7 @@ export default function DashboardPage() {
   };
 
   const transformDataForSalesByState = () => {
-    const chartData = [["Estado", "Cantidad de Ventas"]];
+    const chartData = [["State", "Sales Quantity"]];
     const stateSales = {};
 
     for (let i = 0; i < csvData.length; i++) {
@@ -103,49 +103,47 @@ export default function DashboardPage() {
       {dataAvailable ? (
         <div>
           <Chart
+            chartType="LineChart"
+            width="100%"
+            height="400px"
+            data={transformDataForChart()}
+            options={{
+              hAxis: {
+                title: "Date",
+              },
+              vAxis: {
+                title: "Total Value",
+              },
+              series: {
+                1: { curveType: "function" },
+              },
+            }}
+          />
+          <Chart
             chartType="ColumnChart"
             width="100%"
             height="400px"
             data={transformDataForSalesByMonth()}
             options={{
-              title: "Ventas por Mes",
-              hAxis: { title: "Mes" },
-              vAxis: { title: "Valor Total" },
+              title: "Sales per Month",
+              hAxis: { title: "Month" },
+              vAxis: { title: "Total Value" },
             }}
           />
-          <Chart
-          chartType="LineChart"
-          width="100%"
-          height="400px"
-          data={transformDataForChart()}
-          options={{
-            hAxis: {
-              title: "Fecha",
-            },
-            vAxis: {
-              title: "Valor Total",
-            },
-            series: {
-              1: { curveType: "function" },
-            },
-          }}
-        />
-    
-
           <Chart
             chartType="BarChart"
             width="100%"
             height="400px"
             data={transformDataForSalesByState()}
             options={{
-              title: "Cantidad de Ventas por Estado",
-              hAxis: { title: "Estado" },
-              vAxis: { title: "Cantidad de Ventas" },
+              title: "Sales Quantity by State",
+              hAxis: { title: "State" },
+              vAxis: { title: "Sales Quantity" },
             }}
           />
         </div>
       ) : (
-        <p>Se requieren datos</p>
+        <p>Data is required</p>
       )}
     </div>
   );

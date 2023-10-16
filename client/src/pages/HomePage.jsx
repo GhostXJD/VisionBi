@@ -87,7 +87,7 @@ function HomePage() {
         try {
             const response = await createCsv(formData);
             console.log("Archivo CSV subido con éxito:", response);
-            getCsvs();
+            getCsv();
         } catch (error) {
             console.error("Error al subir el archivo CSV:", error);
         }
@@ -99,7 +99,7 @@ function HomePage() {
                 <h1>homepage</h1>
                 <form onSubmit={onSubmit}>
                     <Button component="label" variant="contained" startIcon={<CloudUploadIcon />}>
-                        Upload CSV
+                        Attach CSV
                         <VisuallyHiddenInput
                             type="file"
                             name="archivoCSV"
@@ -109,14 +109,14 @@ function HomePage() {
                         />
                     </Button>
                     <div className='p-2'>
-                        <Button type="submit" variant="contained" color="success">Subir CSV</Button>
+                        <Button type="submit" variant="contained" color="success">Upload CSV</Button>
                     </div>
                 </form>
             </div>
 
             {/* Mostrar los datos del CSV en una tabla */}
             <div>
-                <h2>Contenido del archivo CSV:</h2>
+                <h2>CSV file content:</h2>
                 <Paper elevation={3} style={{ height: 550, width: '100%' }}>
                     <DataGrid
                         rows={csvData.map((row, rowIndex) => ({

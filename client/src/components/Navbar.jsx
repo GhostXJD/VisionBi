@@ -126,7 +126,7 @@ export default function PersistentDrawerLeft({ children, hiddenRoutes }) {
                             </IconButton>
 
                             <li className={`text-center px-9 py-10 font-bold text-gray-500  dark:text-white `}>
-                                Bienvenido {usuario.nombre}!
+                                Welcome {usuario.nombre}!
                             </li>
 
                             <div className='ml-auto'>
