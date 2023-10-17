@@ -1,5 +1,45 @@
 import csvDato from '../models/csvDato.model.js';
+import * as tf from '@tensorflow/tfjs-node' // Usa '@tensorflow/tfjs-node' para Node.js
+import Papa from 'papaparse';
 
+const lstmModelPath = '../python/modelo_lstm.h5';
+
+export const predictFromCSV = async (req, res) => {
+    try {
+
+        const modelo = await tf.loadLayersModel(lstmModelPath).catch((error) => {
+            console.error('Error al cargar el modelo:', error);
+            return; 
+        });
+        if (!modelo) {
+            return res.status(500).json({ message: 'Error al cargar el modelo' });
+        }
+        const { company } = req.params;
+        const csvDatoRecord = await getCsvDatoByCompany(company);
+
+        if (!csvDatoRecord) {
+            return res.status(404).json({ message: 'Registro de CSV no encontrado' });
+        }
+
+        const csvDataText = csvDatoRecord.archivoCSV.toString('utf-8');
+
+        // Analizar los datos CSV con papaparse y convertirlos en un formato adecuado
+        const parsedData = Papa.parse(csvDataText, { header: true, dynamicTyping: true });
+        // Realizar predicciones con el modelo LSTM
+        const predictions = modelo.predict(parsedData.data);
+
+        // Devolver las predicciones como respuesta
+        res.json({ predictions });
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ message: 'Error en la predicción' });
+    }
+};
+
+// Función para obtener el archivo CSV por el nombre de la compañía SOLO PARA OCUPAR PARA LA FUNCION DE PREDECIR
+const getCsvDatoByCompany = async (company) => {
+    return await csvDato.findOne({ company });
+};
 
 export const getCsvDatos = async (req, res) => {
     try {
