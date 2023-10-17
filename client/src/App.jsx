@@ -4,6 +4,7 @@ import { CsvProvider } from './context/CsvContext';
 import { ThemeProvider } from './context/ThemeContext';
 import ProtectedRoute from './ProtectedRoute'
 import Navbar from './components/Navbar'
+import Footer from './components/footer';
 
 // Rutas Publicas
 import PresentacionPage from './pages/PresentacionPage'
@@ -25,6 +26,7 @@ import ListarEmpleadosPage from './pages/ListarEmpleadosPage';
 
 function App() {
   const hiddenRoutes = ['/login', '/registro']
+  const hiddenRoutesFooter = ['/login', '/registro','/inicio','/dashboard','/perfil','/perfil/ChangePassword','/ListarUsuarios','/RegistrarEmpleado','/ListarEmpleados']
   return (
     <AuthProvider>
       <ThemeProvider>
@@ -60,6 +62,7 @@ function App() {
                 </Routes>
               </main>
             </Navbar>
+            <Footer hiddenRoutes={hiddenRoutesFooter}/>
           </CsvProvider>
         </BrowserRouter>
       </ThemeProvider>
