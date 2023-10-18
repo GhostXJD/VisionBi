@@ -671,3 +671,69 @@ li{
 	font-family: 'Poppins', sans-serif;
 	
 }
+/* ESTILOS DE PIE DE PÁGINA */
+.footer {
+    background-color: #101010;
+    background-size: cover;
+    background-position: center;
+}
+
+.footer .box-footer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+    gap: 3rem;
+}
+
+.footer .box-footer .box h3 {
+    color: #8F3C8A;
+    font-size: 2.5rem;
+    padding-bottom: 2rem;
+}
+
+.footer .box-footer .box a {
+    color: white;
+    font-size: 1.5rem;
+    padding-bottom: 1.5rem;
+    display: block;
+}
+
+.footer .box-footer .box a i {
+    color: #8F3C8A;
+    padding-right: .5rem;
+    transition: .2s linear;
+}
+
+.footer .box-footer .box a:hover i {
+    padding-right: 2rem;
+}
+
+.footer .credit {
+    text-align: center;
+    padding-top: 3rem;
+    margin-top: 3rem;
+    border-top: .1rem solid var(--light-white);
+    font-size: 2rem;
+    color: white;
+}
+
+.footer .credit span {
+    color: #8F3C8A;
+    font-size: 30px;
+}
+
+*{
+		font-family: 'Poppins', sans-serif;
+}
+
+/* ESTILOS DE SCROLLBAR */
+html::-webkit-scrollbar {
+    width: 1rem;
+}
+
+html::-webkit-scrollbar-track {
+    background-color: var(--white);
+}
+
+html::-webkit-scrollbar-thumb {
+    background-color: #8F3C8A;
+}

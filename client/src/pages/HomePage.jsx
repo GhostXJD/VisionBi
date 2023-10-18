@@ -126,7 +126,7 @@ function HomePage() {
                         columns={csvData.length > 0 ? Object.keys(csvData[0]).map((header) => ({
                             field: header,
                             headerName: header,
-                            width: 150,
+                            flex: 1,
                         })) : []}
                         pageSize={5}
                     />
