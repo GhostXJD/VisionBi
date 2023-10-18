@@ -10,7 +10,12 @@ export default function DashboardPage() {
   const { isAuthenticated, usuario } = useAuth();
   const [csvData, setCsvData] = useState([]);
   const [dataAvailable, setDataAvailable] = useState(false);
+  const [selectedYear, setSelectedYear] = useState(""); // Estado para el año seleccionado
 
+  const handleYearChange = (event) => {
+    const year = event.target.value;
+    setSelectedYear(year);
+  };
   useEffect(() => {
     if (!isAuthenticated) navigate("/inicio");
   }, [isAuthenticated]);
@@ -27,7 +32,16 @@ export default function DashboardPage() {
       Papa.parse(response.data, {
         complete: (parsedData) => {
           const data = parsedData.data;
-          setCsvData(data);
+
+          // Filtra los datos por el año seleccionado
+          const filteredData = selectedYear
+            ? data.filter((rowData) => {
+              const fecha = new Date(rowData.date);
+              return fecha.getFullYear().toString() === selectedYear;
+            })
+            : data;
+
+          setCsvData(filteredData);
           setDataAvailable(true);
         },
         header: true,
@@ -38,7 +52,18 @@ export default function DashboardPage() {
       setDataAvailable(false);
     }
   };
-  const Chartes = () => {
+
+  const filterDataByYear = () => {
+    if (!selectedYear) return csvData;
+    return csvData.filter((rowData) => {
+      const fecha = new Date(rowData.date);
+      return fecha.getFullYear().toString() === selectedYear;
+    });
+  };
+
+  const Original = () => {
+    const csvData = filterDataByYear(); // Filtra por año seleccionado
+
     const chartData = [["Date", "Total value"]];
 
     for (let i = 0; i < csvData.length; i++) {
@@ -51,24 +76,33 @@ export default function DashboardPage() {
     return chartData;
   };
 
+  // Función para obtener el top 10 de categorías con la mayor cantidad de ventas
   const RevenueByCategory = () => {
-    const chartData = [["Categpry", "Revenue"]];
+    const csvData = filterDataByYear(); // Filtra por año seleccionado
+
+    const chartData = [["Category", "Sales Quantity"]];
     const categorySales = {};
 
     for (let i = 0; i < csvData.length; i++) {
       const rowData = csvData[i];
       const category = rowData.category;
-      const valorTotal = rowData.quantity * rowData.price;
 
       if (categorySales[category]) {
-        categorySales[category] += valorTotal;
+        categorySales[category]++;
       } else {
-        categorySales[category] = valorTotal;
+        categorySales[category] = 1;
       }
     }
 
+    // Ordena las categorías por cantidad de ventas en orden descendente
+    const sortedCategories = Object.keys(categorySales).sort(
+      (a, b) => categorySales[b] - categorySales[a]
+    );
 
-    for (const category in categorySales) {
+    // Toma solo las 10 primeras categorías
+    const top10Categories = sortedCategories.slice(0, 10);
+
+    for (const category of top10Categories) {
       chartData.push([category, categorySales[category]]);
     }
 
@@ -76,6 +110,8 @@ export default function DashboardPage() {
   };
 
   const SalesByNeighborhood = () => {
+    const csvData = filterDataByYear(); // Filtra por año seleccionado
+
     const chartData = [["Neighborhood", "Sales Quantity"]];
     const neighborhoodSales = {};
 
@@ -105,19 +141,24 @@ export default function DashboardPage() {
     return chartData;
   };
 
-  const SalesTrend = () => {
+  const SalesTrendOverTime = (selectedMonth) => {
+    const csvData = filterDataByYear(); // Filtra por año seleccionado
+
     const chartData = [["Date", "Sales Quantity"]];
     const salesByDate = {};
 
     for (let i = 0; i < csvData.length; i++) {
       const rowData = csvData[i];
-      const fecha = new Date(rowData.date).toLocaleDateString(); // Ajusta el formato de fecha según tus datos
+      const fecha = new Date(rowData.date);
+      const month = fecha.getMonth() + 1;
       const valorTotal = rowData.quantity * rowData.price;
 
-      if (salesByDate[fecha]) {
-        salesByDate[fecha] += valorTotal;
-      } else {
-        salesByDate[fecha] = valorTotal;
+      if (selectedMonth === "" || month.toString() === selectedMonth) { // Filtrar por mes seleccionado
+        if (salesByDate[fecha.toLocaleDateString()]) {
+          salesByDate[fecha.toLocaleDateString()] += valorTotal;
+        } else {
+          salesByDate[fecha.toLocaleDateString()] = valorTotal;
+        }
       }
     }
 
@@ -129,13 +170,21 @@ export default function DashboardPage() {
   };
 
   const SalesByMonth = () => {
+    const csvData = filterDataByYear(); // Filtra por año seleccionado
+
     const chartData = [["Month", "Total value"]];
     const monthlySales = {};
+
+    // Array de nombres de meses
+    const monthNames = [
+      "January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
 
     for (let i = 0; i < csvData.length; i++) {
       const rowData = csvData[i];
       const fecha = new Date(rowData.date);
-      const month = fecha.getMonth() + 1;
+      const month = fecha.getMonth(); // Obtén el número del mes (0-11)
       const valorTotal = rowData.quantity * rowData.price;
 
       if (monthlySales[month]) {
@@ -146,13 +195,16 @@ export default function DashboardPage() {
     }
 
     for (const month in monthlySales) {
-      chartData.push([month.toString(), monthlySales[month]]);
+      chartData.push([monthNames[parseInt(month)], monthlySales[month]]);
     }
 
     return chartData;
   };
 
+
   const SalesByState = () => {
+    const csvData = filterDataByYear(); // Filtra por año seleccionado
+
     const chartData = [["State", "Sales Quantity"]];
     const stateSales = {};
 
@@ -173,94 +225,141 @@ export default function DashboardPage() {
 
     return chartData;
   };
+  const [selectedMonth, setSelectedMonth] = useState(""); // Estado para el mes seleccionado
+
+  const handleMonthChange = (event) => {
+    const month = event.target.value;
+    setSelectedMonth(month);
+  };
+
+
 
   return (
     <div>
+      <div>
+        <select
+          className="dark:text-black"
+          value={selectedYear}
+          onChange={(event) => setSelectedYear(event.target.value)}
+        >
+          <option value="">Select a Time</option>
+          {/* Agrega opciones para cada año presente en tus datos CSV */}
+          {csvData
+            .map((rowData) => new Date(rowData.date).getFullYear())
+            .filter((value, index, self) => self.indexOf(value) === index)
+            .map((year) => (
+              <option key={year} value={year}>
+                {year}
+              </option>
+            ))}
+        </select>
+      </div>
       {dataAvailable ? (
-        <div>
-          <Chart
-            chartType="LineChart"
-            width="100%"
-            height="400px"
-            data={Chartes()}
-            options={{
-              hAxis: {
-                title: "Date",
-              },
-              vAxis: {
-                title: "Total Value",
-              },
-              series: {
-                1: { curveType: "function" },
-              },
-            }}
-          />
-          <h1>REVENUES BY CATEGORY</h1>
-          <Chart
-            chartType="BarChart"
-            width="100%"
-            height="400px"
-            data={RevenueByCategory()}
-            options={{
-              title: "",
-              hAxis: { title: "Revenue" },
-              vAxis: { title: "Category" },
-            }}
-          />
-          <h1>NEIGHBORHOOD SALES</h1>
 
-          <Chart
-            chartType="BarChart"
-            width="100%"
-            height="400px"
-            data={SalesByNeighborhood()}
-            options={{
-              title: "",
-              hAxis: { title: "Sales Quantity" },
-              vAxis: { title: "Neighborhood" },
-            }}
-          />
-          <h1>Sales Trend Over Time</h1>
-          <Chart
-            chartType="LineChart"
-            width="100%"
-            height="400px"
-            data={SalesTrend()}
-            options={{
-              title: "",
-              hAxis: { title: "Fecha" },
-              vAxis: { title: "Cantidad de Ventas" },
-            }}
-          />
+        selectedYear ? (
+          <div>
+            <Chart
+              chartType="LineChart"
+              width="100%"
+              height="400px"
+              data={Original()}
+              options={{
+                hAxis: {
+                  title: "Date",
+                },
+                vAxis: {
+                  title: "Total Value",
+                },
+                series: {
+                  1: { curveType: "function" },
+                },
+              }}
+            />
+            <h1>TOP 10 REVENUES BY CATEGORY</h1>
+            <Chart
+              chartType="BarChart"
+              width="100%"
+              height="800px"
+              data={RevenueByCategory()}
+              options={{
+                title: "",
+                hAxis: { title: "Revenue" },
+                vAxis: { title: "Category" },
+              }}
+            />
+            <h1>TOP 10 NEIGHBORHOOD SALES</h1>
 
-          <h1>monthly sales</h1>
-          <Chart
-            chartType="ColumnChart"
-            width="100%"
-            height="400px"
-            data={SalesByMonth()}
-            options={{
-              title: "",
-              hAxis: { title: "Month" },
-              vAxis: { title: "Total Value" },
-            }}
-          />
-          <h1 className="font-normal">Sales Quantity by State</h1>
-          <Chart
-            chartType="BarChart"
-            width="100%"
-            height="400px"
-            data={SalesByState()}
-            options={{
-              title: "",
-              hAxis: { title: "Sales Quantity" },
-              vAxis: { title: "State" },
-            }}
-          />
-        </div>
+            <Chart
+              chartType="BarChart"
+              width="100%"
+              height="400px"
+              data={SalesByNeighborhood()}
+              options={{
+                title: "",
+                hAxis: { title: "Sales Quantity" },
+                vAxis: { title: "Neighborhood" },
+              }}
+            />
+            <h1>Sales Trend Over Time</h1>
+            <select className="dark:text-black" value={selectedMonth} onChange={handleMonthChange}>
+              <option value="">Select a Month</option>
+              <option value="1">January</option>
+              <option value="2">February</option>
+              <option value="3">March</option>
+              <option value="4">April</option>
+              <option value="5">May</option>
+              <option value="6">June</option>
+              <option value="7">July</option>
+              <option value="8">August</option>
+              <option value="9">September</option>
+              <option value="10">October</option>
+              <option value="11">November</option>
+              <option value="12">December</option>
+              {/* Agrega más meses según tus necesidades */}
+            </select>
+            <Chart
+              chartType="LineChart"
+              width="100%"
+              height="400px"
+              data={SalesTrendOverTime(selectedMonth)} // Pasa el mes seleccionado a la función
+              options={{
+                title: "",
+                hAxis: { title: "Date" },
+                vAxis: { title: "Sales Quantity" },
+              }}
+            />
+
+            <h1>monthly sales</h1>
+            <Chart
+              chartType="ColumnChart"
+              width="100%"
+              height="400px"
+              data={SalesByMonth()}
+              options={{
+                title: "",
+                hAxis: { title: "Month" },
+                vAxis: { title: "Total Value" },
+              }}
+            />
+            <h1 className="font-normal">Sales Quantity by State</h1>
+            <Chart
+              chartType="BarChart"
+              width="100%"
+              height="400px"
+              data={SalesByState()}
+              options={{
+                title: "",
+                hAxis: { title: "Sales Quantity" },
+                vAxis: { title: "State" },
+              }}
+            />
+          </div>
+        ) : (
+          <h1 className="text-center">Please select a time</h1>
+        )
       ) : (
         <h1 className="text-center">Data is required</h1>
       )}
     </div>
   );
-}
+}  
