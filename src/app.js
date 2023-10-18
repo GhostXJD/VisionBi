@@ -10,6 +10,9 @@ import companyRoutes from './routes/company.routes.js';
 
 const app = express();
 
+// Define __dirname en el ámbito del módulo principal
+const __dirname = new URL(import.meta.url).pathname;
+
 app.use(cors({
     origin: 'http://localhost:5173',
     credentials: true

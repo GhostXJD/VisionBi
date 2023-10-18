@@ -1,7 +1,7 @@
 import multer from 'multer';
 import { Router } from "express";
 import { authRequired } from "../middlewares/validateToken.js";
-import { getCsvDatos, getCsvDato, createCsvDato, deleteCsvDato, updateCsvDato, predictFromCSV } from "../controllers/csvDatos.controllers.js";
+import { getCsvDatos, getCsvDato, createCsvDato, deleteCsvDato, updateCsvDato, getPredict } from "../controllers/csvDatos.controllers.js";
 
 const router = Router();
 
@@ -14,6 +14,6 @@ router.post("/csvDatos", authRequired, upload.single('archivoCSV'), createCsvDat
 router.delete("/csvDatos/:id", authRequired, deleteCsvDato);
 router.put("/csvDatos/:id", authRequired, updateCsvDato);
 
-router.get("/predict/:company", predictFromCSV)
+router.get("/predict/:company", getPredict)
 
 export default router;
