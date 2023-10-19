@@ -36,7 +36,7 @@ return (
                     <a href="#"> <i><InstagramIcon /></i> @visionBI </a>
                 </div>
             </div>
-            <div class="credit"> created by <span>visionBI</span> | all right reserved </div>
+            <div class="credit"> &copy; created by <span>visionBI</span> | all right reserved </div>
         </section>
     </div>
 )

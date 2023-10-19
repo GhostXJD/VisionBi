@@ -230,14 +230,16 @@ export default function PersistentDrawerLeft({ children, hiddenRoutes }) {
                     ) : (
                         <>
                             <div className='ml-auto'>
-                                <li className="bg-[#dbb6ee] px-3 py-1 rounded-lg h-8 text-white">
+                                <li className="bg-[#8F3C8A] px-3 py-1 rounded-lg h-8 text-white">
                                     <Link to='/login' >Sign in</Link>
                                 </li>
                             </div>
-                            <li className="bg-[#b57edc] px-3 py-1  h-8 rounded-lg text-white">
+
+                            <li hidden className="bg-[#b57edc] px-3 py-1  h-8 rounded-lg text-white">
                                 <Link to='/registro' >Sign up</Link>
                             </li>
                             <button
+                                hidden
                                 className={`text-center px-3 py-1 h-8 bg-[#8F3C8A] rounded-3xl hover:bg-[#4b1c71]  dark:bg-[#8F3C8A] dark:hover:bg-[#b57edc]`}
                                 onClick={toggleTheme}
                             >
