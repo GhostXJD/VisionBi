@@ -29,15 +29,13 @@ export const getPredict = async (req, res) => {
         // Reorganiza los datos para que coincidan con [batch_size, sequence_length, feature_dim]
         const featureColumns = ['order', 'state', 'neighborhood', 'value', 'quantity', 'category', 'gender', 'skuValue', 'price', 'totalValue']; // Nombres de las columnas de características
 
-        // Filtra solo las columnas de características necesarias
-        const selectedFeatures = parsedData.data.map(row => featureColumns.map(col => row[col]));
+        // Filtra solo las columnas de características necesarias y convierte los valores en enteros
+        const selectedFeatures = parsedData.data.map(row => featureColumns.map(col => parseInt(row[col], 10))); // El segundo argumento de parseInt es la base
 
-        // Normaliza los datos si es necesario
-        const minMaxScaler = new MinMaxScaler(); // Suponiendo que estás utilizando un MinMaxScaler
-        const normalizedData = minMaxScaler.fitTransform(selectedFeatures);
 
         // Convierte los datos en un tensor TensorFlow
-        const inputData = tf.tensor(normalizedData); // Asegúrate de que tus datos sean un array 2D
+        const inputData = tf.tensor(selectedFeatures);
+        // Asegúrate de que tus datos sean un array 2D
 
         // Añade una dimensión de lote si es necesario
         const batchedInputData = inputData.expandDims(0); // Esto agrega una dimensión de lote de tamaño 1
