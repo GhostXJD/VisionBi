@@ -1,8 +1,19 @@
 import csvDato from '../models/csvDato.model.js';
-import { predictFromCSV } from './predict.controller.js';
+import * as tf from '@tensorflow/tfjs-node' // Usa '@tensorflow/tfjs-node' para Node.js
+import Papa from 'papaparse';
 
 export const getPredict = async (req, res) => {
     try {
+
+        const modelPath = 'file://src/python/model.json';
+
+        const model = await tf.loadLayersModel(modelPath).catch((error) => {
+            console.error('Error al cargar el modelo:', error);
+            return;
+        });
+        if (!model) {
+            return res.status(500).json({ message: 'No existe modelo' });
+        }
         const { company } = req.params;
         const csvDatoRecord = await getCsvDatoByCompany(company);
 
@@ -11,22 +22,40 @@ export const getPredict = async (req, res) => {
         }
 
         const csvDataText = csvDatoRecord.archivoCSV.toString('utf-8');
-        const modelPath = '../python/modelo_lstm.json';
 
-        const predictionResult = await predictFromCSV(modelPath, csvDataText);
+        // Analizar los datos CSV con papaparse y convertirlos en un formato adecuado
+        const parsedData = Papa.parse(csvDataText, { header: true, dynamicTyping: true });
 
-        if (predictionResult.error) {
-            return res.status(500).json({ message: predictionResult.error });
-        }
+        // Reorganiza los datos para que coincidan con [batch_size, sequence_length, feature_dim]
+        const featureColumns = ['order', 'state', 'neighborhood', 'value', 'quantity', 'category', 'gender', 'skuValue', 'price', 'totalValue']; // Nombres de las columnas de características
 
-        res.json({ predictions: predictionResult.predictions });
+        // Filtra solo las columnas de características necesarias
+        const selectedFeatures = parsedData.data.map(row => featureColumns.map(col => row[col]));
+
+        // Normaliza los datos si es necesario
+        const minMaxScaler = new MinMaxScaler(); // Suponiendo que estás utilizando un MinMaxScaler
+        const normalizedData = minMaxScaler.fitTransform(selectedFeatures);
+
+        // Convierte los datos en un tensor TensorFlow
+        const inputData = tf.tensor(normalizedData); // Asegúrate de que tus datos sean un array 2D
+
+        // Añade una dimensión de lote si es necesario
+        const batchedInputData = inputData.expandDims(0); // Esto agrega una dimensión de lote de tamaño 1
+
+        // Realiza la predicción con el modelo
+        const predictions = model.predict(batchedInputData);
+
+        // Convierte las predicciones a un formato que puedas enviar al cliente
+        const result = predictions.arraySync();
+        // Envía las predicciones al cliente
+        res.json({ predictions: result });
     } catch (error) {
-        console.log(error);
+        console.log(error)
         res.status(500).json({ message: 'Error en la predicción' });
     }
 };
 
-// Función para obtener el archivo CSV por el nombre de la compañía SOLO PARA OCUPAR PARA LA FUNCION DE PREDECIR
+// Función para obtener el archivo CSV por el nombre de la compañía SOLO PARA OCUPAR LA FUNCION DE PREDECIR
 const getCsvDatoByCompany = async (company) => {
     return await csvDato.findOne({ company });
 };
