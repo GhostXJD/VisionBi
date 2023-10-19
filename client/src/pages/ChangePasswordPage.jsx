@@ -1,4 +1,4 @@
-//TODO: Agregar diseño al formulario y darkmode
+//TODO: Agregar diseño al formulario
 import bcrypt from 'bcryptjs';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
