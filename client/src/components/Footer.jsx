@@ -17,8 +17,8 @@ return (
             <div class="box-footer">
                 <div class="box">
                     <h3>Contact</h3>
-                    <a href="#"> <i><LocalPhoneRoundedIcon /></i> +56227895411 </a>
-                    <a href="#"> <i><PhoneAndroidRoundedIcon /></i> +56227895411 </a>
+                    <a href="#"> <i><LocalPhoneRoundedIcon /></i> +56 2 2789 5411 </a>
+                    <a href="#"> <i><PhoneAndroidRoundedIcon /></i> +56 9 4245 6139 </a>
                     <a href="#"> <i><EmailRoundedIcon /></i> teamvisionbi@gmail.com </a>
                 </div>
 
