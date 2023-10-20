@@ -30,8 +30,7 @@ export const getPredict = async (req, res) => {
         const featureColumns = ['order', 'state', 'neighborhood', 'value', 'quantity', 'category', 'gender', 'skuValue', 'price', 'totalValue']; // Nombres de las columnas de características
 
         // Filtra solo las columnas de características necesarias y convierte los valores en enteros
-        const selectedFeatures = parsedData.data.map(row => featureColumns.map(col => parseInt(row[col], 10))); // El segundo argumento de parseInt es la base
-
+        const selectedFeatures = parsedData.data.map(row => featureColumns.map(col => parseFloat(row[col], 10))); // El segundo argumento de parseInt es la base
 
         // Convierte los datos en un tensor TensorFlow
         const inputData = tf.tensor(selectedFeatures);
