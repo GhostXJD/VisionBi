@@ -4,16 +4,17 @@ import Papa from 'papaparse';
 
 export const getPredict = async (req, res) => {
     try {
-
         const modelPath = 'file://src/python/model.json';
 
         const model = await tf.loadLayersModel(modelPath).catch((error) => {
             console.error('Error al cargar el modelo:', error);
             return;
         });
+
         if (!model) {
             return res.status(500).json({ message: 'No existe modelo' });
         }
+
         const { company } = req.params;
         const csvDatoRecord = await getCsvDatoByCompany(company);
 
@@ -27,27 +28,30 @@ export const getPredict = async (req, res) => {
         const parsedData = Papa.parse(csvDataText, { header: true, dynamicTyping: true });
 
         // Reorganiza los datos para que coincidan con [batch_size, sequence_length, feature_dim]
-        const featureColumns = ['order', 'state', 'neighborhood', 'value', 'quantity', 'category', 'gender', 'skuValue', 'price', 'totalValue']; // Nombres de las columnas de características
+        const featureColumns = ['order', 'state', 'neighborhood', 'value', 'quantity', 'category', 'gender', 'skuValue', 'price', 'totalValue'];
 
-        // Filtra solo las columnas de características necesarias y convierte los valores en enteros
-        const selectedFeatures = parsedData.data.map(row => featureColumns.map(col => parseFloat(row[col], 10))); // El segundo argumento de parseInt es la base
+        const sequenceLength = 180; // Establece la longitud de la secuencia a 180 para que coincida con lo que espera el modelo
 
-        // Convierte los datos en un tensor TensorFlow
-        const inputData = tf.tensor(selectedFeatures);
-        // Asegúrate de que tus datos sean un array 2D
+        // Crear secuencias de datos
+        const dataSequences = [];
+        for (let i = 0; i < parsedData.data.length - sequenceLength; i++) {
+            const sequence = parsedData.data.slice(i, i + sequenceLength).map(row => featureColumns.map(col => parseFloat(row[col], 10)));
+            dataSequences.push(sequence);
+        }
 
-        // Añade una dimensión de lote si es necesario
-        const batchedInputData = inputData.expandDims(0); // Esto agrega una dimensión de lote de tamaño 1
+        // Convierte las secuencias de datos en tensores
+        const inputData = tf.tensor(dataSequences);
 
         // Realiza la predicción con el modelo
-        const predictions = model.predict(batchedInputData);
+        const predictions = model.predict(inputData);
 
         // Convierte las predicciones a un formato que puedas enviar al cliente
         const result = predictions.arraySync();
+
         // Envía las predicciones al cliente
         res.json({ predictions: result });
     } catch (error) {
-        console.log(error)
+        console.log(error);
         res.status(500).json({ message: 'Error en la predicción' });
     }
 };
