@@ -29,12 +29,42 @@ export const getPredict = async (req, res) => {
 
         // Reorganiza los datos para que coincidan con [batch_size, sequence_length, feature_dim]
         const featureColumns = ['order', 'state', 'neighborhood', 'value', 'quantity', 'category', 'gender', 'skuValue', 'price', 'totalValue'];
-        
+
+        // Filtra solo las columnas necesarias
+        const uniqueStates = [...new Set(parsedData.data.map(row => row['state']))];
+        const uniqueNeighborhoods = [...new Set(parsedData.data.map(row => row['neighborhood']))];
+        const uniqueCategories = [...new Set(parsedData.data.map(row => row['category']))];
+        const uniqueGender = [...new Set(parsedData.data.map(row => row['gender']))];
+
+        const stateMapping = {};
+        const neighborhoodMapping = {};
+        const categoryMapping = {};
+        const genderMapping = {};
+
+        uniqueStates.forEach((state, index) => stateMapping[state] = index);
+        uniqueNeighborhoods.forEach((neighborhood, index) => neighborhoodMapping[neighborhood] = index);
+        uniqueCategories.forEach((category, index) => categoryMapping[category] = index);
+        uniqueGender.forEach((quantity, index) => genderMapping[quantity] = index);
+
         // Filtra solo las columnas necesarias
         const filteredData = parsedData.data.map((row) => {
-            return featureColumns.map((col) => row[col]);
+            return featureColumns.map((col) => {
+                if (col == 'state') {
+                    row[col] = stateMapping[row[col]]
+                }
+                if (col == 'neighborhood') {
+                    row[col] = neighborhoodMapping[row[col]]
+                }
+                if (col == 'category') {
+                    row[col] = categoryMapping[row[col]]
+                }
+                if (col == 'gender') {
+                    row[col] = genderMapping[row[col]]
+                }
+                return row[col]
+            });
         });
-        
+
         const sequenceLength = 180;
 
         // Crear secuencias de datos
