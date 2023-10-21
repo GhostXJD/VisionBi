@@ -10,6 +10,10 @@ import Footer from './components/footer';
 import PresentacionPage from './pages/PresentacionPage'
 import LoginPage from './pages/LoginPage';
 import RegistroPage from './pages/RegistroPage';
+import AboutUs from './pages/AboutUs';
+import Mission from './pages/Mission';
+import Vision from './pages/Vision';
+import ContactUs from './pages/ContactUs';
 
 // Rutas usuarios logueados
 import HomePage from './pages/HomePage';
@@ -40,6 +44,10 @@ function App() {
                   <Route path='/' element={<PresentacionPage />} />
                   <Route path='/login' element={<LoginPage />} />
                   <Route path='/registro' element={<RegistroPage />} />
+                  <Route path='/aboutus' element={<AboutUs />} />
+                  <Route path='/mission' element={<Mission />} />
+                  <Route path='/vision' element={<Vision />} />
+                  <Route path='/contactus' element={<ContactUs />} />
 
                   {/* Rutas usuarios logueados */}
                   <Route element={<ProtectedRoute />}>
