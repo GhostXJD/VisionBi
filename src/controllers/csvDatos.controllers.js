@@ -39,6 +39,22 @@ export const getPredict = async (req, res) => {
             dataSequences.push(sequence);
         }
 
+        // Inicializa variables para almacenar el valor mínimo y máximo.
+        let minValue = Number.POSITIVE_INFINITY;
+        let maxValue = Number.NEGATIVE_INFINITY;
+
+        // Itera a través de los datos para encontrar el valor mínimo y máximo en la columna 'skuValue'.
+        parsedData.data.forEach((row) => {
+            const skuValue = row['skuValue'];
+            if (typeof skuValue === 'number') {
+                minValue = Math.min(minValue, skuValue);
+                maxValue = Math.max(maxValue, skuValue);
+            }
+        });
+
+        console.log('Valor mínimo de skuValue:', minValue);
+        console.log('Valor máximo de skuValue:', maxValue);
+
         // Convierte las secuencias de datos en tensores
         const inputData = tf.tensor(dataSequences);
 
@@ -46,10 +62,18 @@ export const getPredict = async (req, res) => {
         const predictions = model.predict(inputData);
 
         // Convierte las predicciones a un formato que puedas enviar al cliente
-        const result = predictions.arraySync();
+        const scaledPredictions = predictions.arraySync();
+
+        // Realiza el escalado inverso en cada valor de predicción
+        const originalPredictions = scaledPredictions.map((scaledValue) => {
+            return scaledValue.map((value) => {
+                const originalValue = (value - (-1)) / (1 - (-1)) * (maxValue - minValue) + minValue;
+                return originalValue;
+            });
+        });
 
         // Envía las predicciones al cliente
-        res.json({ predictions: result });
+        res.json({ predictions: originalPredictions });
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: 'Error en la predicción' });
