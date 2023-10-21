@@ -66,6 +66,7 @@ li {
 	background-position: 0% 0%;
 	background-repeat: repeat;
 	color: rgb(54, 65, 82);
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); 
 
 	/* Box */
 	height: 708.656px;
@@ -694,7 +695,8 @@ li {
 	gap: 3rem;
 	margin-bottom: 1rem;
 }
-.footer .box-footer .box{
+
+.footer .box-footer .box {
 	margin: auto;
 }
 
@@ -786,7 +788,7 @@ html::-webkit-scrollbar-thumb {
 	align-items: right !important;
 }
 
-.index .index-banner .presentation .index-btn{
+.index .index-banner .presentation .index-btn {
 	font-family: 'Poppins', sans-serif;
 	color: white;
 	background-color: #8F3C8A;
@@ -799,12 +801,12 @@ html::-webkit-scrollbar-thumb {
 	border: 2px solid #8F3C8A;
 }
 
-.index .index-banner .presentation .index-btn:hover{
+.index .index-banner .presentation .index-btn:hover {
 	box-shadow: 0 0 15px #c2bdc2;
 }
 
 
-.services .index-info .box-services{
+.services .index-info .box-services {
 	background-color: #fffdff;
 	margin-left: 1rem;
 	border-radius: 5%;
@@ -812,7 +814,7 @@ html::-webkit-scrollbar-thumb {
 	margin-bottom: 30px;
 }
 
-.services .index-info .box-services:hover{
+.services .index-info .box-services:hover {
 	background-color: #fffdff;
 	margin-left: 1rem;
 	border-radius: 5%;
@@ -820,13 +822,13 @@ html::-webkit-scrollbar-thumb {
 	box-shadow: 0 0 10px #dddcdd;
 }
 
-.services .index-info{
+.services .index-info {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(25rem, 5fr));
 }
 
 
-.services h3{
+.services h3 {
 	color: #8F3C8A;
 	font-size: 4rem;
 	margin-top: 4rem;
@@ -836,7 +838,7 @@ html::-webkit-scrollbar-thumb {
 	text-align: center;
 }
 
-.services .index-info h2{
+.services .index-info h2 {
 	color: #8F3C8A;
 	font-size: 2rem;
 	margin-top: 2rem;
@@ -845,7 +847,8 @@ html::-webkit-scrollbar-thumb {
 	font-weight: bold;
 	text-align: center;
 }
-.services .index-info p{
+
+.services .index-info p {
 	font-weight: bold;
 	text-align: justify;
 	margin-left: 8%;
@@ -853,17 +856,17 @@ html::-webkit-scrollbar-thumb {
 	font-size: 1.1rem;
 }
 
-.services .index-info .services-img{
+.services .index-info .services-img {
 	height: 45%;
 	margin: auto;
 }
 
-.file .index-file{
+.file .index-file {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(25rem, 5fr));
 }
 
-.file h3{
+.file h3 {
 	color: #8F3C8A;
 	font-size: 4rem;
 	margin-top: 4rem;
@@ -874,7 +877,7 @@ html::-webkit-scrollbar-thumb {
 
 }
 
-.file .index-file p{
+.file .index-file p {
 	font-weight: bold;
 	text-align: justify;
 	margin-left: 8%;
@@ -884,7 +887,8 @@ html::-webkit-scrollbar-thumb {
 	margin-top: 2%;
 
 }
-.file .index-file ul{
+
+.file .index-file ul {
 	font-weight: bold;
 	text-align: justify;
 	margin-left: 8%;
@@ -893,39 +897,218 @@ html::-webkit-scrollbar-thumb {
 }
 
 
-.file .index-file .file-img{
+.file .index-file .file-img {
 	height: 50%;
 	margin: auto;
 	margin-top: 10%;
 }
+
 /* FIN ESTILOS DE HOMEPAGE */
 
 /* ESTILOS DE FILTROS */
 
 select-container {
-    display: inline-block;
-    /* Para que los elementos select estén en línea uno al lado del otro */
-    margin-right: 20px;
-    /* Espacio entre los select */
+	display: inline-block;
+	/* Para que los elementos select estén en línea uno al lado del otro */
+	margin-right: 20px;
+	/* Espacio entre los select */
 }
 
 .select-element {
-    width: 5;
-    /* Ancho deseado para los select */
-    padding: 10px;
-    border: 2px solid #ba68c8;
-    /* Estilo del borde */
-    background-color: #f2f2f2;
-    /* Color de fondo */
-    color: #000;
-    /* Color del texto */
-    border-radius: 8px;
+	width: 5;
+	/* Ancho deseado para los select */
+	padding: 10px;
+	border: 2px solid #ba68c8;
+	/* Estilo del borde */
+	background-color: #f2f2f2;
+	/* Color de fondo */
+	color: #000;
+	/* Color del texto */
+	border-radius: 8px;
 }
 
 /* Borde redondeado */
 .select-element:hover {
-    border: 2px solid #8F3C8A;
-    /* Estilo del borde */
+	border: 2px solid #8F3C8A;
+	/* Estilo del borde */
 }
 
 /* FIN ESTILOS DE FILTROS */
+
+/* ESTILOS DE NAVBAR */
+.info-navbar {
+	color: black !important;
+	font-weight: bold;
+	align-items: right;
+	margin-left: 2%;
+}
+
+/* FIN ESTILOS DE NAVBAR */
+
+/* ESTILOS DE ABOUTUS */
+.about .about-banner {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(25rem, 5fr));
+}
+
+.about .about-banner .presentation h3 {
+	color: #8F3C8A;
+	font-size: 3rem;
+	margin-top: 10rem;
+	margin-left: 30%;
+	font-family: 'Poppins', sans-serif;
+	text-transform: uppercase;
+	font-weight: bold;
+	align-items: center;
+
+}
+
+/* FIN ESTILOS DE ABOUTUS */
+
+/* ESTILOS DE MISSION */
+.mission .mission-banner {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(25rem, 5fr));
+}
+
+.mission .about-mission .presentation h3 {
+	color: #8F3C8A;
+	font-size: 3rem;
+	margin-top: 10rem;
+	margin-left: 30%;
+	font-family: 'Poppins', sans-serif;
+	text-transform: uppercase;
+	font-weight: bold;
+	align-items: center;
+
+}
+
+/* FIN ESTILOS DE MISSION */
+
+/* ESTILOS DE VISION */
+.vision .vision-banner {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(25rem, 5fr));
+
+}
+
+.vision .about-vision .presentation h3 {
+	color: #8F3C8A;
+	font-size: 3rem;
+	margin-top: 10rem;
+	margin-left: 30%;
+	font-family: 'Poppins', sans-serif;
+	text-transform: uppercase;
+	font-weight: bold;
+	align-items: center;
+
+}
+
+/* FIN ESTILOS DE VISION */
+
+/* ESTILOS DE ABOUT US */
+.about .about-banner .presentation h3{
+	color: #8F3C8A;
+	font-size: 3rem;
+	margin-top: 4rem;
+	margin-left: 30%;
+	font-family: 'Poppins', sans-serif;
+	text-transform: uppercase;
+	font-weight: bold;
+	align-items: center;
+}
+.about-members {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(15rem, 5fr));
+	margin-top: 2rem;
+}
+
+.about .box-members{
+	margin-top: 2rem;
+}
+
+.about-members .box-members .redes {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(25%, 0.5rem));
+	margin-bottom: 8%;
+	align-items: center;
+    justify-content: center;
+
+}
+
+.about-members .box-members .redes .red-logo{
+	margin: auto;
+}
+
+.about-members .box-members {
+	background-color: #fffdff;
+	border-radius: 5%;
+	box-shadow: 0 0 5px #f3f2f3;
+	align-items: center;
+	margin: auto;
+	margin-bottom: 2rem;
+	
+}
+
+.about-members .box-members:hover {
+	background-color: #fffdff;
+	border-radius: 5%;
+	transform: scale(1.1);
+	box-shadow: 0 0 10px #dddcdd;
+}
+
+.about-info h3 {
+	color: #8F3C8A;
+	font-size: 3rem;
+	margin-top: 5rem;
+	margin-left: 30%;
+	font-family: 'Poppins', sans-serif;
+	text-transform: uppercase;
+	font-weight: bold;
+	align-items: center;
+	margin: center;
+
+}
+
+.about-info .about-members .box-members h2 {
+	color: #8F3C8A;
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+	font-family: 'Poppins', sans-serif;
+	font-weight: bold;
+	text-align: center;
+}
+
+.about-info .about-members .box-members p {
+	font-weight: bold;
+	text-align: center;
+	margin-left: 8%;
+	margin-right: 8%;
+	font-size: 1rem;
+	margin-bottom: 5%;
+	margin-top: 2%;
+}
+
+.about-info .about-members .box-members .avatar{
+	margin: auto;
+	margin-top: 5px;
+}
+
+/* FIN ESTILOS DE ABOUT US */
+
+/* ESTILOS DE INFO */
+.about .about-banner .presentation p {
+	font-weight: bold;
+	text-align: justify;
+	margin-left: 8%;
+	margin-right: 8%;
+	font-size: 1.2rem;
+	margin-bottom: 5%;
+	margin-top: 2%;
+}
+
+/* FIN ESTILOS DE INFO */
+
+/* ESTILOS DE  */
+/*NO BORRAR*/
+/* FIN ESTILOS DE  */

@@ -11,7 +11,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { useTheme } from '../context/ThemeContext';
 import SideMenu from './SideMenu'
-import { Link, useLocation,useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import logo from "../images/visionBI (1).png";
 import { purple } from '@mui/material/colors';
@@ -155,7 +155,7 @@ export default function PersistentDrawerLeft({ children, hiddenRoutes }) {
                                     open={Boolean(anchorEl)}
                                     onClose={handleMenuClose}
                                 >
-                                    <MenuItem onClick={() => { toggleTheme();}}
+                                    <MenuItem onClick={() => { toggleTheme(); }}
                                         className='flex items-center text-center px-4 py-1  h-8'>
                                         <div className="flex items-center space-x-2  mx-auto">
                                             <div>
@@ -182,12 +182,12 @@ export default function PersistentDrawerLeft({ children, hiddenRoutes }) {
                                         </div>
                                     </MenuItem>
 
-                                    <MenuItem  className='text-gray-600 hover:text-[#8F3C8A]' onClick={() => { handleMenuClose(); profile(); }} >
-                                        <AccountCircle className='text-[#8F3C8A]'/> Profile
+                                    <MenuItem className='text-gray-600 hover:text-[#8F3C8A]' onClick={() => { handleMenuClose(); profile(); }} >
+                                        <AccountCircle className='text-[#8F3C8A]' /> Profile
                                     </MenuItem>
 
                                     <MenuItem className='text-gray-600 hover:text-[#8F3C8A]' onClick={() => { handleMenuClose(); logout(); }} >
-                                        <LogoutIcon className='text-[#8F3C8A]'/> Log out
+                                        <LogoutIcon className='text-[#8F3C8A]' /> Log out
                                     </MenuItem>
 
                                 </Menu>
@@ -229,6 +229,21 @@ export default function PersistentDrawerLeft({ children, hiddenRoutes }) {
                         </>
                     ) : (
                         <>
+                            <div className="info-navbar">
+                                <li>
+                                    <Link to='/mission' > Mission</Link>
+                                </li>
+                            </div>
+                            <div  className="info-navbar">
+                                <li>
+                                    <Link to='/vision' > Vision</Link>
+                                </li>
+                            </div>
+                            <div  className="info-navbar">
+                                <li>
+                                    <Link to='/aboutus' > About Us</Link>
+                                </li>
+                            </div>
                             <div className='ml-auto'>
                                 <li className="bg-[#8F3C8A] px-3 py-1 rounded-lg h-8 text-white">
                                     <Link to='/login' >Sign in</Link>
