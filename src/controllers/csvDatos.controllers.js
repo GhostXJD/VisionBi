@@ -29,13 +29,20 @@ export const getPredict = async (req, res) => {
 
         // Reorganiza los datos para que coincidan con [batch_size, sequence_length, feature_dim]
         const featureColumns = ['order', 'state', 'neighborhood', 'value', 'quantity', 'category', 'gender', 'skuValue', 'price', 'totalValue'];
-
-        const sequenceLength = 180; // Establece la longitud de la secuencia a 180 para que coincida con lo que espera el modelo
+        
+        // Filtra solo las columnas necesarias
+        const filteredData = parsedData.data.map((row) => {
+            return featureColumns.map((col) => row[col]);
+        });
+        
+        const sequenceLength = 180;
 
         // Crear secuencias de datos
         const dataSequences = [];
-        for (let i = 0; i < parsedData.data.length - sequenceLength; i++) {
-            const sequence = parsedData.data.slice(i, i + sequenceLength).map(row => featureColumns.map(col => parseFloat(row[col], 10)));
+        for (let i = 0; i < filteredData.length - sequenceLength; i++) {
+            const sequence = filteredData.slice(i, i + sequenceLength).map((row) =>
+                row.map((value) => parseFloat(value, 10))
+            );
             dataSequences.push(sequence);
         }
 
@@ -51,9 +58,6 @@ export const getPredict = async (req, res) => {
                 maxValue = Math.max(maxValue, skuValue);
             }
         });
-
-        console.log('Valor mínimo de skuValue:', minValue);
-        console.log('Valor máximo de skuValue:', maxValue);
 
         // Convierte las secuencias de datos en tensores
         const inputData = tf.tensor(dataSequences);
