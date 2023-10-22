@@ -81,23 +81,26 @@ export default function DashboardPage() {
     }
 
     return (
-      <Chart
-        chartType="LineChart"
-        width="100%"
-        height="400px"
-        data={chartData}
-        options={{
-          hAxis: {
-            title: "Date",
-          },
-          vAxis: {
-            title: "Total Value",
-          },
-          series: {
-            1: { curveType: "function" },
-          },
-        }}
-      />
+      <div>
+        <h1 className="text-center">Original</h1>
+        <Chart
+          chartType="LineChart"
+          width="100%"
+          height="400px"
+          data={chartData}
+          options={{
+            hAxis: {
+              title: "Date",
+            },
+            vAxis: {
+              title: "Total Value",
+            },
+            series: {
+              1: { curveType: "function" },
+            },
+          }}
+        />
+      </div>
     );
   };
 
@@ -129,14 +132,14 @@ export default function DashboardPage() {
 
     return (
       <div>
-        <h1>TOP 10 REVENUES BY CATEGORY</h1>
+        <h1 className="text-center">TOP 10 REVENUES BY CATEGORY</h1>
         <Chart
-          chartType="BarChart"
+          chartType="SteppedAreaChart"
           width="100%"
           height="800px"
           data={chartData}
           options={{
-            title: "",
+            title: "TOP 10 REVENUES BY CATEGORY",
             hAxis: { title: "Revenue" },
             vAxis: { title: "Category" },
           }}
@@ -173,9 +176,9 @@ export default function DashboardPage() {
 
     return (
       <div>
-        <h1>TOP 10 NEIGHBORHOOD SALES</h1>
+        <h1 className="text-center">TOP 10 NEIGHBORHOOD SALES</h1>
         <Chart
-          chartType="BarChart"
+          chartType="Line"
           width="100%"
           height="400px"
           data={chartData}
@@ -215,7 +218,7 @@ export default function DashboardPage() {
 
     return (
       <div>
-        <h1>Sales Trend Over Time</h1>
+        <h1 className="text-center">Sales Trend Over Time</h1>
         <select
           className="select-element"
           value={selectedMonth}
@@ -279,11 +282,11 @@ export default function DashboardPage() {
 
     return (
       <div>
-        <h1>Monthly Sales</h1>
+        <h1 className="text-center">Monthly Sales</h1>
         <Chart
           chartType="ColumnChart"
           width="100%"
-          height="400px"
+          height="600px"
           data={chartData}
           options={{
             title: "",
@@ -317,9 +320,9 @@ export default function DashboardPage() {
 
     return (
       <div>
-        <h1 className="font-normal">Sales Quantity by State</h1>
+        <h1 className="font-normal text-center">Sales Quantity by State</h1>
         <Chart
-          chartType="BarChart"
+          chartType="Scatter"
           width="100%"
           height="400px"
           data={chartData}
@@ -332,7 +335,44 @@ export default function DashboardPage() {
       </div>
     );
   };
-
+  const OrdersByTimeUnit = () => {
+    const csvDataFiltered = useMemo(() => filterAndProcessDataByYear(csvData, selectedYear), [csvData, selectedYear]);
+    const chartData = [["Time Unit", "Number of Orders"]];
+    const ordersByTimeUnit = {};
+  
+    for (let i = 0; i < csvDataFiltered.length; i++) {
+      const rowData = csvDataFiltered[i];
+      const fecha = new Date(rowData.date);
+      const month = fecha.toLocaleDateString('default', { month: 'long' });
+  
+      if (ordersByTimeUnit[month]) {
+        ordersByTimeUnit[month]++;
+      } else {
+        ordersByTimeUnit[month] = 1;
+      }
+    }
+  
+    for (const timeUnit in ordersByTimeUnit) {
+      chartData.push([timeUnit, ordersByTimeUnit[timeUnit]]);
+    }
+  
+    return (
+      <div>
+        <h1 className="text-center">Orders by Month</h1>
+        <Chart
+          chartType="PieChart"
+          width="100%"
+          height="600px"
+          data={chartData}
+          options={{
+            title: "",
+            hAxis: { title: "Time Unit" },
+            vAxis: { title: "Number of Orders" },
+          }}
+        />
+      </div>
+    );
+  };
   const renderSelectedChart = () => {
     if (!selectedYear) {
       return <h1 className="text-center">Please select a year first</h1>;
@@ -349,6 +389,8 @@ export default function DashboardPage() {
       return <SalesByMonth />;
     } else if (selectedChart === "SalesByState") {
       return <SalesByState />;
+    } else if (selectedChart === "OrdersByTimeUnit"){
+      return <OrdersByTimeUnit />;
     }
   };
 
@@ -390,6 +432,7 @@ export default function DashboardPage() {
               <option value="SalesTrendOverTime">Sales Trend Over Time</option>
               <option value="SalesByMonth">Monthly Sales</option>
               <option value="SalesByState">Sales Quantity by State</option>
+              <option value="OrdersByTimeUnit">Orders by Month</option>
             </select>
           </div>
           {selectedChart && renderSelectedChart()}

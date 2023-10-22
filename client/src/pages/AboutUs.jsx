@@ -30,12 +30,9 @@ function AboutUs() {
                         <img src={aboutus} alt="aboutus" className='about-img' />
                     </div>
                 </div>
-
             </div>
+            
             <div className="about-info">
-
-
-
                 <h3>Great team is the key</h3>
                 <div className="about-members">
                     <div className="box-members">
@@ -44,13 +41,13 @@ function AboutUs() {
                         <p>Computer engineering student</p>
                         <div className="redes">
                             <div>
-                                <a href="https://www.instagram.com/mmigueell__/" target="_blank"><SocialIcon className="red-logo" network="instagram" /></a>
+                                <a href="https://www.instagram.com/mmigueell__/" ><SocialIcon className="red-logo" network="instagram" /></a>
                             </div>
                             <div>
-                                <a href="https://github.com/newmoss" target="_blank"><SocialIcon className="red-logo" network="github" /></a>
+                                <a href="https://github.com/newmoss" ><SocialIcon className="red-logo" network="github" /></a>
                             </div>
                             <div>
-                                <a href="https://www.linkedin.com/in/miguelbadilla/" target="_blank"><SocialIcon className="red-logo" network="linkedin" /></a>
+                                <a href="https://www.linkedin.com/in/miguelbadilla/" ><SocialIcon className="red-logo" network="linkedin" /></a>
                             </div>
                         </div>
                     </div>
@@ -60,13 +57,13 @@ function AboutUs() {
                         <p>Computer engineering student</p>
                         <div className="redes">
                             <div>
-                                <a href="https://www.instagram.com/aliensutro/" target="_blank"><SocialIcon network="instagram" /></a>
+                                <a href="https://www.instagram.com/aliensutro/" ><SocialIcon network="instagram" /></a>
                             </div>
                             <div>
-                                <a href="https://github.com/GhostXJD" target="_blank"><SocialIcon network="github" /></a>
+                                <a href="https://github.com/GhostXJD" ><SocialIcon network="github" /></a>
                             </div>
                             <div>
-                                <a href="https://www.linkedin.com/in/javierdiaziturra/" target="_blank"><SocialIcon network="linkedin" /></a>
+                                <a href="https://www.linkedin.com/in/javierdiaziturra/" ><SocialIcon network="linkedin" /></a>
                             </div>
                         </div>
                     </div>
@@ -77,13 +74,13 @@ function AboutUs() {
                         <p>Computer engineering student</p>
                         <div className="redes">
                             <div>
-                                <a href="https://www.instagram.com/steffieess/" target="_blank"><SocialIcon network="instagram" /></a>
+                                <a href="https://www.instagram.com/steffieess/"><SocialIcon network="instagram" /></a>
                             </div>
                             <div>
-                                <a href="https://github.com/steffieess" target="_blank"><SocialIcon network="github" /></a>
+                                <a href="https://github.com/steffieess"><SocialIcon network="github" /></a>
                             </div>
                             <div>
-                                <a href="https://www.linkedin.com/in/est-navarro/" target="_blank"><SocialIcon network="linkedin" /></a>
+                                <a href="https://www.linkedin.com/in/est-navarro/"><SocialIcon network="linkedin" /></a>
                             </div>
                         </div>
                     </div>
@@ -93,13 +90,13 @@ function AboutUs() {
                         <p>Computer engineering student</p>
                         <div className="redes">
                             <div>
-                                <a href="https://instagram.com/http._ign_.rs/" target="_blank"><SocialIcon network="instagram" /></a>
+                                <a href="https://instagram.com/http._ign_.rs/"><SocialIcon network="instagram" /></a>
                             </div>
                             <div>
-                                <a href="https://github.com/GxStyle" target="_blank"><SocialIcon network="github" /></a>
+                                <a href="https://github.com/GxStyle"><SocialIcon network="github" /></a>
                             </div>
                             <div>
-                                <a href="https://cl.linkedin.com/in/ig-ruizs" target="_blank"><SocialIcon network="linkedin" /></a>
+                                <a href="https://cl.linkedin.com/in/ig-ruizs"><SocialIcon network="linkedin" /></a>
                             </div>
                         </div>
                     </div>

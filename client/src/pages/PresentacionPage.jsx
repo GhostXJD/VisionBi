@@ -3,7 +3,6 @@ import comparativas from "../images/comparativas.png";
 import graficos from "../images/graficos.png";
 import predicciones from "../images/predicciones.png";
 import csv from "../images/csv.png";
-import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 
 
@@ -22,7 +21,7 @@ function PresentationPage() {
                                 <Link to='/registro' >JOIN US</Link>    
                         </div>
                     </div>
-                    <div className="presentation-photo">
+                    <div className="">
                         <img src={bannerVBI} alt="bannerVBI" className='banner-img' />
                     </div>
                 </div>
@@ -56,7 +55,7 @@ function PresentationPage() {
                     </div>
                     <div className="box-file">
                         <p>To upload your sales history, you can use a CSV file (Comma-Separated Values) that includes the following information:</p>
-                        <ul> • Purchase Order Number: This field records the unique number associated with each purchase transaction.</ul>
+                        <ul> • OrderNumber: This field records the unique number associated with each purchase transaction.</ul>
                         <ul> • Date: Indicates the date on which the sale occurred.</ul>
 
                         <ul> • Category: Describes the category or type of product sold in that transaction.</ul>
