@@ -38,7 +38,6 @@ function HomePage() {
     }, []);
 
     const getCsv = async () => {
-        console.log("Obteniendo datos del archivo CSV...");
         try {
             const response = await getCsvDatoRequest(usuario.company);
             console.log("Respuesta de la API:", response);
