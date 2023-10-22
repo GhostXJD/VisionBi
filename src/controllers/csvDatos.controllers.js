@@ -4,7 +4,7 @@ import Papa from 'papaparse';
 
 export const getPredict = async (req, res) => {
     try {
-        const modelPath = 'file://src/python/model.json';
+        const modelPath = 'file://src/python/model1.json';
 
         const model = await tf.loadLayersModel(modelPath).catch((error) => {
             console.error('Error al cargar el modelo:', error);
