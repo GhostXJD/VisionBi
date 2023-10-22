@@ -33,6 +33,7 @@ aside {
 }
 
 .css-ngpvd6 {
+	height: 0px !important;
 	background-color: #ffffff;
 }
 
@@ -684,7 +685,7 @@ li {
 
 /* ESTILOS DE PIE DE PÁGINA */
 .footer {
-	background-color: #101010;
+	background-color: #111111;
 	background-size: cover;
 	background-position: center;
 }
@@ -693,7 +694,6 @@ li {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
 	gap: 3rem;
-	margin-bottom: 1rem;
 }
 
 .footer .box-footer .box {
@@ -714,7 +714,7 @@ li {
 .footer .box-footer .box a {
 	color: white;
 	font-size: 1.2rem;
-	padding-bottom: 1.5rem;
+	padding-bottom: 1.1rem;
 	display: block;
 	margin-left: 1rem;
 }
@@ -731,16 +731,15 @@ li {
 
 .footer .credit {
 	text-align: center;
-	padding-top: 3rem;
-	margin-top: 1.5rem;
-	border-top: .1rem solid var(--light-white);
-	font-size: 1.5rem;
+	border-top: 1px solid rgba(255, 255, 255, 0.2); /* Cambiamos el color de la línea superior y la hacemos más visible */
+	border-top: .1rem solid rgba(255, 255, 255, 0.2);
+	font-size: 1.2rem;
 	color: white;
 }
 
 .footer .credit span {
 	color: #8F3C8A;
-	font-size: 30px;
+	font-size: 1.4rem;
 }
 
 * {
@@ -761,9 +760,11 @@ html::-webkit-scrollbar-thumb {
 }
 
 /* ESTILOS DE HOMEPAGE */
+
 .index .index-banner {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(25rem, 5fr));
+
 }
 
 .index .index-banner .presentation h3 {
@@ -783,9 +784,16 @@ html::-webkit-scrollbar-thumb {
 	text-align: justify;
 }
 
-
-.index .index-banner .presentation-photo {
-	align-items: right !important;
+.about-img {
+	align-self: center; /* Centra verticalmente la imagen en su columna */
+	justify-self: end; /* Alinea la imagen a la derecha horizontalmente */
+	margin-left: auto; /* Elimina el margen de la imagen */
+}
+.banner-img{
+	
+	position: absolute; /* Permite un posicionamiento absoluto */
+	right: 0; /* Alinea la imagen a la derecha del contenedor */
+	top: 1;/* Elimina el margen de la imagen *//* Elimina el margen de la imagen */
 }
 
 .index .index-banner .presentation .index-btn {
@@ -830,7 +838,7 @@ html::-webkit-scrollbar-thumb {
 
 .services h3 {
 	color: #8F3C8A;
-	font-size: 4rem;
+	font-size: 3rem;
 	margin-top: 4rem;
 	font-family: 'Poppins', sans-serif;
 	text-transform: uppercase;
@@ -868,7 +876,7 @@ html::-webkit-scrollbar-thumb {
 
 .file h3 {
 	color: #8F3C8A;
-	font-size: 4rem;
+	font-size: 3rem;
 	margin-top: 4rem;
 	font-family: 'Poppins', sans-serif;
 	text-transform: uppercase;
