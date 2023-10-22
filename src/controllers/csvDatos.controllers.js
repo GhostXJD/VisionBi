@@ -27,10 +27,10 @@ export const getPredict = async (req, res) => {
         // Analizar los datos CSV con papaparse y convertirlos en un formato adecuado
         const parsedData = Papa.parse(csvDataText, { header: true, dynamicTyping: true });
 
-        // Reorganiza los datos para que coincidan con [batch_size, sequence_length, feature_dim]
+        // Se define un conjunto de nombres de columnas de características que se utilizarán en el análisis posterior.
         const featureColumns = ['order', 'state', 'neighborhood', 'value', 'quantity', 'category', 'gender', 'skuValue', 'price', 'totalValue'];
 
-        // Filtra solo las columnas necesarias
+        // Se crea una serie de mapeos y conjuntos únicos para diferentes columnas de los datos. Estos mapeos se utilizarán para transformar valores categóricos en valores numéricos.
         const uniqueStates = [...new Set(parsedData.data.map(row => row['state']))];
         const uniqueNeighborhoods = [...new Set(parsedData.data.map(row => row['neighborhood']))];
         const uniqueCategories = [...new Set(parsedData.data.map(row => row['category']))];
@@ -65,9 +65,10 @@ export const getPredict = async (req, res) => {
             });
         });
 
+        //Se establece una longitud de secuencia deseada en la variable sequenceLength
         const sequenceLength = 180;
 
-        // Crear secuencias de datos
+        // Se crean secuencias de datos deslizantes con una longitud de sequenceLength. Estas secuencias se utilizan para alimentar el modelo de aprendizaje automático.
         const dataSequences = [];
         for (let i = 0; i < filteredData.length - sequenceLength; i++) {
             const sequence = filteredData.slice(i, i + sequenceLength).map((row) =>
