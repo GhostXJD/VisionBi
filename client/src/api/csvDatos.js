@@ -13,3 +13,5 @@ export const createCsvDatosRequest = (csv) => axios.post("/csvDatos", csv, {head
 export const updateCsvDatosRequest = (id, csv) => axios.put(`/csvDatos/${id}`, csv)
 
 export const deleteCsvDatosRequest = (id) => axios.delete(`/csvDatos/${id}`)
+
+export const getPredictRequest = (company) => axios.get(`/predict/${company}`)

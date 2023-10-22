@@ -2,13 +2,14 @@ import { useEffect, useState, useMemo } from "react";
 import { Chart } from "react-google-charts";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router";
-import { getCsvDatoRequest } from "../api/csvDatos";
+import { getCsvDatoRequest, getPredictRequest } from "../api/csvDatos";
 import Papa from "papaparse";
 
 export default function DashboardPage() {
   const navigate = useNavigate();
   const { isAuthenticated, usuario } = useAuth();
   const [csvData, setCsvData] = useState([]);
+  const [predictData, setPredictData] = useState([]);
   const [dataAvailable, setDataAvailable] = useState(false);
   const [selectedYear, setSelectedYear] = useState("");
   const [selectedChart, setSelectedChart] = useState(null);
@@ -40,8 +41,11 @@ export default function DashboardPage() {
     getCsv(selectedYear);
   }, [selectedYear]);
 
+  useEffect(() => {
+    getPredict();
+  }, []);
+
   const getCsv = async () => {
-    console.log("Obteniendo datos del archivo CSV...");
     try {
       const response = await getCsvDatoRequest(usuario.company);
       console.log("Respuesta de la API:", response);
@@ -60,6 +64,16 @@ export default function DashboardPage() {
     }
   };
 
+  const getPredict = async () => {
+    try {
+      const res = await getPredictRequest(usuario.company);
+      console.log('Predict: ', res.data)
+      setPredictData(res.data);
+    } catch (error) {
+      console.log("Error al predecir", error);
+    }
+  };
+
   // Define una función de utilidad para filtrar y manipular datos por año
   const filterAndProcessDataByYear = (data, selectedYear) => {
     if (!selectedYear) return [];
@@ -71,15 +85,20 @@ export default function DashboardPage() {
 
   const Original = () => {
     const csvDataFiltered = useMemo(() => filterAndProcessDataByYear(csvData, selectedYear), [csvData, selectedYear]);
-    const chartData = [["Date", "Total value"]];
-
+    const chartData = [["Date", "Total Value", "Predicted Value"]];
+  
     for (let i = 0; i < csvDataFiltered.length; i++) {
       const rowData = csvDataFiltered[i];
       const fecha = new Date(rowData.date);
       const valorTotal = rowData.quantity * rowData.price;
-      chartData.push([fecha, valorTotal]);
+  
+      // Encuentra la predicción correspondiente para esta fecha
+      const predictedValues = predictData.predictions[0]; // asumiendo que solo hay una predicción
+      const predictedValue = predictedValues[i]; // predicción para el mismo período de tiempo que los datos originales
+  
+      chartData.push([fecha, valorTotal, predictedValue]);
     }
-
+  
     return (
       <div>
         <h1 className="text-center">Original</h1>
@@ -93,16 +112,17 @@ export default function DashboardPage() {
               title: "Date",
             },
             vAxis: {
-              title: "Total Value",
+              title: "Value",
             },
             series: {
-              1: { curveType: "function" },
+              0: { curveType: "function" },
+              1: { curveType: "function" }, // Esto permite curvas en ambas series (datos originales y predicciones)
             },
           }}
         />
       </div>
     );
-  };
+  };  
 
   const RevenueByCategory = () => {
     const csvDataFiltered = useMemo(() => filterAndProcessDataByYear(csvData, selectedYear), [csvData, selectedYear]);
@@ -339,23 +359,23 @@ export default function DashboardPage() {
     const csvDataFiltered = useMemo(() => filterAndProcessDataByYear(csvData, selectedYear), [csvData, selectedYear]);
     const chartData = [["Time Unit", "Number of Orders"]];
     const ordersByTimeUnit = {};
-  
+
     for (let i = 0; i < csvDataFiltered.length; i++) {
       const rowData = csvDataFiltered[i];
       const fecha = new Date(rowData.date);
       const month = fecha.toLocaleDateString('default', { month: 'long' });
-  
+
       if (ordersByTimeUnit[month]) {
         ordersByTimeUnit[month]++;
       } else {
         ordersByTimeUnit[month] = 1;
       }
     }
-  
+
     for (const timeUnit in ordersByTimeUnit) {
       chartData.push([timeUnit, ordersByTimeUnit[timeUnit]]);
     }
-  
+
     return (
       <div>
         <h1 className="text-center">Orders by Month</h1>
@@ -389,7 +409,7 @@ export default function DashboardPage() {
       return <SalesByMonth />;
     } else if (selectedChart === "SalesByState") {
       return <SalesByState />;
-    } else if (selectedChart === "OrdersByTimeUnit"){
+    } else if (selectedChart === "OrdersByTimeUnit") {
       return <OrdersByTimeUnit />;
     }
   };
