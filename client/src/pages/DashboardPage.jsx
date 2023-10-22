@@ -4,6 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router";
 import { getCsvDatoRequest, getPredictRequest } from "../api/csvDatos";
 import Papa from "papaparse";
+import moment from 'moment';
 
 export default function DashboardPage() {
   const navigate = useNavigate();
@@ -51,7 +52,10 @@ export default function DashboardPage() {
       console.log("Respuesta de la API:", response);
       Papa.parse(response.data, {
         complete: (parsedData) => {
-          const data = parsedData.data;
+          const data = parsedData.data.map((row) => ({
+            ...row,
+            date: moment(row.date).format('YYYY-MM-DD'),
+          }));
           setCsvData(data);
           setDataAvailable(true);
         },
@@ -86,19 +90,19 @@ export default function DashboardPage() {
   const Original = () => {
     const csvDataFiltered = useMemo(() => filterAndProcessDataByYear(csvData, selectedYear), [csvData, selectedYear]);
     const chartData = [["Date", "Total Value", "Predicted Value"]];
-  
+
     for (let i = 0; i < csvDataFiltered.length; i++) {
       const rowData = csvDataFiltered[i];
       const fecha = new Date(rowData.date);
       const valorTotal = rowData.quantity * rowData.price;
-  
+
       // Encuentra la predicción correspondiente para esta fecha
       const predictedValues = predictData.predictions[0]; // asumiendo que solo hay una predicción
       const predictedValue = predictedValues[i]; // predicción para el mismo período de tiempo que los datos originales
-  
+
       chartData.push([fecha, valorTotal, predictedValue]);
     }
-  
+
     return (
       <div>
         <h1 className="text-center">Original</h1>
@@ -122,7 +126,7 @@ export default function DashboardPage() {
         />
       </div>
     );
-  };  
+  };
 
   const RevenueByCategory = () => {
     const csvDataFiltered = useMemo(() => filterAndProcessDataByYear(csvData, selectedYear), [csvData, selectedYear]);

@@ -9,6 +9,8 @@ import { getCsvDatoRequest } from '../api/csvDatos';
 import Papa from 'papaparse';
 import { DataGrid } from '@mui/x-data-grid';
 import Paper from '@mui/material/Paper';
+import moment from 'moment';
+import Swal from 'sweetalert2'
 
 const VisuallyHiddenInput = styled('input')({
     clip: 'rect(0 0 0 0)',
@@ -28,6 +30,7 @@ function HomePage() {
     const { createCsv } = useCsv();
     const [archivoCSV, setArchivoCSV] = useState(null);
     const [csvData, setCsvData] = useState([]);
+    const [hasUploadedFile, setHasUploadedFile] = useState(false);
 
     useEffect(() => {
         if (!isAuthenticated) navigate('/inicio');
@@ -43,13 +46,15 @@ function HomePage() {
             console.log("Respuesta de la API:", response);
             Papa.parse(response.data, {
                 complete: (parsedData) => {
-                    const data = parsedData.data;
+                    const data = parsedData.data.map((row) => ({
+                        ...row,
+                        date: moment(row.date).format('YYYY-MM-DD'),
+                    }));
                     setCsvData(data);
                 },
                 header: true,
                 skipEmptyLines: true,
             });
-
         } catch (error) {
             console.log("Error al obtener los datos:", error);
         }
@@ -65,12 +70,16 @@ function HomePage() {
             const result = event.target.result;
             Papa.parse(result, {
                 complete: (parsedData) => {
-                    const data = parsedData.data;
+                    const data = parsedData.data.map((row) => ({
+                        ...row,
+                        date: moment(row.date).format('YYYY-MM-DD'),
+                    }));
                     setCsvData(data);
                 },
                 header: true,
                 skipEmptyLines: true,
             });
+            setHasUploadedFile(true);
         };
         reader.readAsText(file);
     };
@@ -86,6 +95,14 @@ function HomePage() {
         try {
             const response = await createCsv(formData);
             console.log("Archivo CSV subido con éxito:", response);
+            if  (createCsv(formData)) {
+                Swal.fire({
+                    icon: 'success',
+                    text: 'File upload sucessfuly',
+                    confirmButtonColor: '#8F3C8A',
+                })
+            }
+            setHasUploadedFile(false);
             getCsv();
         } catch (error) {
             console.error("Error al subir el archivo CSV:", error);
@@ -108,7 +125,9 @@ function HomePage() {
                         />
                     </Button>
                     <div className='p-2'>
-                        <Button type="submit" variant="contained" color="success">Upload CSV</Button>
+                        {hasUploadedFile && (
+                            <Button type="submit" variant="contained" color="success">Upload CSV</Button>
+                        )}
                     </div>
                 </form>
             </div>
