@@ -38,7 +38,7 @@ function AboutUs() {
                     <div className="box-members">
                         <Avatar className="avatar" alt="MiguelBadilla" src={MiguelBadilla} sx={{ width: 200, height: 200 }} />
                         <h2>Miguel Badilla</h2>
-                        <p>Computer engineering student</p>
+                        <p className='dark:text-black'>Computer engineering student</p>
                         <div className="redes">
                             <div>
                                 <a href="https://www.instagram.com/mmigueell__/" ><SocialIcon className="red-logo" network="instagram" /></a>
@@ -54,7 +54,7 @@ function AboutUs() {
                     <div className="box-members">
                         <Avatar className="avatar" src={JavierDiaz} alt="JavierDiaz" sx={{ width: 200, height: 200 }} />
                         <h2>Javier Díaz</h2>
-                        <p>Computer engineering student</p>
+                        <p className='dark:text-black'>Computer engineering student</p>
                         <div className="redes">
                             <div>
                                 <a href="https://www.instagram.com/aliensutro/" ><SocialIcon network="instagram" /></a>
@@ -71,7 +71,7 @@ function AboutUs() {
                         <Avatar className="avatar" src={EstefaniNavarro} alt="EstefaniNavarro" sx={{ width: 200, height: 200 }} />
 
                         <h2>Estefani Navarro</h2>
-                        <p>Computer engineering student</p>
+                        <p className='dark:text-black'>Computer engineering student</p>
                         <div className="redes">
                             <div>
                                 <a href="https://www.instagram.com/steffieess/"><SocialIcon network="instagram" /></a>
@@ -87,7 +87,7 @@ function AboutUs() {
                     <div className="box-members">
                         <Avatar className="avatar" src={IgnacioRuiz} alt="IgnacioRuiz" sx={{ width: 200, height: 200 }} />
                         <h2>Ignacio Ruiz</h2>
-                        <p>Computer engineering student</p>
+                        <p className='dark:text-black'>Computer engineering student</p>
                         <div className="redes">
                             <div>
                                 <a href="https://instagram.com/http._ign_.rs/"><SocialIcon network="instagram" /></a>

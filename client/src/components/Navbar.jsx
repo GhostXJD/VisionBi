@@ -110,12 +110,12 @@ export default function PersistentDrawerLeft({ children, hiddenRoutes }) {
             <CssBaseline />
             <AppBar position="fixed" open={open}>
                 <Toolbar>
-                    <Link to='/inicio'>
-                        <img src={logo} alt="Logo" className='logo-img' />
-                    </Link>
+
                     {isAuthenticated ? (
                         <>
-
+                            <Link to='/inicio'>
+                                <img src={logo} alt="Logo" className='logo-img' />
+                            </Link>
                             <IconButton
                                 aria-label="open drawer"
                                 onClick={handleDrawerOpen}
@@ -229,18 +229,21 @@ export default function PersistentDrawerLeft({ children, hiddenRoutes }) {
                         </>
                     ) : (
                         <>
+                        <Link to='/'>
+                        <img src={logo} alt="Logo" className='logo-img' />
+                    </Link>
                             <div className="info-navbar">
-                                <li>
+                                <li className='dark:text-white'>
                                     <Link to='/mission' > Mission</Link>
                                 </li>
                             </div>
-                            <div  className="info-navbar">
-                                <li>
+                            <div className="info-navbar">
+                                <li className='dark:text-white'>
                                     <Link to='/vision' > Vision</Link>
                                 </li>
                             </div>
-                            <div  className="info-navbar">
-                                <li>
+                            <div className="info-navbar">
+                                <li className='dark:text-white'>
                                     <Link to='/aboutus' > About Us</Link>
                                 </li>
                             </div>

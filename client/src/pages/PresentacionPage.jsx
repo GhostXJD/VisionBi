@@ -33,17 +33,17 @@ function PresentationPage() {
                     <div className="box-services">
                         <img src={comparativas} alt="comparativas" className='services-img' />
                         <h2>COMPARE</h2>
-                        <p>We assess your sales goals and compare them against your actual sales figures. Gain a clear understanding of how you're performing in relation to your targets and make data-driven decisions.</p>
+                        <p className='dark:text-black'>We assess your sales goals and compare them against your actual sales figures. Gain a clear understanding of how you're performing in relation to your targets and make data-driven decisions.</p>
                     </div>
                     <div className="box-services">
                         <img src={predicciones} alt="predicciones" className='services-img' />
                         <h2>PREDICT</h2>
-                        <p>Based on your sales history, we generate accurate forecasts for your sales over the next six months. Use this information to plan your operations, adjust your inventory, and take proactive steps to optimize your outcomes.</p>
+                        <p className='dark:text-black'>Based on your sales history, we generate accurate forecasts for your sales over the next six months. Use this information to plan your operations, adjust your inventory, and take proactive steps to optimize your outcomes.</p>
                     </div>
                     <div className="box-services">
                         <img src={graficos} alt="graficos" className='services-img' />
                         <h2>GRAPH</h2>
-                        <p>Visualize the movement of your sales intuitively through interactive graphs. Observe trends, seasonal patterns, and changes in your sales data to make informed and strategic decisions.</p>
+                        <p className='dark:text-black'>Visualize the movement of your sales intuitively through interactive graphs. Observe trends, seasonal patterns, and changes in your sales data to make informed and strategic decisions.</p>
                     </div>
                 </div>
             </div>
