@@ -27,6 +27,15 @@ export const getPredict = async (req, res) => {
         // Analizar los datos CSV con papaparse y convertirlos en un formato adecuado
         const parsedData = Papa.parse(csvDataText, { header: true, dynamicTyping: true });
 
+        const data = parsedData.data;
+
+        if (data.length < 181) {
+            return res.status(400).json({ message: 'No hay suficientes filas para predecir' });
+        }
+
+        const startIndex = data.length - 181;
+        const dataForPrediction = data.slice(startIndex);
+
         // Se define un conjunto de nombres de columnas de características que se utilizarán en el análisis posterior.
         const featureColumns = ['order', 'state', 'neighborhood', 'value', 'quantity', 'category', 'gender', 'skuValue', 'price', 'totalValue'];
 
