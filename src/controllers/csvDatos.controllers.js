@@ -25,16 +25,20 @@ export const getPredict = async (req, res) => {
         const csvDataText = csvDatoRecord.archivoCSV.toString('utf-8');
 
         // Analizar los datos CSV con papaparse y convertirlos en un formato adecuado
-        const parsedData = Papa.parse(csvDataText, { header: true, dynamicTyping: true });
+        const cleanedCsvData = csvDataText.slice(0, -1);
+        const parsedData = Papa.parse(cleanedCsvData, {
+            header: true,
+            dynamicTyping: true,
+            newline: '\r\n'  // Configura el carácter de nueva línea
+        });
 
         const data = parsedData.data;
 
         if (data.length < 181) {
             return res.status(400).json({ message: 'No hay suficientes filas para predecir' });
         }
-
-        const startIndex = data.length - 181;
-        const dataForPrediction = data.slice(startIndex);
+        
+        const dataForPrediction = data.slice(-181).filter(item => item.order !== null);
 
         // Se define un conjunto de nombres de columnas de características que se utilizarán en el análisis posterior.
         const featureColumns = ['order', 'state', 'neighborhood', 'value', 'quantity', 'category', 'gender', 'skuValue', 'price', 'totalValue'];
@@ -56,7 +60,7 @@ export const getPredict = async (req, res) => {
         uniqueGender.forEach((quantity, index) => genderMapping[quantity] = index);
 
         // Filtra solo las columnas necesarias
-        const filteredData = parsedData.data.map((row) => {
+        const filteredData = dataForPrediction.map((row) => {
             return featureColumns.map((col) => {
                 if (col == 'state') {
                     row[col] = stateMapping[row[col]]
@@ -112,7 +116,7 @@ export const getPredict = async (req, res) => {
         const originalPredictions = scaledPredictions.map((scaledValue) => {
             return scaledValue.map((value) => {
                 const originalValue = (value - (-1)) / (1 - (-1)) * (maxValue - minValue) + minValue;
-                return originalValue;
+                return parseInt(originalValue);
             });
         });
 
