@@ -14,6 +14,7 @@ import AboutUs from './pages/AboutUs';
 import Mission from './pages/Mission';
 import Vision from './pages/Vision';
 import ContactUs from './pages/ContactUs';
+import NotFoundPage from './pages/NotFoundPage';
 
 // Rutas usuarios logueados
 import HomePage from './pages/HomePage';
@@ -67,6 +68,9 @@ function App() {
                     <Route path='/RegistrarEmpleado' element={<RegistroEmpleadoPage />} />
                     <Route path='/ListarEmpleados' element={<ListarEmpleadosPage />} />
                   </Route>
+
+                  {/* Pagina no encontrada */}
+                  <Route path="*" element={<NotFoundPage />} />
                 </Routes>
               </main>
             </Navbar>
