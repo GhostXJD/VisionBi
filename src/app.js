@@ -7,7 +7,8 @@ import authRoutes from './routes/auth.routes.js';
 import csvRoutes from './routes/csvDatos.routes.js';
 import usuarioRoutes from './routes/usuarios.routes.js';
 import companyRoutes from './routes/company.routes.js';
-import goalRoutes from './routes/goal.routes.js'
+import goalRoutes from './routes/goal.routes.js';
+import messageRoutes from './routes/message.routes.js';
 
 const app = express();
 
@@ -28,5 +29,6 @@ app.use("/api",csvRoutes);
 app.use("/api",usuarioRoutes);
 app.use("/api", companyRoutes);
 app.use("/api", goalRoutes);
+app.use("/api", messageRoutes);
 
 export default app;
