@@ -97,6 +97,7 @@ function Top10NeighborhoodSales() {
                     text: "Sales Quantity",
                 },
             },
+            colors: ["#8F3C8A"],
         },
         series: [
             {

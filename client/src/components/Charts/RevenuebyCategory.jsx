@@ -99,6 +99,7 @@ function Top10RevenuesByCategory() {
                     text: "Sales Quantity",
                 },
             },
+            colors: ["#8F3C8A"],
         },
         series: [
             {

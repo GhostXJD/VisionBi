@@ -99,6 +99,7 @@ function SalesByMonth() {
                     text: "Total Value",
                 },
             },
+            colors: ["#8F3C8A"],
         },
         series: [
             {

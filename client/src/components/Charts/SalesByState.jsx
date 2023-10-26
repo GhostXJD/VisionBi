@@ -111,6 +111,7 @@ function SalesByState() {
                     title: "",
                     hAxis: { title: "Sales Quantity" },
                     vAxis: { title: "State" },
+                    colors: ["#8F3C8A"],
                 }}
             />
         </div>

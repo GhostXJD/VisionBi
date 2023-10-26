@@ -7,13 +7,21 @@ export function useTheme() {
 }
 
 export function ThemeProvider({ children }) {
-    const [theme, setTheme] = useState('light'); // Establece el tema predeterminado como 'light'
+    // Obtener el tema guardado en localStorage o establecer 'light' como valor predeterminado
+    const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
 
     const toggleTheme = () => {
-        setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
+        // Cambiar el tema entre 'light' y 'dark'
+        const newTheme = theme === 'light' ? 'dark' : 'light';
+
+        // Guardar el nuevo tema en localStorage
+        localStorage.setItem('theme', newTheme);
+
+        setTheme(newTheme);
     };
 
     useEffect(() => {
+        // Aplicar el tema al elemento raíz del documento (html)
         document.documentElement.classList.toggle('dark', theme === 'dark');
     }, [theme]);
 
