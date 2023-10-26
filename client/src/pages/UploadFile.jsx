@@ -112,7 +112,7 @@ function HomePage() {
     return (
         <div>
             <div className='text-center'>
-                <h1>homepage</h1>
+                <h1>Load File</h1>
                 <form onSubmit={onSubmit}>
                     <Button component="label" variant="contained" startIcon={<CloudUploadIcon />}>
                         Attach CSV

@@ -17,7 +17,7 @@ import ContactUs from './pages/ContactUs';
 import NotFoundPage from './pages/NotFoundPage';
 
 // Rutas usuarios logueados
-import HomePage from './pages/HomePage';
+import UploadFile from './pages/UploadFile';
 import Profile from './pages/Profile';
 import ChangePasswordPage from './pages/ChangePasswordPage';
 import DashboardPage from './pages/DashboardPage';
@@ -28,10 +28,17 @@ import ListarUsuariosPage from './pages/ListarUsuariosPage';
 // Rutas representante
 import RegistroEmpleadoPage from './pages/RegistroEmpleadoPage';
 import ListarEmpleadosPage from './pages/ListarEmpleadosPage';
+import RevenueByCategory from './components/Charts/RevenuebyCategory';
+import SalesByNeighborhood from './components/Charts/SalesByNeighborhood';
+import SalesTrendOverTime from './components/Charts/SalesTrendOverTime';
+import SalesByMonth from './components/Charts/SalesByMonth';
+import SalesByState from './components/Charts/SalesByState';
+import OrdersByMonth from './components/Charts/OrdersByMonth';
+
 
 function App() {
   const hiddenRoutes = ['/login', '/registro']
-  const hiddenRoutesFooter = ['/login', '/registro','/inicio','/dashboard','/perfil','/perfil/ChangePassword','/ListarUsuarios','/RegistrarEmpleado','/ListarEmpleados']
+  const hiddenRoutesFooter = ['/orders-by-month','/sales-by-state','/sales-by-month','/sales-trend-over-time','/sales-by-neighborhood','/revenue-by-category','/login', '/registro','/uploadfile','/dashboard','/perfil','/perfil/ChangePassword','/ListarUsuarios','/RegistrarEmpleado','/ListarEmpleados']
   return (
     <AuthProvider>
       <ThemeProvider>
@@ -49,13 +56,20 @@ function App() {
                   <Route path='/mission' element={<Mission />} />
                   <Route path='/vision' element={<Vision />} />
                   <Route path='/contactus' element={<ContactUs />} />
-
+                  
                   {/* Rutas usuarios logueados */}
                   <Route element={<ProtectedRoute />}>
-                    <Route path='/inicio' element={<HomePage />} />
+                    <Route path='/uploadfile' element={<UploadFile />} />
                     <Route path='/perfil' element={<Profile />} />
                     <Route path='/perfil/ChangePassword' element={<ChangePasswordPage />} />
                     <Route path='/dashboard' element={<DashboardPage />} />
+                    {/*Charts*/}
+                    <Route path="/revenue-by-category" element={<RevenueByCategory />} />
+                    <Route path="/sales-by-neighborhood" element={<SalesByNeighborhood />} />
+                    <Route path="/sales-trend-over-time" element={<SalesTrendOverTime />} />
+                    <Route path="/sales-by-month" element={<SalesByMonth />} />
+                    <Route path="/sales-by-state" element={<SalesByState />} />
+                    <Route path="/orders-by-month" element={<OrdersByMonth />} />
                   </Route>
 
                   {/* Rutas Admin */}

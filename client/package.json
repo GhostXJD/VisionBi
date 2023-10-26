@@ -16,6 +16,7 @@
     "@mui/material": "^5.14.13",
     "@mui/styled-engine-sc": "^5.14.12",
     "@tensorflow/tfjs": "^4.11.0",
+    "apexcharts": "^3.44.0",
     "axios": "^1.5.1",
     "js-cookie": "^3.0.5",
     "moment": "^2.29.4",

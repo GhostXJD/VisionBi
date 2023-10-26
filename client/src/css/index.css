@@ -33,7 +33,7 @@ aside {
 }
 
 .css-ngpvd6 {
-	height: 0px !important;
+	height: 77px !important;
 	background-color: #ffffff;
 }
 
@@ -731,8 +731,7 @@ li {
 
 .footer .credit {
 	text-align: center;
-	border-top: 1px solid rgba(255, 255, 255, 0.2); /* Cambiamos el color de la línea superior y la hacemos más visible */
-	border-top: .1rem solid rgba(255, 255, 255, 0.2);
+
 	font-size: 1.2rem;
 	color: white;
 }
@@ -933,8 +932,9 @@ select-container {
 	color: #000;
 	/* Color del texto */
 	border-radius: 8px;
-}
+	margin-top: 10px;
 
+}
 /* Borde redondeado */
 .select-element:hover {
 	border: 2px solid #8F3C8A;

@@ -32,7 +32,7 @@ function LoginPage() {
   }
 
   useEffect(() => {
-    if (isAuthenticated) navigate('/inicio')
+    if (isAuthenticated) navigate('/dashboard');
   }, [isAuthenticated])
 
   const formik = useFormik({

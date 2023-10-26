@@ -5,6 +5,7 @@ import { useNavigate } from "react-router";
 import { getCsvDatoRequest, getPredictRequest } from "../api/csvDatos";
 import Papa from "papaparse";
 import moment from 'moment';
+import ApexCharts from "react-apexcharts";
 
 export default function DashboardPage() {
   const navigate = useNavigate();
@@ -15,6 +16,8 @@ export default function DashboardPage() {
   const [selectedYear, setSelectedYear] = useState("");
   const [selectedChart, setSelectedChart] = useState(null);
   const [selectedMonth, setSelectedMonth] = useState("");
+  const [totalOrders, setTotalOrders] = useState(0);
+  const [totalSales, setTotalSales] = useState(0);
 
   // Para seleccionar año y filtrar evitando colapso
   const handleYearChange = (event) => {
@@ -35,7 +38,27 @@ export default function DashboardPage() {
   };
 
   useEffect(() => {
-    if (!isAuthenticated) navigate("/inicio");
+    // Simulación de tiempo de carga
+    setTimeout(() => {
+      const totalOrders = csvData.length;
+
+      // Dar formato al número total de órdenes con puntos como separadores de miles
+      const formattedTotalOrders = totalOrders.toLocaleString();
+
+      const totalSales = csvData.reduce((total, row) => {
+        return total + row.quantity * row.price;
+      }, 0);
+
+      // Dar formato al monto total con puntos como separadores de miles
+      const formattedTotalSales = totalSales.toLocaleString();
+
+      setTotalOrders(formattedTotalOrders);
+      setTotalSales(formattedTotalSales);
+    }, 1000); // Simulación de tiempo de carga
+  }, [csvData]);
+
+  useEffect(() => {
+    if (!isAuthenticated) navigate("/dashboard");
   }, [isAuthenticated]);
 
   useEffect(() => {
@@ -130,7 +153,6 @@ export default function DashboardPage() {
 
   const RevenueByCategory = () => {
     const csvDataFiltered = useMemo(() => filterAndProcessDataByYear(csvData, selectedYear), [csvData, selectedYear]);
-    const chartData = [["Category", "Sales Quantity"]];
     const categorySales = {};
 
     for (let i = 0; i < csvDataFiltered.length; i++) {
@@ -150,31 +172,42 @@ export default function DashboardPage() {
 
     const top10Categories = sortedCategories.slice(0, 10);
 
-    for (const category of top10Categories) {
-      chartData.push([category, categorySales[category]]);
-    }
+    // Prepare data for ApexCharts
+    const chartData = {
+      options: {
+        chart: {
+          type: "area",
+          height: 400,
+        },
+        xaxis: {
+          categories: top10Categories,
+          title: {
+            text: "Category",
+          },
+        },
+        yaxis: {
+          title: {
+            text: "Sales Quantity",
+          },
+        },
+      },
+      series: [
+        {
+          name: "Sales Quantity",
+          data: top10Categories.map((category) => categorySales[category]),
+        },
+      ],
+    };
 
     return (
       <div>
         <h1 className="text-center">TOP 10 REVENUES BY CATEGORY</h1>
-        <Chart
-          chartType="SteppedAreaChart"
-          width="100%"
-          height="800px"
-          data={chartData}
-          options={{
-            title: "TOP 10 REVENUES BY CATEGORY",
-            hAxis: { title: "Revenue" },
-            vAxis: { title: "Category" },
-          }}
-        />
+        <ApexCharts options={chartData.options} series={chartData.series} type="area" height={400} />
       </div>
     );
   };
-
   const SalesByNeighborhood = () => {
     const csvDataFiltered = useMemo(() => filterAndProcessDataByYear(csvData, selectedYear), [csvData, selectedYear]);
-    const chartData = [["Neighborhood", "Sales Quantity"]];
     const neighborhoodSales = {};
 
     for (let i = 0; i < csvDataFiltered.length; i++) {
@@ -194,31 +227,43 @@ export default function DashboardPage() {
 
     const top10Neighborhoods = sortedNeighborhoods.slice(0, 10);
 
-    for (const neighborhood of top10Neighborhoods) {
-      chartData.push([neighborhood, neighborhoodSales[neighborhood]]);
-    }
+    // Prepare data for ApexCharts
+    const chartData = {
+      options: {
+        chart: {
+          type: "line",
+          height: 400,
+        },
+        xaxis: {
+          categories: top10Neighborhoods,
+          title: {
+            text: "Neighborhood",
+          },
+        },
+        yaxis: {
+          title: {
+            text: "Sales Quantity",
+          },
+        },
+      },
+      series: [
+        {
+          name: "Sales Quantity",
+          data: top10Neighborhoods.map((neighborhood) => neighborhoodSales[neighborhood]),
+        },
+      ],
+    };
 
     return (
       <div>
         <h1 className="text-center">TOP 10 NEIGHBORHOOD SALES</h1>
-        <Chart
-          chartType="Line"
-          width="100%"
-          height="400px"
-          data={chartData}
-          options={{
-            title: "",
-            hAxis: { title: "Sales Quantity" },
-            vAxis: { title: "Neighborhood" },
-          }}
-        />
+        <ApexCharts options={chartData.options} series={chartData.series} type="line" height={400} />
       </div>
     );
   };
 
   const SalesTrendOverTime = () => {
     const csvDataFiltered = useMemo(() => filterAndProcessDataByYear(csvData, selectedYear), [csvData, selectedYear]);
-    const chartData = [["Date", "Sales Quantity"]];
     const salesByDate = {};
 
     for (let i = 0; i < csvDataFiltered.length; i++) {
@@ -236,9 +281,31 @@ export default function DashboardPage() {
       }
     }
 
-    for (const date in salesByDate) {
-      chartData.push([date, salesByDate[date]]);
-    }
+    const chartData = {
+      options: {
+        chart: {
+          type: "line",
+          height: 400,
+        },
+        xaxis: {
+          categories: Object.keys(salesByDate),
+          title: {
+            text: "Date",
+          },
+        },
+        yaxis: {
+          title: {
+            text: "Sales Quantity",
+          },
+        },
+      },
+      series: [
+        {
+          name: "Sales Quantity",
+          data: Object.values(salesByDate),
+        },
+      ],
+    };
 
     return (
       <div>
@@ -262,24 +329,12 @@ export default function DashboardPage() {
           <option value="11">November</option>
           <option value="12">December</option>
         </select>
-        <Chart
-          chartType="LineChart"
-          width="100%"
-          height="400px"
-          data={chartData}
-          options={{
-            title: "",
-            hAxis: { title: "Date" },
-            vAxis: { title: "Sales Quantity" },
-          }}
-        />
+        <ApexCharts options={chartData.options} series={chartData.series} type="line" height={400} />
       </div>
     );
   };
-
   const SalesByMonth = () => {
     const csvDataFiltered = useMemo(() => filterAndProcessDataByYear(csvData, selectedYear), [csvData, selectedYear]);
-    const chartData = [["Month", "Total Value"]];
     const monthlySales = {};
 
     const monthNames = [
@@ -300,24 +355,37 @@ export default function DashboardPage() {
       }
     }
 
-    for (const month in monthlySales) {
-      chartData.push([monthNames[parseInt(month)], monthlySales[month]]);
-    }
+    // Prepare data for ApexCharts
+    const chartData = {
+      options: {
+        chart: {
+          type: "bar",
+          height: 600,
+        },
+        xaxis: {
+          categories: monthNames,
+          title: {
+            text: "Month",
+          },
+        },
+        yaxis: {
+          title: {
+            text: "Total Value",
+          },
+        },
+      },
+      series: [
+        {
+          name: "Total Value",
+          data: monthNames.map((month, index) => monthlySales[index] || 0),
+        },
+      ],
+    };
 
     return (
       <div>
         <h1 className="text-center">Monthly Sales</h1>
-        <Chart
-          chartType="ColumnChart"
-          width="100%"
-          height="600px"
-          data={chartData}
-          options={{
-            title: "",
-            hAxis: { title: "Month" },
-            vAxis: { title: "Total Value" },
-          }}
-        />
+        <ApexCharts options={chartData.options} series={chartData.series} type="bar" height={600} />
       </div>
     );
   };
@@ -361,7 +429,6 @@ export default function DashboardPage() {
   };
   const OrdersByTimeUnit = () => {
     const csvDataFiltered = useMemo(() => filterAndProcessDataByYear(csvData, selectedYear), [csvData, selectedYear]);
-    const chartData = [["Time Unit", "Number of Orders"]];
     const ordersByTimeUnit = {};
 
     for (let i = 0; i < csvDataFiltered.length; i++) {
@@ -376,24 +443,25 @@ export default function DashboardPage() {
       }
     }
 
-    for (const timeUnit in ordersByTimeUnit) {
-      chartData.push([timeUnit, ordersByTimeUnit[timeUnit]]);
-    }
+    // Prepare data for ApexCharts
+    const chartData = {
+      options: {
+        chart: {
+          type: "RadarChart",
+          height: 600,
+        },
+        labels: Object.keys(ordersByTimeUnit),
+        title: {
+          text: "Orders by Month",
+        },
+      },
+      series: Object.values(ordersByTimeUnit),
+    };
 
     return (
       <div>
         <h1 className="text-center">Orders by Month</h1>
-        <Chart
-          chartType="PieChart"
-          width="100%"
-          height="600px"
-          data={chartData}
-          options={{
-            title: "",
-            hAxis: { title: "Time Unit" },
-            vAxis: { title: "Number of Orders" },
-          }}
-        />
+        <ApexCharts options={chartData.options} series={chartData.series} type="pie" height={600} />
       </div>
     );
   };
@@ -419,7 +487,9 @@ export default function DashboardPage() {
   };
 
   return (
-    <div>
+
+    <div className="mt-14">
+
       <div className="select-container">
         <select
           className="select-element"
@@ -440,6 +510,25 @@ export default function DashboardPage() {
               </option>
             ))}
         </select>
+      </div>
+      <div className="flex flex-wrap lg:flex-nowrap justify-center ">
+        <div className="bg-gray-100 dark:text-gray-200 dark:bg-secondary-dark-bg h-44 rounded-xl w-full lg:w-80 p-8 pt-9 m-3 bg-hero-pattern bg-no-repeat bg-cover bg-center">
+          <div className="flex justify-between items-center">
+            <div>
+              <p className="font-bold text-gray-400">Earnings</p>
+              <p className="text-2xl">${totalSales}</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-gray-100 dark:text-gray-200 dark:bg-secondary-dark-bg h-44 rounded-xl w-full lg:w-80 p-8 pt-9 m-3 bg-hero-pattern bg-no-repeat bg-cover bg-center">
+          <div className="flex justify-between items-center">
+            <div>
+              <p className="font-bold text-gray-400">Orders sold</p>
+              <p className="text-2xl">{totalOrders}</p>
+            </div>
+          </div>
+        </div>
       </div>
       {dataAvailable ? (
         <div>
