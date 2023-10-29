@@ -20,7 +20,7 @@ function OrdersByMonth() {
 
     useEffect(() => {
         if (!isAuthenticated) {
-            navigate("/inicio");
+            navigate("/");
         }
     }, [isAuthenticated, navigate]);
 

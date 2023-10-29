@@ -33,7 +33,7 @@ function HomePage() {
     const [hasUploadedFile, setHasUploadedFile] = useState(false);
 
     useEffect(() => {
-        if (!isAuthenticated) navigate('/inicio');
+        if (!isAuthenticated) navigate('/');
     }, [isAuthenticated]);
 
     useEffect(() => {
@@ -95,13 +95,12 @@ function HomePage() {
         try {
             const response = await createCsv(formData);
             console.log("Archivo CSV subido con éxito:", response);
-            if  (createCsv(formData)) {
-                Swal.fire({
-                    icon: 'success',
-                    text: 'File upload sucessfuly',
-                    confirmButtonColor: '#8F3C8A',
-                })
-            }
+            Swal.fire({
+                icon: 'success',
+                text: 'File upload sucessfuly',
+                confirmButtonColor: '#8F3C8A',
+            })
+
             setHasUploadedFile(false);
             getCsv();
         } catch (error) {

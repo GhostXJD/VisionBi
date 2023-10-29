@@ -39,16 +39,15 @@ function ContactUs() {
                     message: values.message,
                 }
                 await createMessageRequest(msgData)
-                if (createMessageRequest(msgData)) {
-                    Swal.fire({
-                        icon: 'success',
-                        text: 'Message sent',
-                        confirmButtonColor: '#8F3C8A',
-                    }).then(() => {
-                        // Redirigir al usuario a la página de inicio después de hacer clic en "Ok"
-                        window.location.replace('/');
-                    });
-                }
+                Swal.fire({
+                    icon: 'success',
+                    text: 'Message sent',
+                    confirmButtonColor: '#8F3C8A',
+                }).then(() => {
+                    // Redirigir al usuario a la página de inicio después de hacer clic en "Ok"
+                    window.location.replace('/');
+                });
+
             } catch (err) {
                 helpers.setStatus({ success: false });
                 helpers.setErrors({ submit: err.message });

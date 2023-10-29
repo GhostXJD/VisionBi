@@ -12,12 +12,12 @@ export const getGoals = async (req, res) => {
 
 export const createGoal = async (req, res) => {
     try {
-        const { amount, category, starDate, endDate, company } = req.body
+        const { amount, category, startDate, endDate, company } = req.body
 
         const newGoal = new goal({
             amount,
             category,
-            starDate,
+            startDate,
             endDate,
             company
         })

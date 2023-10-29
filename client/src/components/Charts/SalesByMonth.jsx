@@ -20,7 +20,7 @@ function SalesByMonth() {
 
     useEffect(() => {
         if (!isAuthenticated) {
-            navigate("/inicio");
+            navigate("/");
         }
     }, [isAuthenticated, navigate]);
 

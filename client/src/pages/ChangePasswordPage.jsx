@@ -20,7 +20,7 @@ function ChangePasswordPage() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!isAuthenticated) navigate('/inicio')
+        if (!isAuthenticated) navigate('/')
     }, [isAuthenticated])
 
     const formik = useFormik({

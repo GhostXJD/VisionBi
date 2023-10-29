@@ -18,8 +18,8 @@ function RegistroEmpleadoPage() {
     const { theme } = useTheme();
 
     useEffect(() => {
-        if (!isAuthenticated) navigate('/inicio')
-    }, [isAuthenticated])
+        if (!isAuthenticated) navigate('/');
+    }, [isAuthenticated]);
 
     const calcularDigitoVerificador = (rutSinDigito) => {
         let suma = 0;
@@ -111,16 +111,15 @@ function RegistroEmpleadoPage() {
                         company: usuario.company
                     }
                     await createUsuarioRequest(userData)
-                        if (createUsuarioRequest(userData)) {
-                          Swal.fire({
-                            icon: 'success',
-                            text: 'Usuario creado exitosamente',
-                            confirmButtonColor: '#8F3C8A',
-                          }).then(() => {
-                            // Redirigir al usuario a la página de inicio después de hacer clic en "Ok"
-                            window.location.replace('/inicio');
-                          });
-                        }
+                    Swal.fire({
+                        icon: 'success',
+                        text: 'Usuario creado exitosamente',
+                        confirmButtonColor: '#8F3C8A',
+                    }).then(() => {
+                        // Redirigir al usuario a la página de inicio después de hacer clic en "Ok"
+                        window.location.replace('/ListarEmpleados');
+                    });
+
                 } else {
                     setRutError("This RUT does not exist");
                 }
@@ -133,113 +132,113 @@ function RegistroEmpleadoPage() {
     });
 
     return (
-        
 
-            <div className={`flex  h-[80vh] items-center justify-right`}>
-                <div className={` max-w-md w-full  rounded-md `}>
-                    <h1 className='regUserTittle'>Registrar Usuario</h1>
-                    <div className="registroEmpCard" >
-                        <form
 
-                            noValidate
-                            onSubmit={formik.handleSubmit}
-                        >
+        <div className={`flex  h-[80vh] items-center justify-right`}>
+            <div className={` max-w-md w-full  rounded-md `}>
+                <h1 className='regUserTittle'>Registrar Usuario</h1>
+                <div className="registroEmpCard" >
+                    <form
 
-                            <Stack spacing={3}>
-                                <TextField
-                                    error={!!(formik.touched.nombre && formik.errors.nombre)}
-                                    fullWidth
-                                    helperText={formik.touched.nombre && formik.errors.nombre}
-                                    label="First Name"
-                                    name="nombre"
-                                    onBlur={formik.handleBlur}
-                                    onChange={formik.handleChange}
-                                    type="text"
-                                    value={formik.values.nombre}
-                                    InputProps={{
-                                        sx: { borderRadius: 3 }
-                                    }}
-                                />
-                                <TextField
-                                    className='textField'
-                                    error={!!(formik.touched.apellido && formik.errors.apellido)}
-                                    fullWidth
-                                    helperText={formik.touched.apellido && formik.errors.apellido}
-                                    label="Last Name"
-                                    name="apellido"
-                                    onBlur={formik.handleBlur}
-                                    onChange={formik.handleChange}
-                                    type="text"
-                                    value={formik.values.apellido}
-                                    InputProps={{
-                                        sx: { borderRadius: 3 }
-                                    }}
-                                />
+                        noValidate
+                        onSubmit={formik.handleSubmit}
+                    >
 
-                                <TextField
-                                    error={!!(formik.touched.rut && formik.errors.rut) || !!rutError}
-                                    helperText={formik.touched.rut && formik.errors.rut ? formik.errors.rut : rutError}
-                                    label="Rut"
-                                    name="rut"
-                                    onBlur={(e) => {
-                                        const formattedRut = formatearRut(e.target.value);
-                                        formik.handleBlur(e);
-                                        if (formattedRut !== e.target.value) {
-                                            e.target.value = formattedRut;
-                                            formik.setFieldValue('rut', formattedRut);
-                                        }
-                                    }}
-                                    onChange={formik.handleChange}
-                                    type="text"
-                                    value={formik.values.rut}
-                                    InputProps={{
-                                        sx: { borderRadius: 3 }
-                                    }}
-                                />
+                        <Stack spacing={3}>
+                            <TextField
+                                error={!!(formik.touched.nombre && formik.errors.nombre)}
+                                fullWidth
+                                helperText={formik.touched.nombre && formik.errors.nombre}
+                                label="First Name"
+                                name="nombre"
+                                onBlur={formik.handleBlur}
+                                onChange={formik.handleChange}
+                                type="text"
+                                value={formik.values.nombre}
+                                InputProps={{
+                                    sx: { borderRadius: 3 }
+                                }}
+                            />
+                            <TextField
+                                className='textField'
+                                error={!!(formik.touched.apellido && formik.errors.apellido)}
+                                fullWidth
+                                helperText={formik.touched.apellido && formik.errors.apellido}
+                                label="Last Name"
+                                name="apellido"
+                                onBlur={formik.handleBlur}
+                                onChange={formik.handleChange}
+                                type="text"
+                                value={formik.values.apellido}
+                                InputProps={{
+                                    sx: { borderRadius: 3 }
+                                }}
+                            />
 
-                                <TextField
-                                    error={!!(formik.touched.correo && formik.errors.correo)}
-                                    fullWidth
-                                    helperText={formik.touched.correo && formik.errors.correo}
-                                    label="Email Address"
-                                    name="correo"
-                                    onBlur={formik.handleBlur}
-                                    onChange={formik.handleChange}
-                                    type="email"
-                                    value={formik.values.correo}
-                                    InputProps={{
-                                        sx: { borderRadius: 3 }
-                                    }}
-                                />
-                            </Stack>
+                            <TextField
+                                error={!!(formik.touched.rut && formik.errors.rut) || !!rutError}
+                                helperText={formik.touched.rut && formik.errors.rut ? formik.errors.rut : rutError}
+                                label="Rut"
+                                name="rut"
+                                onBlur={(e) => {
+                                    const formattedRut = formatearRut(e.target.value);
+                                    formik.handleBlur(e);
+                                    if (formattedRut !== e.target.value) {
+                                        e.target.value = formattedRut;
+                                        formik.setFieldValue('rut', formattedRut);
+                                    }
+                                }}
+                                onChange={formik.handleChange}
+                                type="text"
+                                value={formik.values.rut}
+                                InputProps={{
+                                    sx: { borderRadius: 3 }
+                                }}
+                            />
 
-                            {formik.errors.submit && (
-                                <Typography
-                                    color="error"
-                                    sx={{ mt: 3 }}
-                                    variant="body2"
-                                >
-                                    {formik.errors.submit}
-                                </Typography>
-                            )}
-                            {/* Botón de ingresar */}
-                            <div className="LoginSeparacion">
-                                <Button
-                                    fullWidth
-                                    size="large"
-                                    sx={{ mt: 3 }}
-                                    type="submit"
-                                    variant="contained"
-                                    font-family='Poppins'
-                                >
-                                    Create user
-                                </Button>
-                            </div>
-                        </form>
-                    </div>
+                            <TextField
+                                error={!!(formik.touched.correo && formik.errors.correo)}
+                                fullWidth
+                                helperText={formik.touched.correo && formik.errors.correo}
+                                label="Email Address"
+                                name="correo"
+                                onBlur={formik.handleBlur}
+                                onChange={formik.handleChange}
+                                type="email"
+                                value={formik.values.correo}
+                                InputProps={{
+                                    sx: { borderRadius: 3 }
+                                }}
+                            />
+                        </Stack>
+
+                        {formik.errors.submit && (
+                            <Typography
+                                color="error"
+                                sx={{ mt: 3 }}
+                                variant="body2"
+                            >
+                                {formik.errors.submit}
+                            </Typography>
+                        )}
+                        {/* Botón de ingresar */}
+                        <div className="LoginSeparacion">
+                            <Button
+                                fullWidth
+                                size="large"
+                                sx={{ mt: 3 }}
+                                type="submit"
+                                variant="contained"
+                                font-family='Poppins'
+                            >
+                                Create user
+                            </Button>
+                        </div>
+                    </form>
                 </div>
             </div>
-        
+        </div>
+
 
     );
 }

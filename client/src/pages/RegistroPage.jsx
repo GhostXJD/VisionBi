@@ -23,7 +23,7 @@ function RegistroPage() {
   const { theme } = useTheme();
 
   useEffect(() => {
-    if (isAuthenticated) navigate('/inicio')
+    if (isAuthenticated) navigate('/dashboard');
   }, [isAuthenticated])
 
   const calcularDigitoVerificador = (rutSinDigito) => {
@@ -217,7 +217,7 @@ function RegistroPage() {
           formik.setFieldError('businessRut', 'This RUT already exists');
         }
         else {
-          navigate("/inicio")
+          navigate("/dashboard")
         }
       }
     }

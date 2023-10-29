@@ -113,7 +113,7 @@ export default function PersistentDrawerLeft({ children, hiddenRoutes }) {
 
                     {isAuthenticated ? (
                         <>
-                            <Link to='/inicio'>
+                            <Link to='/dashboard'>
                                 <img src={logo} alt="Logo" className='logo-img' />
                             </Link>
                             <IconButton
@@ -186,7 +186,7 @@ export default function PersistentDrawerLeft({ children, hiddenRoutes }) {
                                         <AccountCircle className='text-[#8F3C8A]' /> Profile
                                     </MenuItem>
 
-                                    <MenuItem className='text-gray-600 hover:text-[#8F3C8A]' onClick={() => { handleMenuClose(); logout(); }} >
+                                    <MenuItem className='text-gray-600 hover:text-[#8F3C8A]' onClick={() => { handleMenuClose(); logout(); handleDrawerClose(); }} >
                                         <LogoutIcon className='text-[#8F3C8A]' /> Log out
                                     </MenuItem>
 

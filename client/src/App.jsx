@@ -21,13 +21,7 @@ import UploadFile from './pages/UploadFile';
 import Profile from './pages/Profile';
 import ChangePasswordPage from './pages/ChangePasswordPage';
 import DashboardPage from './pages/DashboardPage';
-
-// Rutas admin
-import ListarUsuariosPage from './pages/ListarUsuariosPage';
-
-// Rutas representante
-import RegistroEmpleadoPage from './pages/RegistroEmpleadoPage';
-import ListarEmpleadosPage from './pages/ListarEmpleadosPage';
+import GoalsPage from './pages/GoalsPage';
 import RevenueByCategory from './components/Charts/RevenuebyCategory';
 import SalesByNeighborhood from './components/Charts/SalesByNeighborhood';
 import SalesTrendOverTime from './components/Charts/SalesTrendOverTime';
@@ -35,10 +29,17 @@ import SalesByMonth from './components/Charts/SalesByMonth';
 import SalesByState from './components/Charts/SalesByState';
 import OrdersByMonth from './components/Charts/OrdersByMonth';
 
+// Rutas admin
+import ListarUsuariosPage from './pages/ListarUsuariosPage';
+
+// Rutas representante
+import RegistroEmpleadoPage from './pages/RegistroEmpleadoPage';
+import ListarEmpleadosPage from './pages/ListarEmpleadosPage';
+
 
 function App() {
   const hiddenRoutes = ['/login', '/registro']
-  const hiddenRoutesFooter = ['/orders-by-month','/sales-by-state','/sales-by-month','/sales-trend-over-time','/sales-by-neighborhood','/revenue-by-category','/login', '/registro','/uploadfile','/dashboard','/perfil','/perfil/ChangePassword','/ListarUsuarios','/RegistrarEmpleado','/ListarEmpleados']
+  const hiddenRoutesFooter = ['/orders-by-month','/sales-by-state','/sales-by-month','/sales-trend-over-time','/sales-by-neighborhood','/revenue-by-category','/login', '/registro','/uploadfile','/goals','/dashboard','/perfil','/perfil/ChangePassword','/ListarUsuarios','/RegistrarEmpleado','/ListarEmpleados']
   return (
     <AuthProvider>
       <ThemeProvider>
@@ -63,6 +64,7 @@ function App() {
                     <Route path='/perfil' element={<Profile />} />
                     <Route path='/perfil/ChangePassword' element={<ChangePasswordPage />} />
                     <Route path='/dashboard' element={<DashboardPage />} />
+                    <Route path='/goals' element={<GoalsPage />} />
                     {/*Charts*/}
                     <Route path="/revenue-by-category" element={<RevenueByCategory />} />
                     <Route path="/sales-by-neighborhood" element={<SalesByNeighborhood />} />

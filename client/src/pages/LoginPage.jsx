@@ -78,7 +78,7 @@ function LoginPage() {
         } else if (errores == "Contraseña incorrecta") {
           formik.setFieldError('password', 'Password is incorrect');
         }else{
-          navigate("/inicio")
+          navigate("/dashboard");
         }
       }
     }

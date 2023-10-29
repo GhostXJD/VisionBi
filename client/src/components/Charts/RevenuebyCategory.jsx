@@ -21,7 +21,7 @@ function Top10RevenuesByCategory() {
 
     useEffect(() => {
         if (!isAuthenticated) {
-            navigate("/inicio");
+            navigate("/");
         }
     }, [isAuthenticated, navigate]);
 
