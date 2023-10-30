@@ -39,7 +39,7 @@ import ListarEmpleadosPage from './pages/ListarEmpleadosPage';
 
 function App() {
   const hiddenRoutes = ['/login', '/registro']
-  const hiddenRoutesFooter = ['/orders-by-month','/sales-by-state','/sales-by-month','/sales-trend-over-time','/sales-by-neighborhood','/revenue-by-category','/login', '/registro','/uploadfile','/goals','/dashboard','/perfil','/perfil/ChangePassword','/ListarUsuarios','/RegistrarEmpleado','/ListarEmpleados']
+  const hiddenRoutesFooter = ['/login', '/registro','/uploadfile','/perfil','/perfil/ChangePassword','/dashboard','/goals','/revenue-by-category','/sales-by-neighborhood','/sales-trend-over-time','/sales-by-month','/sales-by-state','/orders-by-month','/ListarUsuarios','/RegistrarEmpleado','/ListarEmpleados']
   return (
     <AuthProvider>
       <ThemeProvider>
