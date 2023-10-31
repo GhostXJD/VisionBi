@@ -46,7 +46,7 @@ function SalesTrendOverTime() {
                 complete: (parsedData) => {
                     const data = parsedData.data.map((row) => ({
                         ...row,
-                        date: row.date, // No se formatea la fecha
+                        date: new Date(row.date), // Formatea la fecha como objeto Date
                         price: parseFloat(row.price), // Convierte a número
                         quantity: parseInt(row.quantity), // Convierte a número
                     }));
@@ -63,7 +63,7 @@ function SalesTrendOverTime() {
     const filterAndProcessDataByYear = (data, selectedYear) => {
         if (!selectedYear) return [];
         return data.filter((rowData) => {
-            const fecha = new Date(rowData.date);
+            const fecha = rowData.date;
             return fecha.getFullYear().toString() === selectedYear;
         });
     };
@@ -73,18 +73,24 @@ function SalesTrendOverTime() {
 
     for (let i = 0; i < csvDataFiltered.length; i++) {
         const rowData = csvDataFiltered[i];
-        const fecha = new Date(rowData.date);
+        const fecha = rowData.date;
         const month = fecha.getMonth() + 1;
+        const day = fecha.getDate();
         const valorTotal = rowData.quantity * rowData.price;
 
         if (selectedMonth === "" || month.toString() === selectedMonth) {
-            if (salesByDate[fecha.toLocaleDateString()]) {
-                salesByDate[fecha.toLocaleDateString()] += valorTotal;
+            const formattedDate = `${fecha.getFullYear()}-${month.toString().padStart(2, "0")}-${day.toString().padStart(2, "0")}`;
+
+            if (salesByDate[formattedDate]) {
+                salesByDate[formattedDate] += valorTotal;
             } else {
-                salesByDate[fecha.toLocaleDateString()] = valorTotal;
+                salesByDate[formattedDate] = valorTotal;
             }
         }
     }
+
+    // Ordena las fechas en orden ascendente
+    const sortedDates = Object.keys(salesByDate).sort();
 
     const chartData = {
         options: {
@@ -93,7 +99,7 @@ function SalesTrendOverTime() {
                 height: 400,
             },
             xaxis: {
-                categories: Object.keys(salesByDate),
+                categories: sortedDates,
                 title: {
                     text: "Date",
                 },
@@ -104,15 +110,15 @@ function SalesTrendOverTime() {
                 },
             },
             colors: ["#8F3C8A"],
-
         },
         series: [
             {
                 name: "Sales Quantity",
-                data: Object.values(salesByDate),
+                data: sortedDates.map((date) => salesByDate[date]),
             },
         ],
     };
+
     const monthNames = [
         "January",
         "February",
@@ -127,6 +133,7 @@ function SalesTrendOverTime() {
         "November",
         "December"
     ];
+
     return (
         <div>
             <div className="select-container">
@@ -137,7 +144,7 @@ function SalesTrendOverTime() {
                 >
                     <option value="">Select a Year</option>
                     {csvData
-                        .map((rowData) => new Date(rowData.date).getFullYear())
+                        .map((rowData) => rowData.date.getFullYear())
                         .filter((value, index, self) => self.indexOf(value) === index)
                         .map((year) => (
                             <option
