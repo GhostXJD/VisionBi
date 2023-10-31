@@ -95,6 +95,7 @@ function GoalsPage() {
                                 onChange={formik.handleChange}
                                 value={formik.values.category}
                             />
+                            <div className="font-bold">Goal start date</div>
                             <TextField
                                 error={!!(formik.touched.startDate && formik.errors.startDate)}
                                 fullWidth
@@ -105,6 +106,7 @@ function GoalsPage() {
                                 type='date'
                                 value={formik.values.startDate}
                             />
+                            <div className="font-bold">Goal end date</div>
                             <TextField
                                 error={!!(formik.touched.endDate && formik.errors.endDate)}
                                 fullWidth

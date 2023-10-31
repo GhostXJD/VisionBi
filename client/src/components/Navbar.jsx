@@ -229,9 +229,9 @@ export default function PersistentDrawerLeft({ children, hiddenRoutes }) {
                         </>
                     ) : (
                         <>
-                        <Link to='/'>
-                        <img src={logo} alt="Logo" className='logo-img' />
-                    </Link>
+                            <Link to='/'>
+                                <img src={logo} alt="Logo" className='logo-img' />
+                            </Link>
                             <div className="info-navbar">
                                 <li className='dark:text-white'>
                                     <Link to='/mission' > Mission</Link>
