@@ -4,7 +4,7 @@ import Papa from 'papaparse';
 
 export const getPredict = async (req, res) => {
     try {
-        const modelPath = 'file://src/python/model1.json';
+        const modelPath = 'file://src/python/model.json';
 
         const model = await tf.loadLayersModel(modelPath).catch((error) => {
             console.error('Error al cargar el modelo:', error);
@@ -24,78 +24,98 @@ export const getPredict = async (req, res) => {
 
         const csvDataText = csvDatoRecord.archivoCSV.toString('utf-8');
 
-        // Analizar los datos CSV con papaparse y convertirlos en un formato adecuado
         const cleanedCsvData = csvDataText.slice(0, -1);
         const parsedData = Papa.parse(cleanedCsvData, {
             header: true,
             dynamicTyping: true,
-            newline: '\r\n'  // Configura el carácter de nueva línea
+            newline: '\r\n'
         });
 
-        const data = parsedData.data;
+        let data = parsedData.data;
+
+        data = data.map((row) => ({
+            ...row,
+            date: new Date(row.date)
+        }));
+
+        data.sort((a, b) => a.date - b.date);
 
         if (data.length < 181) {
             return res.status(400).json({ message: 'No hay suficientes filas para predecir' });
         }
-        
-        const dataForPrediction = data.slice(-181).filter(item => item.order !== null);
 
-        // Se define un conjunto de nombres de columnas de características que se utilizarán en el análisis posterior.
-        const featureColumns = ['order', 'state', 'neighborhood', 'value', 'quantity', 'category', 'gender', 'skuValue', 'price', 'totalValue'];
-
-        // Se crea una serie de mapeos y conjuntos únicos para diferentes columnas de los datos. Estos mapeos se utilizarán para transformar valores categóricos en valores numéricos.
-        const uniqueStates = [...new Set(parsedData.data.map(row => row['state']))];
-        const uniqueNeighborhoods = [...new Set(parsedData.data.map(row => row['neighborhood']))];
-        const uniqueCategories = [...new Set(parsedData.data.map(row => row['category']))];
-        const uniqueGender = [...new Set(parsedData.data.map(row => row['gender']))];
-
-        const stateMapping = {};
-        const neighborhoodMapping = {};
-        const categoryMapping = {};
-        const genderMapping = {};
-
-        uniqueStates.forEach((state, index) => stateMapping[state] = index);
-        uniqueNeighborhoods.forEach((neighborhood, index) => neighborhoodMapping[neighborhood] = index);
-        uniqueCategories.forEach((category, index) => categoryMapping[category] = index);
-        uniqueGender.forEach((quantity, index) => genderMapping[quantity] = index);
-
-        // Filtra solo las columnas necesarias
-        const filteredData = dataForPrediction.map((row) => {
+        const featureColumns = ['date', 'skuValue'];
+        const filteredData = data.map((row) => {
             return featureColumns.map((col) => {
-                if (col == 'state') {
-                    row[col] = stateMapping[row[col]]
-                }
-                if (col == 'neighborhood') {
-                    row[col] = neighborhoodMapping[row[col]]
-                }
-                if (col == 'category') {
-                    row[col] = categoryMapping[row[col]]
-                }
-                if (col == 'gender') {
-                    row[col] = genderMapping[row[col]]
-                }
-                return row[col]
+                return row[col];
+            });
+        });
+        
+        const sumByDate = {};
+        
+        filteredData.forEach((row) => {
+            const date = row[0]; 
+            const skuValue = row[1]; 
+        
+            const dateKey = date.toISOString().split('T')[0];
+        
+            if (sumByDate[dateKey]) {
+                sumByDate[dateKey] += skuValue;
+            } else {
+                sumByDate[dateKey] = skuValue;
+            }
+        });
+        
+        const aggregatedData = Object.entries(sumByDate).map(([date, sum]) => ({
+            date,
+            skuValue: sum,
+        }));
+
+        const dataForPrediction = aggregatedData.slice(-181).filter(item => item.order !== null);
+
+        const predictColumns = ['skuValue'];
+        const predictedData = dataForPrediction.map((row) => {
+            return predictColumns.map((col) => {
+                return row[col];
             });
         });
 
-        //Se establece una longitud de secuencia deseada en la variable sequenceLength
         const sequenceLength = 180;
 
-        // Se crean secuencias de datos deslizantes con una longitud de sequenceLength. Estas secuencias se utilizan para alimentar el modelo de aprendizaje automático.
         const dataSequences = [];
-        for (let i = 0; i < filteredData.length - sequenceLength; i++) {
-            const sequence = filteredData.slice(i, i + sequenceLength).map((row) =>
+        for (let i = 0; i < predictedData.length - sequenceLength; i++) {
+            const sequence = predictedData.slice(i, i + sequenceLength).map((row) =>
                 row.map((value) => parseFloat(value, 10))
             );
             dataSequences.push(sequence);
         }
 
-        // Inicializa variables para almacenar el valor mínimo y máximo.
+        let min = Infinity;
+        let max = -Infinity;
+
+        for (const sequence of dataSequences) {
+            for (const row of sequence) {
+                for (const value of row) {
+                    if (value < min) {
+                        min = value;
+                    }
+                    if (value > max) {
+                        max = value;
+                    }
+                }
+            }
+        }
+
+        const scaledDataSequences = dataSequences.map((sequence) =>
+            sequence.map((row) =>
+                row.map((value) => (value - min) / (max - min))
+            )
+        );
+
         let minValue = Number.POSITIVE_INFINITY;
         let maxValue = Number.NEGATIVE_INFINITY;
 
-        // Itera a través de los datos para encontrar el valor mínimo y máximo en la columna 'skuValue'.
-        parsedData.data.forEach((row) => {
+        dataForPrediction.forEach((row) => {
             const skuValue = row['skuValue'];
             if (typeof skuValue === 'number') {
                 minValue = Math.min(minValue, skuValue);
@@ -103,24 +123,19 @@ export const getPredict = async (req, res) => {
             }
         });
 
-        // Convierte las secuencias de datos en tensores
-        const inputData = tf.tensor(dataSequences);
+        const inputData = tf.tensor(scaledDataSequences);
 
-        // Realiza la predicción con el modelo
         const predictions = model.predict(inputData);
 
-        // Convierte las predicciones a un formato que puedas enviar al cliente
         const scaledPredictions = predictions.arraySync();
 
-        // Realiza el escalado inverso en cada valor de predicción
         const originalPredictions = scaledPredictions.map((scaledValue) => {
             return scaledValue.map((value) => {
-                const originalValue = (value - (-1)) / (1 - (-1)) * (maxValue - minValue) + minValue;
+                const originalValue = (value - (0)) / (1 - (0)) * (maxValue - minValue) + minValue;
                 return parseInt(originalValue);
             });
         });
 
-        // Envía las predicciones al cliente
         res.json({ predictions: originalPredictions });
     } catch (error) {
         console.log(error);
