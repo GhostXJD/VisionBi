@@ -43,40 +43,9 @@ export const getPredict = async (req, res) => {
         if (data.length < 181) {
             return res.status(400).json({ message: 'No hay suficientes filas para predecir' });
         }
-<<<<<<< HEAD
 
         const featureColumns = ['date', 'skuValue'];
         const filteredData = data.map((row) => {
-=======
-
-        // Ordena los datos por la columna 'order' en orden ascendente
-        data.sort((a, b) => a.order - b.order);
-
-        const dataForPrediction = data.slice(-181).filter(item => item.order !== null);
-
-
-        // Se define un conjunto de nombres de columnas de características que se utilizarán en el análisis posterior.
-        const featureColumns = ['order', 'state', 'neighborhood', 'value', 'quantity', 'category', 'gender', 'skuValue', 'price', 'totalValue'];
-
-        // Se crea una serie de mapeos y conjuntos únicos para diferentes columnas de los datos. Estos mapeos se utilizarán para transformar valores categóricos en valores numéricos.
-        const uniqueStates = [...new Set(parsedData.data.map(row => row['state']))];
-        const uniqueNeighborhoods = [...new Set(parsedData.data.map(row => row['neighborhood']))];
-        const uniqueCategories = [...new Set(parsedData.data.map(row => row['category']))];
-        const uniqueGender = [...new Set(parsedData.data.map(row => row['gender']))];
-
-        const stateMapping = {};
-        const neighborhoodMapping = {};
-        const categoryMapping = {};
-        const genderMapping = {};
-
-        uniqueStates.forEach((state, index) => stateMapping[state] = index);
-        uniqueNeighborhoods.forEach((neighborhood, index) => neighborhoodMapping[neighborhood] = index);
-        uniqueCategories.forEach((category, index) => categoryMapping[category] = index);
-        uniqueGender.forEach((quantity, index) => genderMapping[quantity] = index);
-
-        // Filtra solo las columnas necesarias
-        const filteredData = dataForPrediction.map((row) => {
->>>>>>> main
             return featureColumns.map((col) => {
                 return row[col];
             });
