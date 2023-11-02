@@ -7,7 +7,7 @@ function Profile() {
 
   // Redirige al usuario a la página de inicio si no está autenticado
   useEffect(() => {
-    if (!isAuthenticated) navigate('/inicio');
+    if (!isAuthenticated) navigate('/');
   }, [isAuthenticated]);
   return (
     <div className="flex flex-col justify-center items-center h-[70vh]">

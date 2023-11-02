@@ -32,7 +32,7 @@ function LoginPage() {
   }
 
   useEffect(() => {
-    if (isAuthenticated) navigate('/inicio')
+    if (isAuthenticated) navigate('/dashboard');
   }, [isAuthenticated])
 
   const formik = useFormik({
@@ -78,7 +78,7 @@ function LoginPage() {
         } else if (errores == "Contraseña incorrecta") {
           formik.setFieldError('password', 'Password is incorrect');
         }else{
-          navigate("/inicio")
+          navigate("/dashboard");
         }
       }
     }

@@ -9,7 +9,7 @@ function ListarUsuariosPage() {
   const { isAuthenticated } = useAuth();
 
   useEffect(() => {
-    if (!isAuthenticated) navigate('/inicio')
+    if (!isAuthenticated) navigate('/')
   }, [isAuthenticated])
 
   useEffect(() => {

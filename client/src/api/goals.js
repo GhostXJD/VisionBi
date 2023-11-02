@@ -2,7 +2,7 @@ import axios from './axios'
 
 export const getGoalsRequest = () => axios.get("/goals")
 
-export const getGoalRequest = (id) => axios.get(`/goals/${id}`)
+export const getGoalRequest = (company) => axios.get(`/goals/${company}`)
 
 export const createGoalRequest = (goal) => axios.post("/goals", goal)
 

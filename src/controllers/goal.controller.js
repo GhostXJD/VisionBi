@@ -12,12 +12,12 @@ export const getGoals = async (req, res) => {
 
 export const createGoal = async (req, res) => {
     try {
-        const { amount, category, starDate, endDate, company } = req.body
+        const { amount, category, startDate, endDate, company } = req.body
 
         const newGoal = new goal({
             amount,
             category,
-            starDate,
+            startDate,
             endDate,
             company
         })
@@ -29,9 +29,10 @@ export const createGoal = async (req, res) => {
     }
 };
 
-export const getGoal = async (req, res) => {
+export const getGoalByCompany = async (req, res) => {
     try {
-        const goal = await goal.findById(req.params.id)
+        const { company } = req.params.id
+        const goal = await goal.findOne({ company })
         if (!goal) return res.status(404).json({ message: 'Goal not found' })
         res.json(goal)
 

@@ -43,9 +43,40 @@ export const getPredict = async (req, res) => {
         if (data.length < 181) {
             return res.status(400).json({ message: 'No hay suficientes filas para predecir' });
         }
+<<<<<<< HEAD
 
         const featureColumns = ['date', 'skuValue'];
         const filteredData = data.map((row) => {
+=======
+
+        // Ordena los datos por la columna 'order' en orden ascendente
+        data.sort((a, b) => a.order - b.order);
+
+        const dataForPrediction = data.slice(-181).filter(item => item.order !== null);
+
+
+        // Se define un conjunto de nombres de columnas de características que se utilizarán en el análisis posterior.
+        const featureColumns = ['order', 'state', 'neighborhood', 'value', 'quantity', 'category', 'gender', 'skuValue', 'price', 'totalValue'];
+
+        // Se crea una serie de mapeos y conjuntos únicos para diferentes columnas de los datos. Estos mapeos se utilizarán para transformar valores categóricos en valores numéricos.
+        const uniqueStates = [...new Set(parsedData.data.map(row => row['state']))];
+        const uniqueNeighborhoods = [...new Set(parsedData.data.map(row => row['neighborhood']))];
+        const uniqueCategories = [...new Set(parsedData.data.map(row => row['category']))];
+        const uniqueGender = [...new Set(parsedData.data.map(row => row['gender']))];
+
+        const stateMapping = {};
+        const neighborhoodMapping = {};
+        const categoryMapping = {};
+        const genderMapping = {};
+
+        uniqueStates.forEach((state, index) => stateMapping[state] = index);
+        uniqueNeighborhoods.forEach((neighborhood, index) => neighborhoodMapping[neighborhood] = index);
+        uniqueCategories.forEach((category, index) => categoryMapping[category] = index);
+        uniqueGender.forEach((quantity, index) => genderMapping[quantity] = index);
+
+        // Filtra solo las columnas necesarias
+        const filteredData = dataForPrediction.map((row) => {
+>>>>>>> main
             return featureColumns.map((col) => {
                 return row[col];
             });
@@ -169,11 +200,21 @@ export const createCsvDato = async (req, res) => {
         const existingCsvDato = await csvDato.findOne({ userUploader, company });
 
         if (existingCsvDato) {
-            // Si existe, actualiza el registro existente con el nuevo archivo
-            existingCsvDato.archivoCSV = req.file.buffer;
-            existingCsvDato.date = new Date();
-            const updatedCsvDato = await existingCsvDato.save();
-            res.json(updatedCsvDato);
+            // Si existe, elimina el archivo CSV existente
+            // y luego crea uno nuevo
+            const deletedCsvDato = await csvDato.findOneAndDelete({ userUploader, company });
+
+            if (deletedCsvDato) {
+                const newCsvDato = new csvDato({
+                    archivoCSV: req.file.buffer,
+                    userUploader: userUploader,
+                    company: company,
+                    date: new Date(),
+                });
+
+                const savedCsvDato = await newCsvDato.save();
+                return res.json(savedCsvDato);
+            }
         } else {
             // Si no existe, crea un nuevo registro
             const newCsvDato = new csvDato({
@@ -184,13 +225,16 @@ export const createCsvDato = async (req, res) => {
             });
 
             const savedCsvDato = await newCsvDato.save();
-            res.json(savedCsvDato);
+            return res.json(savedCsvDato);
         }
+
+        return res.status(500).json({ message: 'No se pudo actualizar ni crear el registro' });
     } catch (error) {
         res.status(500).json({ message: error.message });
         console.log("error", error);
     }
 };
+
 
 
 export const getCsvDato = async (req, res) => {

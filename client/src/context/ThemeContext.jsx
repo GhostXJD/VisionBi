@@ -1,31 +1,27 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 
-// Crea el contexto del tema
 const ThemeContext = createContext();
 
-// Hook personalizado para usar el contexto del tema
 export function useTheme() {
     return useContext(ThemeContext);
 }
 
-// Proveedor de tema que se utilizará en la parte superior de la jerarquía de componentes
 export function ThemeProvider({ children }) {
-    const [theme, setTheme] = useState(() => {
-        // Determina el tema según la preferencia del sistema
-        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            return 'dark';
-        } else {
-            return 'light';
-        }
-    });
+    // Obtener el tema guardado en localStorage o establecer 'light' como valor predeterminado
+    const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
 
-    // Cambia el tema cuando el botón es presionado
     const toggleTheme = () => {
-        setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
+        // Cambiar el tema entre 'light' y 'dark'
+        const newTheme = theme === 'light' ? 'dark' : 'light';
+
+        // Guardar el nuevo tema en localStorage
+        localStorage.setItem('theme', newTheme);
+
+        setTheme(newTheme);
     };
 
-    // Efecto para aplicar el tema al documento HTML
     useEffect(() => {
+        // Aplicar el tema al elemento raíz del documento (html)
         document.documentElement.classList.toggle('dark', theme === 'dark');
     }, [theme]);
 
