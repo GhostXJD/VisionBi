@@ -50,22 +50,22 @@ export const getPredict = async (req, res) => {
                 return row[col];
             });
         });
-        
+
         const sumByDate = {};
-        
+
         filteredData.forEach((row) => {
-            const date = row[0]; 
-            const skuValue = row[1]; 
-        
+            const date = row[0];
+            const skuValue = row[1];
+
             const dateKey = date.toISOString().split('T')[0];
-        
+
             if (sumByDate[dateKey]) {
                 sumByDate[dateKey] += skuValue;
             } else {
                 sumByDate[dateKey] = skuValue;
             }
         });
-        
+
         const aggregatedData = Object.entries(sumByDate).map(([date, sum]) => ({
             date,
             skuValue: sum,
@@ -91,7 +91,8 @@ export const getPredict = async (req, res) => {
         }
 
         let min = Infinity;
-        let max = -Infinity;
+        let sum = 0;
+        let count = 0;
 
         for (const sequence of dataSequences) {
             for (const row of sequence) {
@@ -99,12 +100,14 @@ export const getPredict = async (req, res) => {
                     if (value < min) {
                         min = value;
                     }
-                    if (value > max) {
-                        max = value;
-                    }
+                    sum += value;
+                    count++;
                 }
             }
         }
+
+        const average = sum / count;
+        const max = parseInt(average);
 
         const scaledDataSequences = dataSequences.map((sequence) =>
             sequence.map((row) =>
@@ -131,12 +134,32 @@ export const getPredict = async (req, res) => {
 
         const originalPredictions = scaledPredictions.map((scaledValue) => {
             return scaledValue.map((value) => {
-                const originalValue = (value - (0)) / (1 - (0)) * (maxValue - minValue) + minValue;
+                const originalValue = (value - (-1)) / (1 - (-1)) * (max - min) + min;
                 return parseInt(originalValue);
             });
         });
 
-        res.json({ predictions: originalPredictions });
+        const formattedPredictions = originalPredictions.flatMap(prediction => prediction);
+
+        const lastDate = new Date(dataForPrediction[dataForPrediction.length - 1].date);
+
+        // Crea un arreglo de fechas futuras comenzando un día después de la última fecha
+        const futureDates = [];
+        for (let i = 0; i < 30; i++) {
+            const nextDate = new Date(lastDate);
+            nextDate.setDate(lastDate.getDate() + i + 1);
+            futureDates.push(nextDate.toISOString().split('T')[0]);
+        }
+
+        // Combina las fechas futuras con los valores en formattedPredictions
+        const predictionsWithDates = [];
+        for (let i = 0; i < futureDates.length; i++) {
+            const date = futureDates[i];
+            const skuValue = formattedPredictions[i];
+            predictionsWithDates.push({ date, skuValue });
+        }
+
+        res.json({ predictions: predictionsWithDates });
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: 'Error en la predicción' });
