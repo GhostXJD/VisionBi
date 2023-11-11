@@ -125,7 +125,10 @@ function HomePage() {
                     </Button>
                     <div className='p-2'>
                         {hasUploadedFile && (
-                            <Button type="submit" variant="contained" color="success">Upload CSV</Button>
+                            <>
+                                <div className="">Click here</div>
+                                <Button type="submit" variant="contained" color="success">SAVE FILE</Button>
+                            </>
                         )}
                     </div>
                 </form>

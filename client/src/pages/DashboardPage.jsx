@@ -5,8 +5,11 @@ import { Chart } from "react-google-charts";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router";
 import { getCsvDatoRequest, getPredictRequest } from "../api/csvDatos";
+import { Link } from "react-router-dom";
 import Papa from "papaparse";
 import moment from 'moment';
+import { styled } from '@mui/material/styles';
+import Button from '@mui/material/Button';
 
 export default function DashboardPage() {
   const navigate = useNavigate();
@@ -65,6 +68,15 @@ export default function DashboardPage() {
     getPredict();
   }, []);
 
+  const ColorButton = styled(Button)(({ theme }) => ({
+    color: theme.palette.getContrastText("#8F3C8A"),
+    backgroundColor: "#8F3C8A",
+    '&:hover': {
+      backgroundColor: "#ba68c8",
+    },
+    fontFamily: 'Poppins',
+  }));
+
   const calculateTotalPredictedSales = () => {
     if (predictData.predictions && predictData.predictions.length > 0) {
       const predictedSales = predictData.predictions.map((prediction) => prediction.skuValue);
@@ -73,8 +85,13 @@ export default function DashboardPage() {
     }
     return 0;
   };
-  
-  const totalPredictedSales = calculateTotalPredictedSales();  
+
+  const totalPredictedSales = calculateTotalPredictedSales();
+
+  const formattedTotalPredictedSales = new Intl.NumberFormat("es-CL", {
+    style: "currency",
+    currency: "CLP",
+  }).format(totalPredictedSales);
 
   const getCsv = async () => {
     try {
@@ -255,7 +272,7 @@ export default function DashboardPage() {
                   <div className="flex justify-between items-center">
                     <div>
                       <p className="font-bold text-gray-400">Predicted Sales</p>
-                      <p className="text-2xl">${totalPredictedSales}</p>
+                      <p className="text-2xl">{formattedTotalPredictedSales}</p>
                     </div>
                     <button type="button" className="ml-auto text-2xl opacity-0.9 rounded-full p-4 hover:drop-shadow-xl bg-amber-400 text-white">
                       <svg
@@ -279,7 +296,12 @@ export default function DashboardPage() {
               ) : (<h1 className="text-center">There is not enough data to predict</h1>)}
             </div>
           ) : (
-            <h1 className="text-center">No data uploaded, you must upload a CSV</h1>
+            <>
+              <h1 className="text-center">No data uploaded, you must upload a CSV</h1>
+              <div className="font-sans text-center">
+                <Link to="/uploadfile" ><ColorButton >Click here, For upload CSV</ColorButton></Link>
+              </div>
+            </>
           )}
         </>
       )}
