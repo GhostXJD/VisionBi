@@ -132,7 +132,7 @@ export default function DashboardPage() {
   };
 
   const Prediction = () => {
-    const sortedChartData = [["Date", "Total Value", "Predicted Value"]];
+    const sortedChartData = [["Date", "Total", "Predicted"]];
 
     if (csvData.length === 0) {
       return <div>No hay datos disponibles para graficar.</div>;
@@ -191,7 +191,7 @@ export default function DashboardPage() {
     }
 
     if (predictData.predictions && predictData.predictions.length > 0) {
-      predictData.predictions.forEach((prediction, index) => {
+      predictData.predictions.forEach((prediction) => {
         sortedChartData.push([prediction.date, null, prediction.skuValue]);
       });
     }
@@ -212,7 +212,11 @@ export default function DashboardPage() {
             },
             series: {
               0: { curveType: "function" },
-              1: { curveType: "function" }, // Esto permite curvas en ambas series (datos originales y predicciones)
+              1: { curveType: "function" },
+            },
+            pointSize: 6, // Ajusta el tamaño de los puntos en la línea
+            legend: {
+              position: "bottom",
             },
           }}
         />
