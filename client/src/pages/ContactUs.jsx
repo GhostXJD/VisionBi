@@ -69,6 +69,7 @@ function ContactUs() {
                             >
                                 <Stack spacing={3}>
                                     <TextField
+                                        color="secondary"
                                         error={!!(formik.touched.nombre && formik.errors.nombre)}
                                         fullWidth
                                         helperText={formik.touched.nombre && formik.errors.nombre}
@@ -84,6 +85,7 @@ function ContactUs() {
                                     />
 
                                     <TextField
+                                        color="secondary"
                                         error={!!(formik.touched.correo && formik.errors.correo)}
                                         fullWidth
                                         helperText={formik.touched.correo && formik.errors.correo}
@@ -99,6 +101,7 @@ function ContactUs() {
                                     />
 
                                     <TextField
+                                        color="secondary"
                                         error={!!(formik.touched.message && formik.errors.message)}
                                         fullWidth
                                         helperText={formik.touched.message && formik.errors.message}
@@ -108,6 +111,8 @@ function ContactUs() {
                                         onChange={formik.handleChange}
                                         type="text"
                                         value={formik.values.message}
+                                        multiline
+                                        rows={4}
                                         InputProps={{
                                             sx: { borderRadius: 3 }
                                         }}
@@ -126,6 +131,7 @@ function ContactUs() {
                                 {/* Botón de ingresar */}
                                 <div className="LoginSeparacion">
                                     <Button
+                                        color="secondary"
                                         fullWidth
                                         size="large"
                                         sx={{ mt: 3 }}

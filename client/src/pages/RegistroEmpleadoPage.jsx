@@ -9,6 +9,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Button, Typography } from '@mui/material';
 import TextField from '@mui/material/TextField';
+import PersonAddAlt1RoundedIcon from '@mui/icons-material/PersonAddAlt1Rounded';
 
 function RegistroEmpleadoPage() {
 
@@ -134,82 +135,92 @@ function RegistroEmpleadoPage() {
     return (
 
 
-        <div className={`flex  h-[80vh] items-center justify-right`}>
-            <div className={` max-w-md w-full  rounded-md `}>
-                <h1 className='regUserTittle'>Registrar Usuario</h1>
+        <div className={`flex  h-[80vh] items-center justify-right justify-center`}>
+            <div className={` max-w-md w-full  rounded-md p-8 bg-[#fff] `} style={{ border: '2px  #c1b9c7', borderRadius: '5px', boxShadow: '0 0 10px rgba(219, 207, 228, 0.7)' }}>
+                <h1 className='regUserTittle'> <PersonAddAlt1RoundedIcon sx={{ fontSize: 45 }} /> Registrar Usuario</h1>
                 <div className="registroEmpCard" >
                     <form
 
                         noValidate
                         onSubmit={formik.handleSubmit}
                     >
-
-                        <Stack spacing={3}>
-                            <TextField
-                                error={!!(formik.touched.nombre && formik.errors.nombre)}
-                                fullWidth
-                                helperText={formik.touched.nombre && formik.errors.nombre}
-                                label="First Name"
-                                name="nombre"
-                                onBlur={formik.handleBlur}
-                                onChange={formik.handleChange}
-                                type="text"
-                                value={formik.values.nombre}
-                                InputProps={{
-                                    sx: { borderRadius: 3 }
-                                }}
-                            />
-                            <TextField
-                                className='textField'
-                                error={!!(formik.touched.apellido && formik.errors.apellido)}
-                                fullWidth
-                                helperText={formik.touched.apellido && formik.errors.apellido}
-                                label="Last Name"
-                                name="apellido"
-                                onBlur={formik.handleBlur}
-                                onChange={formik.handleChange}
-                                type="text"
-                                value={formik.values.apellido}
-                                InputProps={{
-                                    sx: { borderRadius: 3 }
-                                }}
-                            />
-
-                            <TextField
-                                error={!!(formik.touched.rut && formik.errors.rut) || !!rutError}
-                                helperText={formik.touched.rut && formik.errors.rut ? formik.errors.rut : rutError}
-                                label="Rut"
-                                name="rut"
-                                onBlur={(e) => {
-                                    const formattedRut = formatearRut(e.target.value);
-                                    formik.handleBlur(e);
-                                    if (formattedRut !== e.target.value) {
-                                        e.target.value = formattedRut;
-                                        formik.setFieldValue('rut', formattedRut);
-                                    }
-                                }}
-                                onChange={formik.handleChange}
-                                type="text"
-                                value={formik.values.rut}
-                                InputProps={{
-                                    sx: { borderRadius: 3 }
-                                }}
-                            />
-
-                            <TextField
-                                error={!!(formik.touched.correo && formik.errors.correo)}
-                                fullWidth
-                                helperText={formik.touched.correo && formik.errors.correo}
-                                label="Email Address"
-                                name="correo"
-                                onBlur={formik.handleBlur}
-                                onChange={formik.handleChange}
-                                type="email"
-                                value={formik.values.correo}
-                                InputProps={{
-                                    sx: { borderRadius: 3 }
-                                }}
-                            />
+                        <Stack spacing={3} >
+                            
+                                <div className='regEmpForm'>
+                                    <TextField
+                                        className='textForm'
+                                        color="secondary"
+                                        error={!!(formik.touched.nombre && formik.errors.nombre)}
+                                        helperText={formik.touched.nombre && formik.errors.nombre}
+                                        label="First Name"
+                                        name="nombre"
+                                        onBlur={formik.handleBlur}
+                                        onChange={formik.handleChange}
+                                        type="text"
+                                        value={formik.values.nombre}
+                                        InputProps={{
+                                            sx: { borderRadius: 3 }
+                                        }}
+                                    />
+                                    <TextField
+                                        className='textForm'
+                                        color="secondary"
+                                        error={!!(formik.touched.apellido && formik.errors.apellido)}
+                                        helperText={formik.touched.apellido && formik.errors.apellido}
+                                        label="Last Name"
+                                        name="apellido"
+                                        onBlur={formik.handleBlur}
+                                        onChange={formik.handleChange}
+                                        type="text"
+                                        value={formik.values.apellido}
+                                        InputProps={{
+                                            sx: { borderRadius: 3 }
+                                        }}
+                                    />
+                                </div>
+                                <div className='regEmpForm'>
+                                    <TextField
+                                        className='textFormA'
+                                        color="secondary"
+                                        error={!!(formik.touched.rut && formik.errors.rut) || !!rutError}
+                                        helperText={formik.touched.rut && formik.errors.rut ? formik.errors.rut : rutError}
+                                        label="Rut"
+                                        name="rut"
+                                        fullWidth
+                                        onBlur={(e) => {
+                                            const formattedRut = formatearRut(e.target.value);
+                                            formik.handleBlur(e);
+                                            if (formattedRut !== e.target.value) {
+                                                e.target.value = formattedRut;
+                                                formik.setFieldValue('rut', formattedRut);
+                                            }
+                                        }}
+                                        onChange={formik.handleChange}
+                                        type="text"
+                                        value={formik.values.rut}
+                                        InputProps={{
+                                            sx: { borderRadius: 3 }
+                                        }}
+                                    />
+                                </div>
+                                <div className='regEmpForm'>
+                                    <TextField
+                                        className='textFormA'
+                                        color="secondary"
+                                        error={!!(formik.touched.correo && formik.errors.correo)}
+                                        helperText={formik.touched.correo && formik.errors.correo}
+                                        label="Email Address"
+                                        name="correo"
+                                        fullWidth
+                                        onBlur={formik.handleBlur}
+                                        onChange={formik.handleChange}
+                                        type="email"
+                                        value={formik.values.correo}
+                                        InputProps={{
+                                            sx: { borderRadius: 3 }
+                                        }}
+                                    />
+                                </div>
                         </Stack>
 
                         {formik.errors.submit && (
@@ -224,7 +235,7 @@ function RegistroEmpleadoPage() {
                         {/* Botón de ingresar */}
                         <div className="LoginSeparacion">
                             <Button
-                                fullWidth
+                                color="secondary"
                                 size="large"
                                 sx={{ mt: 3 }}
                                 type="submit"

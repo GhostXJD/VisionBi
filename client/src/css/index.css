@@ -67,7 +67,7 @@ li {
 	background-position: 0% 0%;
 	background-repeat: repeat;
 	color: rgb(54, 65, 82);
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); 
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 
 	/* Box */
 	height: 708.656px;
@@ -402,6 +402,7 @@ li {
 	vertical-align: baseline;
 	white-space: normal;
 	word-spacing: 0px;
+	margin-bottom: 20px;
 
 
 	/* Color & Background */
@@ -529,6 +530,16 @@ li {
 	border-bottom-right-radius: 0px;
 }
 
+
+.names .textform {
+	margin-right: 20px;
+	width: 202px;
+}
+
+.names .textformA {
+	width: 202px;
+}
+
 .RegistroTxt1 {
 	/* Font & Text */
 	margin: 0px 0px 0.35em;
@@ -580,86 +591,19 @@ li {
 .registroEmpCard {
 	/* Font & Text */
 	font-family: 'Poppins', sans-serif;
-	font-size: 14px;
-	font-style: normal;
-	font-variant: normal;
-	font-weight: 400;
-	letter-spacing: normal;
-	line-height: 18.676px;
-	text-decoration: none solid rgb(54, 65, 82);
-	text-align: start;
-	text-indent: 0px;
-	text-transform: none;
-	vertical-align: baseline;
-	white-space: normal;
-	word-spacing: 0px;
-
-
-	/* Color & Background */
-	background-attachment: scroll;
-	background-color: #ffffff;
-	background-image: none;
-	background-position: 0% 0%;
-	background-repeat: repeat;
-	color: rgb(54, 65, 82);
 
 	/* Box */
-	width: 1600px;
-	height: 450px;
-	border: 0px none rgb(54, 65, 82);
-	border-top: 0px none rgb(54, 65, 82);
-	border-right: 0px none rgb(54, 65, 82);
-	border-bottom: 0px none rgb(54, 65, 82);
-	border-left: 0px none rgb(54, 65, 82);
-	margin: 0px;
-	padding: 24px;
-	max-height: none;
-	min-height: 0px;
-	max-width: none;
-	min-width: 0px;
 	margin-top: 20px;
+}
 
-	/* Positioning */
-	position: static;
-	top: auto;
-	bottom: auto;
-	right: auto;
-	left: auto;
-	float: none;
-	display: block;
-	clear: none;
-	z-index: auto;
-	/* List */
-	list-style-image: none;
-	list-style-type: disc;
-	list-style-position: outside;
 
-	/* Table */
-	border-collapse: separate;
-	border-spacing: 0px 0px;
-	caption-side: top;
-	empty-cells: show;
-	table-layout: auto;
+.regEmpForm .textForm {
+	width: 172px;
+	margin-right: 20px;
+}
 
-	/* Miscellaneous */
-	overflow: visible;
-	cursor: auto;
-	visibility: visible;
-
-	/* Effects */
-	transform: none;
-	transition: all 0s ease 0s;
-	outline-offset: 0px;
-	box-sizing: border-box;
-	resize: none;
-	text-shadow: none;
-	text-overflow: clip;
-	word-wrap: normal;
-	box-shadow: none;
-	border-top-left-radius: 16px;
-	border-top-right-radius: 16px;
-	border-bottom-left-radius: 16px;
-	border-bottom-right-radius: 16px;
+.regEmpForm .textFormA {
+	width: 365px;
 }
 
 .regUserTittle {
@@ -784,15 +728,23 @@ html::-webkit-scrollbar-thumb {
 }
 
 .about-img {
-	align-self: center; /* Centra verticalmente la imagen en su columna */
-	justify-self: end; /* Alinea la imagen a la derecha horizontalmente */
-	margin-left: auto; /* Elimina el margen de la imagen */
+	align-self: center;
+	/* Centra verticalmente la imagen en su columna */
+	justify-self: end;
+	/* Alinea la imagen a la derecha horizontalmente */
+	margin-left: auto;
+	/* Elimina el margen de la imagen */
 }
-.banner-img{
-	
-	position: absolute; /* Permite un posicionamiento absoluto */
-	right: 0; /* Alinea la imagen a la derecha del contenedor */
-	top: 1;/* Elimina el margen de la imagen *//* Elimina el margen de la imagen */
+
+.banner-img {
+
+	position: absolute;
+	/* Permite un posicionamiento absoluto */
+	right: 0;
+	/* Alinea la imagen a la derecha del contenedor */
+	top: 1;
+	/* Elimina el margen de la imagen */
+	/* Elimina el margen de la imagen */
 }
 
 .index .index-banner .presentation .index-btn {
@@ -935,6 +887,7 @@ select-container {
 	margin-top: 10px;
 
 }
+
 /* Borde redondeado */
 .select-element:hover {
 	border: 2px solid #8F3C8A;
@@ -1015,7 +968,7 @@ select-container {
 /* FIN ESTILOS DE VISION */
 
 /* ESTILOS DE ABOUT US */
-.about .about-banner .presentation h3{
+.about .about-banner .presentation h3 {
 	color: #8F3C8A;
 	font-size: 3rem;
 	margin-top: 4rem;
@@ -1025,13 +978,14 @@ select-container {
 	font-weight: bold;
 	align-items: center;
 }
+
 .about-members {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(15rem, 5fr));
 	margin-top: 2rem;
 }
 
-.about .box-members{
+.about .box-members {
 	margin-top: 2rem;
 }
 
@@ -1040,11 +994,11 @@ select-container {
 	grid-template-columns: repeat(auto-fit, minmax(25%, 0.5rem));
 	margin-bottom: 8%;
 	align-items: center;
-    justify-content: center;
+	justify-content: center;
 
 }
 
-.about-members .box-members .redes .red-logo{
+.about-members .box-members .redes .red-logo {
 	margin: auto;
 }
 
@@ -1055,7 +1009,7 @@ select-container {
 	align-items: center;
 	margin: auto;
 	margin-bottom: 2rem;
-	
+
 }
 
 .about-members .box-members:hover {
@@ -1097,25 +1051,67 @@ select-container {
 	margin-top: 2%;
 }
 
-.about-info .about-members .box-members .avatar{
+.about-info .about-members .box-members .avatar {
 	margin: auto;
 	margin-top: 5px;
 }
 
 /* FIN ESTILOS DE ABOUT US */
 
-/* ESTILOS DE INFO */
-.about .about-banner .presentation p {
-	font-weight: bold;
-	text-align: justify;
-	margin-left: 8%;
-	margin-right: 8%;
-	font-size: 1.2rem;
-	margin-bottom: 5%;
-	margin-top: 2%;
+
+/* ESTILOS DE UPLOAD FILE */
+.uploadFile {
+	margin-top: 50px;
 }
 
-/* FIN ESTILOS DE INFO */
+.file h2 {
+	font-family: 'Poppins', sans-serif;
+	font-weight: bold;
+	margin-bottom: 15px;
+}
+
+.custom-header-class {
+	color: #662961;
+	text-transform: uppercase;
+
+}
+
+.file {
+	overflow-y: scroll;
+}
+
+/* Estilos para el scrollbar y thumb */
+.file::-webkit-scrollbar {
+	width: 12px;
+	/* Ancho del scrollbar */
+}
+
+.file::-webkit-scrollbar-thumb {
+	background-color: #8F3C8A;
+	/* Color del thumb */
+	border-radius: 6px;
+	/* Borde redondeado del thumb */
+}
+
+/* FIN ESTILOS DE UPLOAD FILE */
+
+/* ESTILOS DE  PERFIL*/
+.perfil h4 {
+	color: #8F3C8A;
+	font-size: 2rem;
+	margin-top: 1.5rem;
+	margin-bottom: 1.5rem;
+	font-family: 'Poppins', sans-serif;
+	font-weight: bold;
+	text-align: center;
+	text-transform: uppercase;
+}
+
+.datos{
+	color: #8F3C8A;
+}
+
+/* FIN ESTILOS DE  PERFIL*/
 
 /* ESTILOS DE  */
 /*NO BORRAR*/

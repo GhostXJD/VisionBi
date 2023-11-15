@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { getUsuariosRequest } from '../api/usuarios';
 import { DataGrid } from '@mui/x-data-grid';
 import { useAuth } from '../context/AuthContext'
+import PeopleAltRoundedIcon from '@mui/icons-material/PeopleAltRounded';
 
 export default function DataTable() {
     const [usuarios, setUsuarios] = useState([]);
@@ -37,7 +38,10 @@ export default function DataTable() {
     ];
 
     return (
-            <div style={{ height: 600, width: '100%', backgroundColor: 'white' }}>
+            <div style={{ height: 600, width: '100%', backgroundColor: 'white', marginTop: '60px' }}>
+                <h1 style={{ marginBottom: '30px' }}>
+                    <PeopleAltRoundedIcon sx={{ fontSize: 45 }}/> Your Employees
+                </h1>
                 <DataGrid
                     rows={usuarios.map((user, index) =>({
                         id: index + 1,

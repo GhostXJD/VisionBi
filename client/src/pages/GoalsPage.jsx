@@ -8,6 +8,7 @@ import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import { createGoalRequest } from '../api/goals';
 import Swal from 'sweetalert2'
+import LocalGroceryStoreRoundedIcon from '@mui/icons-material/LocalGroceryStoreRounded';
 
 function GoalsPage() {
     const { isAuthenticated, usuario } = useAuth();
@@ -69,8 +70,8 @@ function GoalsPage() {
 
     return (
         <div className={`flex  h-[80vh] items-center justify-right justify-center`}>
-            <div className={` max-w-md w-full  rounded-md p-8 bg-[#fff] `} style={{ border: '2px dashed #b57edc' }}>
-                <h1>Add Goal</h1>
+            <div className={` max-w-md w-full  rounded-md p-8 bg-[#fff] `} style={{ border: '2px  #c1b9c7', borderRadius: '5px', boxShadow: '0 0 10px rgba(219, 207, 228, 0.7)' }}>
+                <h1 style={{marginBottom: '15px'}}> <LocalGroceryStoreRoundedIcon sx={{ fontSize: 45 }}/> Add Goal</h1>
                 <div className="">
                     <form
                         noValidate
@@ -78,6 +79,7 @@ function GoalsPage() {
                     >
                         <Stack spacing={3}>
                             <TextField
+                                color="secondary"
                                 error={!!(formik.touched.amount && formik.errors.amount)}
                                 fullWidth
                                 label="Amount"
@@ -87,6 +89,7 @@ function GoalsPage() {
                                 value={formik.values.amount}
                             />
                             <TextField
+                                color="secondary"
                                 error={!!(formik.touched.category && formik.errors.category)}
                                 fullWidth
                                 label="Category"
@@ -97,6 +100,7 @@ function GoalsPage() {
                             />
                             <div className="font-bold">Goal start date</div>
                             <TextField
+                                color="secondary"
                                 error={!!(formik.touched.startDate && formik.errors.startDate)}
                                 fullWidth
                                 helperText={formik.touched.startDate && formik.errors.startDate}
@@ -108,6 +112,7 @@ function GoalsPage() {
                             />
                             <div className="font-bold">Goal end date</div>
                             <TextField
+                                color="secondary"
                                 error={!!(formik.touched.endDate && formik.errors.endDate)}
                                 fullWidth
                                 helperText={formik.touched.endDate && formik.errors.endDate}
@@ -133,15 +138,12 @@ function GoalsPage() {
                                 fullWidth
                                 size="large"
                                 sx={{
-                                    mt: 3,
-                                    backgroundColor: '#8F3C8A', // Establece el color de fondo del botón
-                                    '&:hover': {
-                                        backgroundColor: '#b57edc', // Establece el color de fondo al pasar el mouse por encima
-                                    },
-                                }}
+                                    mt: 3
+                                }}                                
+                                
+                                color="secondary"
                                 type="submit"
                                 variant="contained"
-                                color="success"
                             >
                                 Add Goal
                             </Button>

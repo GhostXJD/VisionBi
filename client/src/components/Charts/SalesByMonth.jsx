@@ -80,7 +80,16 @@ function SalesByMonth() {
             monthlySales[month] = valorTotal;
         }
     }
-
+    const formatNumber = (value) => {
+        if (value >= 1000000) {
+            return (value / 1000000).toFixed(2) + "M";
+        } else if (value >= 1000) {
+            return (value / 1000).toFixed(2) + "K";
+        } else {
+            return value.toFixed(2);
+        }
+    };
+    
     // Prepare data for ApexCharts
     const chartData = {
         options: {
@@ -98,6 +107,9 @@ function SalesByMonth() {
                 title: {
                     text: "Total Value",
                 },
+                labels: {
+                    formatter: (value) => formatNumber(value), // Usa la función de formato
+                },
             },
             colors: ["#8F3C8A"],
         },
@@ -108,6 +120,7 @@ function SalesByMonth() {
             },
         ],
     };
+    
 
     return (
         <div>

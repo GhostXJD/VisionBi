@@ -108,6 +108,17 @@ function SalesTrendOverTime() {
                 title: {
                     text: "Sales Quantity",
                 },
+                labels: {
+                    formatter: function (value) {
+                        // Formatea el valor como entero sin decimales con punto como separador de miles
+                        return new Intl.NumberFormat('en-US', {
+                            style: 'decimal',
+                            minimumFractionDigits: 0,
+                            maximumFractionDigits: 0,
+                            useGrouping: true,
+                        }).format(value);
+                    },
+                },
             },
             colors: ["#8F3C8A"],
         },
@@ -118,7 +129,6 @@ function SalesTrendOverTime() {
             },
         ],
     };
-
     const monthNames = [
         "January",
         "February",

@@ -59,9 +59,9 @@ function LoginPage() {
           correo: values.correo,
           password: values.password
         }
-        
+
         await signin(userLogin);
-        
+
       } catch (err) {
         helpers.setStatus({ success: false });
         helpers.setErrors({ submit: err.message });
@@ -77,7 +77,7 @@ function LoginPage() {
           formik.setFieldError('correo', 'Email is incorrect');
         } else if (errores == "Contraseña incorrecta") {
           formik.setFieldError('password', 'Password is incorrect');
-        }else{
+        } else {
           navigate("/dashboard");
         }
       }
@@ -95,10 +95,10 @@ function LoginPage() {
   return (
 
     <div className={`flex  h-[100vh]  items-center justify-center ${theme === 'dark' ? 'dark' : ''}`}  >
-      <div className={` max-w-md w-full rounded-md ${theme === 'dark' ? "#3b0764" : "bg-white"}`}>
-        <div className={`LoginCard ${theme === 'dark' ? 'bg-zinc-800' : 'bg-white border-black'}`}>
+      <div className={` max-w-md w-full rounded-md ${theme === 'dark' ? "#3b0764" : "bg-white"} `}>
+        <div className={`LoginCard ${theme === 'dark' ? 'bg-zinc-800' : 'bg-white border-black'}`} style={{ border: '2px  #c1b9c7', borderRadius: '5px', boxShadow: '0 0 10px rgba(207, 195, 218, 0.7)', backgroundColor:'#fffdfe' }}>
           <div className="LoginImg">
-            <Link to="/"><img src={vision} alt="Descripción de la imagen"/></Link>
+            <Link to="/"><img src={vision} alt="Descripción de la imagen" /></Link>
           </div>
           <div className="LoginMsg">
             <h2 className="LoginTxt1"> Hi, Welcome Back</h2>
@@ -118,6 +118,7 @@ function LoginPage() {
 
             <Stack spacing={3}>
               <TextField
+                color="secondary"
                 error={!!(formik.touched.correo && formik.errors.correo)}
                 fullWidth
                 helperText={formik.touched.correo && formik.errors.correo}
@@ -133,6 +134,7 @@ function LoginPage() {
               />
 
               <TextField
+                color="secondary"
                 error={!!(formik.touched.password && formik.errors.password)}
                 fullWidth
                 helperText={formik.touched.password && formik.errors.password}
@@ -162,16 +164,6 @@ function LoginPage() {
 
             <div className='LoginFinal'>
               <div className='LoginRemember'>
-                <div className='LoginCheckbox'>
-                  <Checkbox
-                    checked={checked}
-                    onChange={handleCheckboxChange}
-                    color="primary"
-                  />
-                </div>
-                <div className='LoginRememberSpan'>
-                  <span>Remember me</span>
-                </div>
               </div>
               <h6 className='LoginForgot'>
                 Forgot Password?
@@ -189,8 +181,9 @@ function LoginPage() {
               </Typography>
             )}
             {/* Botón de ingresar */}
-            
+
             <Button
+              color="secondary"
               fullWidth
               size="large"
               sx={{ mt: 3 }}
@@ -210,7 +203,7 @@ function LoginPage() {
               Don't have an account?
             </Link>
           </div>
-          
+
         </div>
       </div>
     </div>
