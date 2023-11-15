@@ -1,7 +1,7 @@
 import multer from 'multer';
 import { Router } from "express";
 import { authRequired } from "../middlewares/validateToken.js";
-import { getCsvDatos, getCsvDato, createCsvDato, deleteCsvDato, updateCsvDato, getPredict } from "../controllers/csvDatos.controllers.js";
+import { getCsvDatos, getCsvDato, createCsvDato, deleteCsvDato, updateCsvDato, getPredict, getPredictCategory } from "../controllers/csvDatos.controllers.js";
 
 const router = Router();
 
@@ -15,5 +15,6 @@ router.delete("/csvDatos/:id", authRequired, deleteCsvDato);
 router.put("/csvDatos/:id", authRequired, updateCsvDato);
 
 router.get("/predict/:company", getPredict)
+router.get("/predictCategory/:company", getPredictCategory)
 
 export default router;
