@@ -57,7 +57,7 @@ export default function DashboardPage() {
   }, []);
 
   useEffect(() => {
-    if (!isAuthenticated) navigate("/dashboard");
+    if (isAuthenticated) navigate("/dashboard");
   }, [isAuthenticated]);
 
   useEffect(() => {

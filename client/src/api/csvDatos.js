@@ -15,3 +15,5 @@ export const updateCsvDatosRequest = (id, csv) => axios.put(`/csvDatos/${id}`, c
 export const deleteCsvDatosRequest = (id) => axios.delete(`/csvDatos/${id}`)
 
 export const getPredictRequest = (company) => axios.get(`/predict/${company}`)
+
+export const getPredictBycategoryRequest = (company) => axios.get(`/predict/${company}`)
