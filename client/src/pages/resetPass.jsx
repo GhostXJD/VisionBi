@@ -1,5 +1,3 @@
-
-import bcrypt from 'bcryptjs';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext'
@@ -26,16 +24,11 @@ function ChangePasswordPage() {
 
     const formik = useFormik({
         initialValues: {
-            currentPassword: '',
             password: '',
             passwordC: '',
             submit: null
         },
         validationSchema: Yup.object({
-            currentPassword: Yup
-                .string()
-                .max(255)
-                .required('Current password is required'),
             password: Yup
                 .string()
                 .max(255)
@@ -50,13 +43,6 @@ function ChangePasswordPage() {
 
         onSubmit: async (values, helpers) => {
             try {
-
-                const isPasswordValid = await bcrypt.compare(values.currentPassword, usuario.password);
-
-                if (!isPasswordValid) {
-                    helpers.setErrors({ currentPassword: 'Current password is incorrect' });
-                    return;
-                }
 
                 const userData = {
                     nombre: usuario.nombre,
@@ -87,12 +73,6 @@ function ChangePasswordPage() {
         }
     });
 
-    const [showCurrentPassword, setCurrentPassword] = useState(false);
-    const handleClickShowCurrentPassword = () => setCurrentPassword((show) => !show);
-    const handleMouseDownCurrentPassword = (event) => {
-        event.preventDefault();
-    };
-
     const [showPassword, setShowPassword] = useState(false);
     const handleClickShowPassword = () => setShowPassword((show) => !show);
     const handleMouseDownPassword = (event) => {
@@ -109,7 +89,8 @@ function ChangePasswordPage() {
 
         <div className={`flex  h-[80vh] items-center justify-right justify-center`}>
             <div className={` max-w-md w-full  rounded-md p-8 bg-[#fff] `}style={{ border: '2px  #c1b9c7', borderRadius: '5px', boxShadow: '0 0 10px rgba(219, 207, 228, 0.7)' }}>
-                <h1> <LockIcon sx={{ fontSize: 45 }} /> Change Password</h1>
+                <h1> <LockIcon sx={{ fontSize: 45 }} /> Restablecer Contraseña</h1>
+                <p></p>
                 <div className="">
                     <form
                         noValidate
@@ -117,33 +98,6 @@ function ChangePasswordPage() {
                     >
 
                         <Stack spacing={3}>
-                            <TextField
-                                error={!!(formik.touched.currentPassword && formik.errors.currentPassword)}
-                                fullWidth
-                                color="secondary"
-                                helperText={formik.touched.currentPassword && formik.errors.currentPassword}
-                                label="Current Password"
-                                name="currentPassword"
-                                onBlur={formik.handleBlur}
-                                onChange={formik.handleChange}
-                                type={showCurrentPassword ? 'text' : 'password'}
-                                value={formik.values.currentPassword}
-                                InputProps={{
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <IconButton
-                                                aria-label="toggle currentPassword visibility"
-                                                onClick={handleClickShowCurrentPassword}
-                                                onMouseDown={handleMouseDownCurrentPassword}
-                                                edge="end"
-                                            >
-                                                {showCurrentPassword ? <VisibilityOff /> : <Visibility />}
-                                            </IconButton>
-                                        </InputAdornment>
-                                    ),
-                                    sx: { borderRadius: 3 }
-                                }}
-                            />
                             <TextField
                                 error={!!(formik.touched.password && formik.errors.password)}
                                 fullWidth
