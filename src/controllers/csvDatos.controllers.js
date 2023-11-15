@@ -166,7 +166,7 @@ export const getPredict = async (req, res) => {
     }
 };
 
-export const getPredictCategory = async (req, res) => {
+export const postPredictCategory = async (req, res) => {
     try {
     const modelPath = 'file://src/python/category/model.json';
 
