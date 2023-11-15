@@ -41,11 +41,7 @@ import ListarEmpleadosPage from './pages/ListarEmpleadosPage';
 
 function App() {
   const hiddenRoutes = ['/login', '/registro']
-<<<<<<< Updated upstream
-  const hiddenRoutesFooter = ['/login', '/registro','/uploadfile','/perfil','/perfil/ChangePassword','/dashboard','/dashboardByCategory','/goals','/revenue-by-category','/sales-by-neighborhood','/sales-trend-over-time','/sales-by-month','/sales-by-state','/orders-by-month','/ListarUsuarios','/RegistrarEmpleado','/ListarEmpleados']
-=======
-  const hiddenRoutesFooter = ['/login', '/registro','/uploadfile','/perfil','/perfil/ChangePassword','/dashboard','/goals','/revenue-by-category','/sales-by-neighborhood','/sales-trend-over-time','/sales-by-month','/sales-by-state','/orders-by-month','/ListarUsuarios','/RegistrarEmpleado','/ListarEmpleados','/resetPass']
->>>>>>> Stashed changes
+  const hiddenRoutesFooter = ['/login', '/registro','/uploadfile','/perfil','/perfil/ChangePassword','/dashboard','/dashboardByCategory','/goals','/revenue-by-category','/sales-by-neighborhood','/sales-trend-over-time','/sales-by-month','/sales-by-state','/orders-by-month','/ListarUsuarios','/RegistrarEmpleado','/ListarEmpleados','/resetPass']
   return (
     <AuthProvider>
       <ThemeProvider>
