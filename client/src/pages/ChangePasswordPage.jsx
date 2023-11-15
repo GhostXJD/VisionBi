@@ -14,6 +14,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Stack from '@mui/material/Stack';
 import { updateUsuarioRequest } from '../api/usuarios'
 import Swal from 'sweetalert2'
+import LockIcon from '@mui/icons-material/Lock';
 
 function ChangePasswordPage() {
     const { isAuthenticated, usuario } = useAuth();
@@ -107,8 +108,8 @@ function ChangePasswordPage() {
     return (
 
         <div className={`flex  h-[80vh] items-center justify-right justify-center`}>
-            <div className={` max-w-md w-full  rounded-md p-8 bg-[#fff] `}style={{ border: '2px dashed #b57edc' }}>
-                <h1>Change Password</h1>
+            <div className={` max-w-md w-full  rounded-md p-8 bg-[#fff] `}style={{ border: '2px  #c1b9c7', borderRadius: '5px', boxShadow: '0 0 10px rgba(219, 207, 228, 0.7)' }}>
+                <h1> <LockIcon sx={{ fontSize: 45 }} /> Change Password</h1>
                 <div className="">
                     <form
                         noValidate
@@ -119,6 +120,7 @@ function ChangePasswordPage() {
                             <TextField
                                 error={!!(formik.touched.currentPassword && formik.errors.currentPassword)}
                                 fullWidth
+                                color="secondary"
                                 helperText={formik.touched.currentPassword && formik.errors.currentPassword}
                                 label="Current Password"
                                 name="currentPassword"
@@ -145,6 +147,7 @@ function ChangePasswordPage() {
                             <TextField
                                 error={!!(formik.touched.password && formik.errors.password)}
                                 fullWidth
+                                color="secondary"
                                 helperText={formik.touched.password && formik.errors.password}
                                 label="Password"
                                 name="password"
@@ -172,6 +175,7 @@ function ChangePasswordPage() {
                             <TextField
                                 error={!!(formik.touched.passwordC && (formik.errors.passwordC || formik.values.password !== formik.values.passwordC))}
                                 fullWidth
+                                color="secondary"
                                 helperText={
                                     (formik.touched.passwordC && formik.errors.passwordC) ||
                                     (formik.values.password !== formik.values.passwordC && 'Passwords do not match')

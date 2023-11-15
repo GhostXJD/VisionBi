@@ -24,6 +24,7 @@ const VisuallyHiddenInput = styled('input')({
     width: 1,
 });
 
+
 function HomePage() {
     const navigate = useNavigate();
     const { isAuthenticated, usuario } = useAuth();
@@ -108,12 +109,13 @@ function HomePage() {
         }
     };
 
+
     return (
-        <div>
+        <div className='uploadFile'>
             <div className='text-center'>
-                <h1>Load File</h1>
+                <h1>Load your history File here</h1>
                 <form onSubmit={onSubmit}>
-                    <Button component="label" variant="contained" startIcon={<CloudUploadIcon />}>
+                    <Button component="label" variant="contained" startIcon={<CloudUploadIcon />} color="secondary">
                         Attach CSV
                         <VisuallyHiddenInput
                             type="file"
@@ -126,8 +128,7 @@ function HomePage() {
                     <div className='p-2'>
                         {hasUploadedFile && (
                             <>
-                                <div className="">Click here</div>
-                                <Button type="submit" variant="contained" color="success">SAVE FILE</Button>
+                                <Button type="submit" variant="contained" color="secondary">SAVE FILE</Button>
                             </>
                         )}
                     </div>
@@ -135,8 +136,8 @@ function HomePage() {
             </div>
 
             {/* Mostrar los datos del CSV en una tabla */}
-            <div>
-                <h2>CSV file content:</h2>
+            <div className='file'>
+                <h2 >CSV file content </h2>
                 <Paper elevation={3} style={{ height: 550, width: '100%' }}>
                     <DataGrid
                         rows={csvData.map((row, rowIndex) => ({
@@ -147,6 +148,7 @@ function HomePage() {
                             field: header,
                             headerName: header,
                             flex: 1,
+                            headerClassName: 'custom-header-class', // Agregar una clase personalizada para el encabezado
                         })) : []}
                         pageSize={5}
                     />

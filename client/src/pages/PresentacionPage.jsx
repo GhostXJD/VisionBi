@@ -67,6 +67,8 @@ function PresentationPage() {
                         <ul> • State: Refers to the geographical region or location where the sale took place.</ul>
 
                         <ul> • Neighborhood: Specifies the smaller geographic area where the transaction occurred.</ul>
+
+                        <ul> • Total by Order: Represents the totsl price of an order sale.</ul>
                         <p>To complete this process, simply upload a CSV file containing this information. This will enable you to analyze and manage your sales history efficiently and effectively.</p>
                     </div>
                 </div>

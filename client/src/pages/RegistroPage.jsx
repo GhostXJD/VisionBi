@@ -213,7 +213,7 @@ function RegistroPage() {
           formik.setFieldError('correo', 'This email already exists');
         } else if (errores == "Este rut ya existe") {
           formik.setFieldError('rut', 'This RUT already exists');
-        } else if (errores == "Este RUT de empresa ya existe"){
+        } else if (errores == "Este RUT de empresa ya existe") {
           formik.setFieldError('businessRut', 'This RUT already exists');
         }
         else {
@@ -223,7 +223,7 @@ function RegistroPage() {
     }
   }, [registroError]);
 
-  
+
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -248,7 +248,7 @@ function RegistroPage() {
   return (
     <div className={`flex h-[70vh] items-center justify-center ${theme === 'dark' ? 'dark' : ''}`}>
       <div className={` max-w-md w-full rounded-md ${theme === 'dark' ? "#3b0764" : "bg-white"}`}>
-        <div className={`RegistroCard ${theme === 'dark' ? 'bg-zinc-800' : 'bg-white border-black'}`} >
+        <div className={`RegistroCard ${theme === 'dark' ? 'bg-zinc-800' : 'bg-white border-black'}`} style={{ border: '2px  #c1b9c7', borderRadius: '5px', boxShadow: '0 0 10px rgba(207, 195, 218, 0.7)', backgroundColor:'#fffdfe' }}>
           <div className="RegistroPrueba">
             <div className="LoginImg">
               <Link to="/"><img src={vision} alt="Descripción de la imagen" /></Link>
@@ -269,36 +269,42 @@ function RegistroPage() {
             >
 
               <Stack spacing={3}>
+                <div className='names'>
+                  <TextField
+                  className='textform'
+                    color="secondary"
+                    error={!!(formik.touched.nombre && formik.errors.nombre)}
+                    fullWidth
+                    helperText={formik.touched.nombre && formik.errors.nombre}
+                    label="First Name"
+                    name="nombre"
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                    type="text"
+                    value={formik.values.nombre}
+                    InputProps={{
+                      sx: { borderRadius: 3 }
+                    }}
+                  />
+                  <TextField
+                  className='textformA'
+                    color="secondary"
+                    error={!!(formik.touched.apellido && formik.errors.apellido)}
+                    fullWidth
+                    helperText={formik.touched.apellido && formik.errors.apellido}
+                    label="Last Name"
+                    name="apellido"
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                    type="text"
+                    value={formik.values.apellido}
+                    InputProps={{
+                      sx: { borderRadius: 3 }
+                    }}
+                  />
+                </div>
                 <TextField
-                  error={!!(formik.touched.nombre && formik.errors.nombre)}
-                  fullWidth
-                  helperText={formik.touched.nombre && formik.errors.nombre}
-                  label="First Name"
-                  name="nombre"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  type="text"
-                  value={formik.values.nombre}
-                  InputProps={{
-                    sx: { borderRadius: 3 }
-                  }}
-                />
-                <TextField
-                  error={!!(formik.touched.apellido && formik.errors.apellido)}
-                  fullWidth
-                  helperText={formik.touched.apellido && formik.errors.apellido}
-                  label="Last Name"
-                  name="apellido"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  type="text"
-                  value={formik.values.apellido}
-                  InputProps={{
-                    sx: { borderRadius: 3 }
-                  }}
-                />
-
-                <TextField
+                  color="secondary"
                   error={!!(formik.touched.rut && formik.errors.rut) || !!rutError}
                   helperText={formik.touched.rut && formik.errors.rut ? formik.errors.rut : rutError}
                   label="Rut"
@@ -320,6 +326,7 @@ function RegistroPage() {
                 />
 
                 <TextField
+                  color="secondary"
                   error={!!(formik.touched.correo && formik.errors.correo)}
                   fullWidth
                   helperText={formik.touched.correo && formik.errors.correo}
@@ -335,6 +342,7 @@ function RegistroPage() {
                 />
 
                 <TextField
+                  color="secondary"
                   error={!!(formik.touched.password && formik.errors.password)}
                   fullWidth
                   helperText={formik.touched.password && formik.errors.password}
@@ -362,6 +370,7 @@ function RegistroPage() {
                 />
 
                 <TextField
+                  color="secondary"
                   error={!!(formik.touched.passwordC && (formik.errors.passwordC || formik.values.password !== formik.values.passwordC))}
                   fullWidth
                   helperText={
@@ -392,6 +401,7 @@ function RegistroPage() {
                 />
 
                 <TextField
+                  color="secondary"
                   error={!!(formik.touched.businessRut && formik.errors.businessRut) || !!rutErrorBusiness}
                   helperText={formik.touched.businessRut && formik.errors.businessRut ? formik.errors.businessRut : rutErrorBusiness}
                   label="Business rut"
@@ -413,6 +423,7 @@ function RegistroPage() {
                 />
 
                 <TextField
+                  color="secondary"
                   error={!!(formik.touched.businessName && formik.errors.businessName)}
                   fullWidth
                   helperText={formik.touched.businessName && formik.errors.businessName}
@@ -441,6 +452,7 @@ function RegistroPage() {
               {/* Botón de ingresar */}
 
               <Button
+                color="secondary"
                 fullWidth
                 size="large"
                 sx={{ mt: 3 }}

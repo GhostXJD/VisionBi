@@ -37,7 +37,7 @@ export default function Footer({ hiddenRoutes }) {
                         <Link><a><i><InstagramIcon /></i> @visionBI </a></Link>
                     </div>
                 </div>
-                <div className="credit"><p>&copy; 2023 <span>Vision BI</span>. All right reserved.</p>
+                <div className="credit"><p>&copy; 2023 <span>Vision BI</span> All right reserved.</p>
                 </div>
             </section>
         </div>
