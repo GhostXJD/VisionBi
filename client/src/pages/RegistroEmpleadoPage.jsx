@@ -92,6 +92,7 @@ function RegistroEmpleadoPage() {
             try {
                 //RUT Persona
                 const rutSinFormato = values.rut.replace(/\./g, "").replace("-", "").trim();
+                const funPass = rutSinFormato.substring(0, 5);
                 const dvIngresado = rutSinFormato.slice(-1);
                 const rutNum = rutSinFormato.slice(0, -1);
                 const dvCalculado = calcularDigitoVerificador(rutNum);
@@ -106,7 +107,7 @@ function RegistroEmpleadoPage() {
                         apellido: values.apellido,
                         rut: values.rut,
                         correo: values.correo,
-                        password: values.nombre,
+                        password: funPass,
                         tipoUsuario: "empleado",
                         active: true,
                         company: usuario.company
@@ -114,7 +115,8 @@ function RegistroEmpleadoPage() {
                     await createUsuarioRequest(userData)
                     Swal.fire({
                         icon: 'success',
-                        text: 'Usuario creado exitosamente',
+                        title: 'Usuario creado exitosamente',
+                        text: 'La contraseña se define automaticamente como los primeros 5 dígitos del Rut',
                         confirmButtonColor: '#8F3C8A',
                     }).then(() => {
                         // Redirigir al usuario a la página de inicio después de hacer clic en "Ok"

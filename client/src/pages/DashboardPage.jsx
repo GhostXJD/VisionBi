@@ -57,7 +57,7 @@ export default function DashboardPage() {
   }, []);
 
   useEffect(() => {
-    if (!isAuthenticated) navigate("/dashboard");
+    if (isAuthenticated) navigate("/dashboard");
   }, [isAuthenticated]);
 
   useEffect(() => {
@@ -121,7 +121,7 @@ export default function DashboardPage() {
   const getPredict = async () => {
     try {
       const res = await getPredictRequest(usuario.company);
-      console.log('Predict: ', res.data)
+      //console.log('Predict: ', res.data)
       setPredictData(res.data);
       setLoading(true)
     } catch (error) {

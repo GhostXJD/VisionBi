@@ -2,6 +2,7 @@ import { createContext, useState, useContext, useEffect } from "react";
 import { registroRequest, loginRequest, verifyTokenRequet } from '../api/auth';
 import { createCompanyRequest } from '../api/company'
 import Cookies from 'js-cookie';
+import bcrypt from 'bcryptjs';
 
 export const AuthContext = createContext()
 
@@ -30,10 +31,19 @@ export const AuthProvider = ({ children }) => {
         }
     }
 
+
     const signin = async (usuario) => {
         try {
             const res = await loginRequest(usuario)
             console.log(res)
+            const rutSinFormato = usuario.rut.replace(/\./g, "").replace("-", "").trim();
+            console.log('rutSinFormato', rutSinFormato)
+            const funPass = rutSinFormato.substring(0, 5);
+            console.log('funPass', funPass)
+            const isPasswordValid = await bcrypt.compare(funPass, usuario.password);
+            if(funPass === usuario.password){
+                window.location.href='/resetPass'
+            }
             setIsAuthenticated(true)
             setUsuario(res.data)
         } catch (error) {

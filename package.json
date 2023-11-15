@@ -17,6 +17,7 @@
     "@mui/icons-material": "^5.14.11",
     "@mui/material": "^5.14.13",
     "@mui/styled-engine-sc": "^5.14.12",
+    "@mui/styles": "^5.14.18",
     "@mui/x-data-grid": "^6.16.2",
     "@tensorflow/tfjs": "^4.11.0",
     "@tensorflow/tfjs-node": "^4.11.0",

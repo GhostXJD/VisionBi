@@ -44,7 +44,7 @@ function HomePage() {
     const getCsv = async () => {
         try {
             const response = await getCsvDatoRequest(usuario.company);
-            console.log("Respuesta de la API:", response);
+            //console.log("Respuesta de la API:", response);
             Papa.parse(response.data, {
                 complete: (parsedData) => {
                     const data = parsedData.data.map((row) => ({
@@ -95,7 +95,7 @@ function HomePage() {
 
         try {
             const response = await createCsv(formData);
-            console.log("Archivo CSV subido con éxito:", response);
+            //console.log("Archivo CSV subido con éxito:", response);
             Swal.fire({
                 icon: 'success',
                 text: 'File upload sucessfuly',
