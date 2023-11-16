@@ -1,16 +1,21 @@
-//TODO: Agregar diseño
 import { useState, useEffect } from 'react';
-import { useAuth } from '../context/AuthContext'
+import { useAuth } from '../context/AuthContext';
 import { deleteUsuarioRequest, getUsuariosRequest } from '../api/usuarios';
-import UsuarioCard from "../components/UsuarioCard";
+import Swal from 'sweetalert2';
+import { DataGrid } from '@mui/x-data-grid';
+import IconButton from '@mui/material/IconButton';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 function ListarUsuariosPage() {
   const [usuarios, setUsuarios] = useState([]);
   const { isAuthenticated } = useAuth();
 
   useEffect(() => {
-    if (!isAuthenticated) navigate('/')
-  }, [isAuthenticated])
+    if (!isAuthenticated) {
+      window.location.href = '/';
+    }
+  }, [isAuthenticated]);
 
   useEffect(() => {
     getUsuarios();
@@ -24,7 +29,7 @@ function ListarUsuariosPage() {
       );
       setUsuarios(usuarios);
     } catch (error) {
-      console.error("Error al obtener usuarios:", error);
+      console.error('Error al obtener usuarios:', error);
     }
   };
 
@@ -32,24 +37,58 @@ function ListarUsuariosPage() {
     try {
       const res = await deleteUsuarioRequest(id);
       console.log(res);
+      Swal.fire({
+        icon: 'success',
+        text: 'User deleted successfully',
+        confirmButtonColor: '#8F3C8A',
+      });
       getUsuarios();
     } catch (error) {
-      console.error("Error al eliminar usuario:", error);
+      console.error('Error al eliminar usuario:', error);
     }
   };
 
-  if (usuarios.length === 0) return <h1>No hay usuarios</h1>;
+  const columns = [
+    { field: 'id', headerName: 'ID', width: 110 },
+    { field: 'nombre', headerName: 'Name', width: 200 },
+    { field: 'rut', headerName: 'Rut', width: 200 },
+    { field: 'correo', headerName: 'E-mail', width: 250 },
+    { field: 'tipoUsuario', headerName: 'Job', width: 150 },
+    {
+      field: 'actions',
+      headerName: 'Actions',
+      renderCell: (params) => (
+        <>
+          <IconButton onClick={() => handleEditUsuario(params.row.id)}>
+            <EditIcon />
+          </IconButton>
+          <IconButton onClick={() => handleDeleteUsuario(params.row.id)}>
+            <DeleteIcon />
+          </IconButton>
+        </>
+      ),
+    },
+  ];
 
   return (
-      <div className='grid grid-cols-3 gap-2'>
-        {usuarios.map((usuario) => (
-          <UsuarioCard
-            usuario={usuario}
-            key={usuario._id}
-            onDeleteUsuario={handleDeleteUsuario}
-          />
-        ))}
-      </div>
+    <div className="mx-auto my-5">
+      {usuarios.length > 0 ? (
+        <DataGrid
+          rows={usuarios.map((usuario, index) => ({
+            id: usuario._id, // Usar el id real del usuario
+            ...usuario,
+          }))}
+          columns={columns}
+          pageSize={5}
+          autoHeight
+          rowHeight={40}
+          headerClassName="sticky-header"
+          className="scrollable-body"
+        />
+      ) : (
+        <h1>No hay usuarios</h1>
+      )}
+    </div>
   );
 }
 
