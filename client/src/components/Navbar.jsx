@@ -106,7 +106,7 @@ export default function PersistentDrawerLeft({ children, hiddenRoutes }) {
     };
 
     return (
-        <Box sx={{ display: 'flex' }}>
+        <Box sx={{ display: 'flex' }} className="my-5">
             <CssBaseline />
             <AppBar position="fixed" open={open}>
                 <Toolbar>

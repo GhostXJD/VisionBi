@@ -64,7 +64,7 @@ function recoverPassPage() {
 
         <div className={`flex  h-[80vh] items-center justify-right justify-center`}>
             <div className={` max-w-md w-full  rounded-md p-8 bg-[#fff] `}style={{ border: '2px  #c1b9c7', borderRadius: '5px', boxShadow: '0 0 10px rgba(219, 207, 228, 0.7)' }}>
-                <h1> <LockIcon sx={{ fontSize: 45 }} /> Recuperar Contraseña</h1>
+                <h1> <LockIcon sx={{ fontSize: 45 }} /> Create your password</h1>
                 <div className="">
                     <form
                         noValidate
