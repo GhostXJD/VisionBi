@@ -5,76 +5,50 @@ import { useAuth } from '../context/AuthContext'
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { Button, Typography } from '@mui/material';
-import IconButton from '@mui/material/IconButton';
-import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Stack from '@mui/material/Stack';
-import { updateUsuarioRequest } from '../api/usuarios'
+import { updatePassUsuarioRequest } from '../api/usuarios'
 import Swal from 'sweetalert2'
 import LockIcon from '@mui/icons-material/Lock';
 
-function ChangePasswordPage() {
-    const { isAuthenticated, usuario } = useAuth();
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        if (!isAuthenticated) navigate('/')
-    }, [isAuthenticated])
+function recoverPassPage() {
 
     const formik = useFormik({
         initialValues: {
-            currentPassword: '',
-            password: '',
-            passwordC: '',
+            mail: '',
             submit: null
         },
         validationSchema: Yup.object({
-            currentPassword: Yup
+            mail: Yup
                 .string()
                 .max(255)
-                .required('Current password is required'),
-            password: Yup
-                .string()
-                .max(255)
-                .min(5, 'Must be at least 5 characters')
-                .required('Password is required'),
-            passwordC: Yup
-                .string()
-                .max(255)
-                .min(5, 'Must be at least 5 characters')
-                .required('Repeat your password'),
+                .required('Ingresa un correo'),
         }),
 
         onSubmit: async (values, helpers) => {
             try {
 
-                const isPasswordValid = await bcrypt.compare(values.currentPassword, usuario.password);
-
-                if (!isPasswordValid) {
-                    helpers.setErrors({ currentPassword: 'Current password is incorrect' });
-                    return;
-                }
+                 
 
                 const userData = {
                     nombre: usuario.nombre,
                     apellido: usuario.apellido,
                     rut: usuario.rut,
                     correo: usuario.correo,
-                    password: values.password,
+                    password: funPass,
                     tipoUsuario: usuario.tipoUsuario,
                     active: true,
                     company: usuario.company
                 }
-                await updateUsuarioRequest(usuario.id, userData)
-                if (updateUsuarioRequest(userData)) {
+                await updatePassUsuarioRequest(usuario.id, userData)
+                if (updatePassUsuarioRequest(userData)) {
                     Swal.fire({
                         icon: 'success',
-                        text: 'Contraseña actualizada',
+                        title: 'Contraseña se ha restablecida correctamente',
+                        text: 'Tu contraseña son los primeros 5 dígitos de tu rut sin puntos',
                         confirmButtonColor: '#8F3C8A',
                     }).then(() => {
-                        window.location.replace('/perfil');
+                        window.location.replace('/login');
                     });
                 }
 
@@ -86,29 +60,11 @@ function ChangePasswordPage() {
         }
     });
 
-    const [showCurrentPassword, setCurrentPassword] = useState(false);
-    const handleClickShowCurrentPassword = () => setCurrentPassword((show) => !show);
-    const handleMouseDownCurrentPassword = (event) => {
-        event.preventDefault();
-    };
-
-    const [showPassword, setShowPassword] = useState(false);
-    const handleClickShowPassword = () => setShowPassword((show) => !show);
-    const handleMouseDownPassword = (event) => {
-        event.preventDefault();
-    };
-
-    const [showPasswordC, setShowPasswordC] = useState(false);
-    const handleClickShowPasswordC = () => setShowPasswordC((showC) => !showC);
-    const handleMouseDownPasswordC = (event) => {
-        event.preventDefault();
-    };
-
     return (
 
         <div className={`flex  h-[80vh] items-center justify-right justify-center`}>
             <div className={` max-w-md w-full  rounded-md p-8 bg-[#fff] `}style={{ border: '2px  #c1b9c7', borderRadius: '5px', boxShadow: '0 0 10px rgba(219, 207, 228, 0.7)' }}>
-                <h1> <LockIcon sx={{ fontSize: 45 }} /> Change Password</h1>
+                <h1> <LockIcon sx={{ fontSize: 45 }} /> Recuperar Contraseña</h1>
                 <div className="">
                     <form
                         noValidate
@@ -117,89 +73,19 @@ function ChangePasswordPage() {
 
                         <Stack spacing={3}>
                             <TextField
-                                error={!!(formik.touched.currentPassword && formik.errors.currentPassword)}
+                                error={!!(formik.touched.mail && formik.errors.mail)}
                                 fullWidth
                                 color="secondary"
-                                helperText={formik.touched.currentPassword && formik.errors.currentPassword}
-                                label="Current Password"
-                                name="currentPassword"
+                                helperText={formik.touched.mail && formik.errors.mail}
+                                label="Correo"
+                                name="mail"
                                 onBlur={formik.handleBlur}
                                 onChange={formik.handleChange}
-                                type={showCurrentPassword ? 'text' : 'password'}
-                                value={formik.values.currentPassword}
+                                type="email"
+                                value={formik.values.mail}
                                 InputProps={{
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <IconButton
-                                                aria-label="toggle currentPassword visibility"
-                                                onClick={handleClickShowCurrentPassword}
-                                                onMouseDown={handleMouseDownCurrentPassword}
-                                                edge="end"
-                                            >
-                                                {showCurrentPassword ? <VisibilityOff /> : <Visibility />}
-                                            </IconButton>
-                                        </InputAdornment>
-                                    ),
                                     sx: { borderRadius: 3 }
-                                }}
-                            />
-                            <TextField
-                                error={!!(formik.touched.password && formik.errors.password)}
-                                fullWidth
-                                color="secondary"
-                                helperText={formik.touched.password && formik.errors.password}
-                                label="Password"
-                                name="password"
-                                onBlur={formik.handleBlur}
-                                onChange={formik.handleChange}
-                                type={showPassword ? 'text' : 'password'}
-                                value={formik.values.password}
-                                InputProps={{
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <IconButton
-                                                aria-label="toggle password visibility"
-                                                onClick={handleClickShowPassword}
-                                                onMouseDown={handleMouseDownPassword}
-                                                edge="end"
-                                            >
-                                                {showPassword ? <VisibilityOff /> : <Visibility />}
-                                            </IconButton>
-                                        </InputAdornment>
-                                    ),
-                                    sx: { borderRadius: 3 }
-                                }}
-                            />
-
-                            <TextField
-                                error={!!(formik.touched.passwordC && (formik.errors.passwordC || formik.values.password !== formik.values.passwordC))}
-                                fullWidth
-                                color="secondary"
-                                helperText={
-                                    (formik.touched.passwordC && formik.errors.passwordC) ||
-                                    (formik.values.password !== formik.values.passwordC && 'Passwords do not match')
-                                }
-                                label="Confirm Password"
-                                name="passwordC"
-                                onBlur={formik.handleBlur}
-                                onChange={formik.handleChange}
-                                type={showPasswordC ? 'text' : 'password'}
-                                value={formik.values.passwordC}
-                                InputProps={{
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <IconButton
-                                                aria-label="toggle password visibility"
-                                                onClick={handleClickShowPasswordC}
-                                                onMouseDown={handleMouseDownPasswordC}
-                                                edge="end"
-                                            >
-                                                {showPasswordC ? <VisibilityOff /> : <Visibility />}
-                                            </IconButton>
-                                        </InputAdornment>
-                                    ),
-                                    sx: { borderRadius: 3 },
-                                }}
+                                  }}
                             />
                         </Stack>
 
@@ -227,7 +113,7 @@ function ChangePasswordPage() {
                                 variant="contained"
                                 color="success"
                             >
-                                Change Password
+                                Restablecer contraseña
                             </Button>
 
                         </div>
@@ -238,4 +124,4 @@ function ChangePasswordPage() {
     )
 }
 
-export default ChangePasswordPage
+export default recoverPassPage

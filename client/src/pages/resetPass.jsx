@@ -14,7 +14,7 @@ import { updateUsuarioRequest } from '../api/usuarios'
 import Swal from 'sweetalert2'
 import LockIcon from '@mui/icons-material/Lock';
 
-function ChangePasswordPage() {
+function resetPassPage() {
     const { isAuthenticated, usuario } = useAuth();
     const navigate = useNavigate();
 
@@ -193,4 +193,4 @@ function ChangePasswordPage() {
     )
 }
 
-export default ChangePasswordPage
+export default resetPassPage
