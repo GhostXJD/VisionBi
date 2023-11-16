@@ -35,17 +35,17 @@ export const AuthProvider = ({ children }) => {
     const signin = async (usuario) => {
         try {
             const res = await loginRequest(usuario)
-            console.log(res)
-            const rutSinFormato = usuario.rut.replace(/\./g, "").replace("-", "").trim();
-            console.log('rutSinFormato', rutSinFormato)
+            setIsAuthenticated(true);
+            setUsuario(res.data);
+
+            const rutSinFormato = res.data.rut.replace(/\./g, "").replace("-", "").trim();
             const funPass = rutSinFormato.substring(0, 5);
-            console.log('funPass', funPass)
-            const isPasswordValid = await bcrypt.compare(funPass, usuario.password);
-            if(funPass === usuario.password){
-                window.location.href='/resetPass'
+
+            const isPasswordValid = await bcrypt.compare(funPass, res.data.password);
+            if (isPasswordValid) {
+                window.location.href = '/resetPass';
             }
-            setIsAuthenticated(true)
-            setUsuario(res.data)
+
         } catch (error) {
             if (Array.isArray(error.response.data)) {
                 return setErrors(error.response.data);
