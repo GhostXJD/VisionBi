@@ -14,7 +14,11 @@ const messageSchema = new mongoose.Schema({
         type: String,
         required: true,
         trim: true,
-    }
+    },
+    status: {
+        type: Boolean,
+        required: true
+    },
 })
 
 export default mongoose.model('message', messageSchema)

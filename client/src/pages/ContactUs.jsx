@@ -37,6 +37,7 @@ function ContactUs() {
                     nombre: values.nombre,
                     correo: values.correo,
                     message: values.message,
+                    status: true
                 }
                 await createMessageRequest(msgData)
                 Swal.fire({
