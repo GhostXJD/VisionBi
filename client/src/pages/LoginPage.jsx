@@ -165,9 +165,11 @@ function LoginPage() {
             <div className='LoginFinal'>
               <div className='LoginRemember'>
               </div>
+              <Link to='/recoverPass' >
               <h6 className='LoginForgot'>
                 Forgot Password?
               </h6>
+              </Link>
             </div>
 
 

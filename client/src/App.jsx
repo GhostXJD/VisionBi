@@ -15,6 +15,7 @@ import Mission from './pages/Mission';
 import Vision from './pages/Vision';
 import ContactUs from './pages/ContactUs';
 import NotFoundPage from './pages/NotFoundPage';
+import RecoverPass from './pages/recoverPass';
 
 // Rutas usuarios logueados
 import UploadFile from './pages/UploadFile';
@@ -41,7 +42,7 @@ import ListarEmpleadosPage from './pages/ListarEmpleadosPage';
 
 function App() {
   const hiddenRoutes = ['/login', '/registro']
-  const hiddenRoutesFooter = ['/login', '/registro','/uploadfile','/perfil','/perfil/ChangePassword','/dashboard','/dashboardByCategory','/goals','/revenue-by-category','/sales-by-neighborhood','/sales-trend-over-time','/sales-by-month','/sales-by-state','/orders-by-month','/ListarUsuarios','/RegistrarEmpleado','/ListarEmpleados','/resetPass']
+  const hiddenRoutesFooter = ['/login', '/registro','/uploadfile','/perfil','/perfil/ChangePassword','/dashboard','/dashboardByCategory','/goals','/revenue-by-category','/sales-by-neighborhood','/sales-trend-over-time','/sales-by-month','/sales-by-state','/orders-by-month','/ListarUsuarios','/RegistrarEmpleado','/ListarEmpleados','/resetPass','/recoverPass']
   return (
     <AuthProvider>
       <ThemeProvider>
@@ -59,6 +60,7 @@ function App() {
                   <Route path='/mission' element={<Mission />} />
                   <Route path='/vision' element={<Vision />} />
                   <Route path='/contactus' element={<ContactUs />} />
+                  <Route path='/recoverPass' element={<RecoverPass />} />
                   
                   {/* Rutas usuarios logueados */}
                   <Route element={<ProtectedRoute />}>

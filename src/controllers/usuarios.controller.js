@@ -91,3 +91,22 @@ export const updateUsuario = async (req, res) => {
         res.status(404).json({ message: "Usuario not found" });
     }
 };
+
+function generatePassword(rut) {
+    return rut.replace(/[-.]/g, '').slice(0, -1);
+}
+
+export const updatePass = async (req, res) => {
+    try {
+        const correo = req.params.correo
+
+        const passwordSinEncriptar = generatePassword(funpass)
+        const usuarioEncontrado = await usuario.findOneAndUpdate({ correo:correo },{
+            password: passwordHash
+        });
+        
+        res.json(usuarioEncontrado);
+    } catch (error) {
+        res.status(404).json({ message: "El correo ingresado no existe" });
+    }
+};
