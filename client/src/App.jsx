@@ -34,6 +34,7 @@ import ResetPass from './pages/resetPass';
 
 // Rutas admin
 import ListarUsuariosPage from './pages/ListarUsuariosPage';
+import ListarMenssagesPage from './pages/ListarMessagesPage';
 
 // Rutas representante
 import RegistroEmpleadoPage from './pages/RegistroEmpleadoPage';
@@ -42,7 +43,7 @@ import ListarEmpleadosPage from './pages/ListarEmpleadosPage';
 
 function App() {
   const hiddenRoutes = ['/login', '/registro']
-  const hiddenRoutesFooter = ['/login', '/registro','/uploadfile','/perfil','/perfil/ChangePassword','/dashboard','/dashboardByCategory','/goals','/revenue-by-category','/sales-by-neighborhood','/sales-trend-over-time','/sales-by-month','/sales-by-state','/orders-by-month','/ListarUsuarios','/RegistrarEmpleado','/ListarEmpleados','/resetPass','/recoverPass']
+  const hiddenRoutesFooter = ['/login', '/registro','/uploadfile','/perfil','/perfil/ChangePassword','/dashboard','/dashboardByCategory','/goals','/revenue-by-category','/sales-by-neighborhood','/sales-trend-over-time','/sales-by-month','/sales-by-state','/orders-by-month','/ListarUsuarios','/RegistrarEmpleado','/ListarEmpleados','/resetPass','/recoverPass', '/ListarMensajes']
   return (
     <AuthProvider>
       <ThemeProvider>
@@ -89,6 +90,7 @@ function App() {
                   <Route element={<ProtectedRoute role='representante' />}>
                     <Route path='/RegistrarEmpleado' element={<RegistroEmpleadoPage />} />
                     <Route path='/ListarEmpleados' element={<ListarEmpleadosPage />} />
+                    <Route path='/ListarMensajes' element={<ListarMenssagesPage />} />
                   </Route>
 
                   {/* Pagina no encontrada */}
