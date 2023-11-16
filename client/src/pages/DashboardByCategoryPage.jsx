@@ -2,7 +2,6 @@ import React from 'react'
 import { useEffect, useState } from "react";
 import { Chart } from "react-google-charts";
 import { useAuth } from "../context/AuthContext";
-import { useNavigate } from "react-router";
 import { getCsvDatoRequest, getPredictByCategoryRequest } from "../api/csvDatos";
 import { Link } from "react-router-dom";
 import Papa from "papaparse";
@@ -17,7 +16,7 @@ function DashboardByCategoryPage() {
     const [selectedCategory, setSelectedCategory] = useState("");
     const [dataAvailable, setDataAvailable] = useState(false);
     const [loading, setLoading] = useState(true);
-    const [chartData, setCharData] = useState([]);
+    const [chartData, setChartData] = useState([]);
     const [filteredCsvData, setFilteredCsvData] = useState([]);
     const [predictCategoryData, setPredictCategoryData] = useState([]);
 
@@ -38,7 +37,6 @@ function DashboardByCategoryPage() {
     const getCsv = async () => {
         try {
             const response = await getCsvDatoRequest(usuario.company);
-            //console.log("Respuesta de la API:", response);
             Papa.parse(response.data, {
                 complete: (parsedData) => {
                     const data = parsedData.data.map((row) => ({
@@ -63,11 +61,14 @@ function DashboardByCategoryPage() {
     const getPredictByCategory = async () => {
         try {
             if (!selectedCategory) {
-                console.log("Por favor selecciona categoría");
+                console.log('Por favor selecciona categoría');
                 return;
             }
 
             const filteredData = csvData.filter((row) => row.category === selectedCategory);
+
+            const res = await getPredictByCategoryRequest(usuario.company, { category: selectedCategory });
+            setPredictCategoryData(res.data);
 
             const dailyTotal = {};
 
@@ -86,14 +87,26 @@ function DashboardByCategoryPage() {
                 .sort(([dateA], [dateB]) => new Date(dateA) - new Date(dateB))
                 .map(([date, total]) => [date, total]);
 
-            const res = await getPredictByCategoryRequest(usuario.company, { category: selectedCategory });
-            setPredictCategoryData(res.data.predictionsCategory);
+            const futureDates = res.data.predictionsCategory.map((prediction) => prediction.date);
 
-            setCharData(sortedChartData);
-            setLoading(true);
+            const futurePredictions = res.data.predictionsCategory.filter((prediction) =>
+                futureDates.includes(prediction.date)
+            );
+
+            const futureChartData = futurePredictions.map((prediction) => [
+                prediction.date,
+                null,
+                prediction.skuValue,
+            ]);
+
+            const historicalChartData = sortedChartData.map(([date, total]) => [date, total, null]);
+
+            const combinedChartData = [...historicalChartData, ...futureChartData];
+
+            setChartData(combinedChartData);
+            setLoading(false);
         } catch (error) {
-            console.log("Error al predecir", error);
-        } finally {
+            console.log('Error al predecir', error);
             setLoading(false);
         }
     };
@@ -139,18 +152,15 @@ function DashboardByCategoryPage() {
                                     loader={<div>Loading Chart</div>}
                                     data={[
                                         ['Date', 'Total Sales', 'Predicted Sales'],
-                                        ...chartData.map(([date, total]) => {
-                                            const predicted = predictCategoryData.find(prediction => prediction.date === date);
-                                            return [date, total, predicted ? predicted.skuValue : 0];
-                                        }),
-                                    ].filter(row => row[2] !== null)}
+                                        ...chartData,
+                                    ]}
                                     options={{
                                         title: `Total vs Predicted Sales by Day for ${selectedCategory}`,
                                         hAxis: {
                                             title: 'Date',
                                         },
                                         vAxis: {
-                                            title: 'Sales',
+                                            title: 'Value',
                                         },
                                     }}
                                     rootProps={{ 'data-testid': '1' }}

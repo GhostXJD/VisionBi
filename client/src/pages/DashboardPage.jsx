@@ -1,5 +1,3 @@
-// ULTIMAS 30 VENTAS ORDENADAS
-
 import { useEffect, useState } from "react";
 import { Chart } from "react-google-charts";
 import { useAuth } from "../context/AuthContext";
@@ -96,7 +94,6 @@ export default function DashboardPage() {
   const getCsv = async () => {
     try {
       const response = await getCsvDatoRequest(usuario.company);
-      //console.log("Respuesta de la API:", response);
       Papa.parse(response.data, {
         complete: (parsedData) => {
           const data = parsedData.data.map((row) => ({
@@ -121,7 +118,6 @@ export default function DashboardPage() {
   const getPredict = async () => {
     try {
       const res = await getPredictRequest(usuario.company);
-      //console.log('Predict: ', res.data)
       setPredictData(res.data);
       setLoading(true)
     } catch (error) {
