@@ -8,6 +8,10 @@ import Papa from "papaparse";
 import moment from 'moment';
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
 
 function DashboardByCategoryPage() {
 
@@ -127,23 +131,27 @@ function DashboardByCategoryPage() {
             ) : (
                 <>
                     {dataAvailable ? (
-                        <div className="">
-                            <label htmlFor="categorySelect">Select Category:</label>
-                            <select
-                                id="categorySelect"
-                                value={selectedCategory}
-                                onChange={(e) => setSelectedCategory(e.target.value)}
-                            >
-                                <option value="">Select a category</option>
-                                {Array.from(new Set(csvData.map((row) => row.category))).map((category) => (
-                                    <option key={category} value={category}>
-                                        {category}
-                                    </option>
-                                ))}
-                            </select>
-                            <button disabled={!isCategorySelected} onClick={getPredictByCategory}>
-                                Get Predictions
-                            </button>
+                        <div sx={{ minWidth: 120 }}>
+                            <FormControl sx={{ minWidth: 300 }}>
+                                <InputLabel id="">Select Category:</InputLabel>
+                                <Select
+                                    id="categorySelect"
+                                    label="Select Category"
+                                    value={selectedCategory}
+                                    onChange={(e) => setSelectedCategory(e.target.value)}
+                                >
+                                    {Array.from(new Set(csvData.map((row) => row.category)))
+                                        .filter((category) => category.trim() !== "") // Filtrar valores vacíos
+                                        .map((category) => (
+                                            <MenuItem key={category} value={category}>
+                                                {category}
+                                            </MenuItem>
+                                        ))}
+                                </Select>
+                            </FormControl>
+                                <Button disabled={!isCategorySelected} onClick={getPredictByCategory} color='success' variant="contained">
+                                    Get Predictions
+                                </Button>
                             {chartData.length > 0 && (
                                 <Chart
                                     width={'100%'}
