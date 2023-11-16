@@ -3,12 +3,13 @@ import mensaje from "../models/message.model.js";
 
 //Crear Usuario
 export const createMessage = async (req, res) => {
-    const { nombre, correo, message } = req.body;
+    const { nombre, correo, message, status } = req.body;
     try {
         const newMessage = new mensaje({
             nombre,
             correo,
-            message
+            message,
+            status
         });
 
         const messageSaved = await newMessage.save();
@@ -16,7 +17,8 @@ export const createMessage = async (req, res) => {
             id: messageSaved._id,
             nombre: messageSaved.nombre,
             correo: messageSaved.correo,
-            message: messageSaved.message
+            message: messageSaved.message,
+            status: messageSaved.status
         });
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -26,7 +28,7 @@ export const createMessage = async (req, res) => {
 
 export const getMessages = async (req, res) => {
     try {
-        const messages = await mensaje.find().select('nombre correo message');
+        const messages = await mensaje.find().select('nombre correo message status');
         res.json(messages)
     } catch (error) {
         res.status(500).json({ message: error.message });

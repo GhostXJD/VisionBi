@@ -1113,19 +1113,10 @@ select-container {
 
 /* FIN ESTILOS DE  PERFIL*/
 
-/* ESTILOS DE  */
-/*NO BORRAR*/
-/* FIN ESTILOS DE  */
-
-/* Messages.css */
-/* Estilos CSS */
-
-
+/* ESTILOS DE LAS TABLAS */
 .scrollable-body .MuiDataGrid-main {
 	overflow-y: auto !important;
 	max-height: 550px;
-	/* Define la altura máxima que desees para el cuerpo */
-
 }
 
 .scrollable-body ::-webkit-scrollbar {
@@ -1151,5 +1142,14 @@ select-container {
 }
 
 .MuiDataGrid-columnHeader:focus-within {
-    outline: none !important;
+	outline: none !important;
 }
+
+/* FIN ESTILOS DE LAS TABLAS */
+
+/* ESTILOS DE */
+/*NO BORRAR*/
+/* FIN ESTILOS DE  */
+
+/* Messages.css */
+/* Estilos CSS */
