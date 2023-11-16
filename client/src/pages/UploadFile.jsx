@@ -138,7 +138,6 @@ function HomePage() {
             {/* Mostrar los datos del CSV en una tabla */}
             <div className='file'>
                 <h2 >CSV file content </h2>
-                <Paper elevation={3} style={{ height: 550, width: '100%' }}>
                     <DataGrid
                         rows={csvData.map((row, rowIndex) => ({
                             id: rowIndex,
@@ -151,8 +150,9 @@ function HomePage() {
                             headerClassName: 'custom-header-class', // Agregar una clase personalizada para el encabezado
                         })) : []}
                         pageSize={5}
+                        headerClassName='sticky-header' // Agregar una clase para el encabezado
+                        className='scrollable-body'
                     />
-                </Paper>
             </div>
         </div>
     );

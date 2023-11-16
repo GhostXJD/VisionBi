@@ -1107,7 +1107,7 @@ select-container {
 	text-transform: uppercase;
 }
 
-.datos{
+.datos {
 	color: #8F3C8A;
 }
 
@@ -1116,3 +1116,40 @@ select-container {
 /* ESTILOS DE  */
 /*NO BORRAR*/
 /* FIN ESTILOS DE  */
+
+/* Messages.css */
+/* Estilos CSS */
+
+
+.scrollable-body .MuiDataGrid-main {
+	overflow-y: auto !important;
+	max-height: 550px;
+	/* Define la altura máxima que desees para el cuerpo */
+
+}
+
+.scrollable-body ::-webkit-scrollbar {
+	width: 1rem;
+}
+
+.scrollable-body ::-webkit-scrollbar-track {
+	background-color: var(--white);
+}
+
+.scrollable-body ::-webkit-scrollbar-thumb {
+	background-color: #8F3C8A;
+}
+
+.MuiDataGrid-root .MuiDataGrid-cell:focus,
+.MuiDataGrid-root .MuiDataGrid-cell:focus-within,
+.MuiDataGrid-root .MuiDataGrid-row:hover,
+.MuiDataGrid-root .MuiDataGrid-colCell:focus,
+.MuiDataGrid-root .MuiDataGrid-colCell :focus-within {
+	outline: none !important;
+	border: none !important;
+	box-shadow: none !important;
+}
+
+.MuiDataGrid-columnHeader:focus-within {
+    outline: none !important;
+}
