@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { deleteUsuarioRequest, getUsuariosRequest } from '../api/usuarios';
-import moment from 'moment';
 import Swal from 'sweetalert2';
 import { DataGrid } from '@mui/x-data-grid';
-import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
+import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 function ListarUsuariosPage() {
   const [usuarios, setUsuarios] = useState([]);
@@ -59,25 +59,29 @@ function ListarUsuariosPage() {
       headerName: 'Actions',
       renderCell: (params) => (
         <>
-          <EditIcon onClick={() => handleEditUsuario(params.row.id)}>Edit</EditIcon>
-          <RemoveCircleOutlineIcon onClick={() => handleDeleteUsuario(params.row.id)}></RemoveCircleOutlineIcon>
+          <IconButton onClick={() => handleEditUsuario(params.row.id)}>
+            <EditIcon />
+          </IconButton>
+          <IconButton onClick={() => handleDeleteUsuario(params.row.id)}>
+            <DeleteIcon />
+          </IconButton>
         </>
       ),
     },
   ];
 
   return (
-    <div className="mx-auto my5">
+    <div className="mx-auto my-5">
       {usuarios.length > 0 ? (
         <DataGrid
           rows={usuarios.map((usuario, index) => ({
-            id: index + 1,
+            id: usuario._id, // Usar el id real del usuario
             ...usuario,
           }))}
           columns={columns}
           pageSize={5}
           autoHeight
-          rowHeight={40} // Puedes ajustar este valor según tus preferencias
+          rowHeight={40}
           headerClassName="sticky-header"
           className="scrollable-body"
         />
