@@ -23,7 +23,6 @@ import Profile from './pages/Profile';
 import ChangePasswordPage from './pages/ChangePasswordPage';
 import DashboardPage from './pages/DashboardPage';
 import DashboardByCategoryPage from './pages/DashboardByCategoryPage';
-import GoalsPage from './pages/GoalsPage';
 import RevenueByCategory from './components/Charts/RevenuebyCategory';
 import SalesByNeighborhood from './components/Charts/SalesByNeighborhood';
 import SalesTrendOverTime from './components/Charts/SalesTrendOverTime';
@@ -44,6 +43,7 @@ import ListarEmpleadosPage from './pages/ListarEmpleadosPage';
 function App() {
   const hiddenRoutes = ['/login', '/registro']
   const hiddenRoutesFooter = ['/login', '/registro','/uploadfile','/perfil','/perfil/ChangePassword','/dashboard','/dashboardByCategory','/revenue-by-category','/sales-by-neighborhood','/sales-trend-over-time','/sales-by-month','/sales-by-state','/orders-by-month','/ListarUsuarios','/RegistrarEmpleado','/ListarEmpleados','/resetPass','/recoverPass', '/ListarMensajes']
+  
   return (
     <AuthProvider>
       <ThemeProvider>
