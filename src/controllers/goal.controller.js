@@ -1,8 +1,8 @@
-import goal from '../models/goal.model.js'
+import Goal from '../models/goal.model.js'
 
 export const getGoals = async (req, res) => {
     try {
-        const goals = await goal.find()
+        const goals = await Goal.find()
         res.json(goals)
 
     } catch (error) {
@@ -12,15 +12,21 @@ export const getGoals = async (req, res) => {
 
 export const createGoal = async (req, res) => {
     try {
-        const { amount, category, startDate, endDate, company } = req.body
+        const { amount, startDate, endDate, company } = req.body
 
-        const newGoal = new goal({
+        const existingGoal = await Goal.findOne({ company })
+
+        if (existingGoal) {
+            await Goal.findByIdAndDelete(existingGoal._id)
+        }
+
+        const newGoal = new Goal({
             amount,
-            category,
             startDate,
             endDate,
             company
         })
+
         const savedGoal = await newGoal.save()
         res.json(savedGoal)
 
@@ -31,8 +37,8 @@ export const createGoal = async (req, res) => {
 
 export const getGoalByCompany = async (req, res) => {
     try {
-        const { company } = req.params.id
-        const goal = await goal.findOne({ company })
+        const { company } = req.params
+        const goal = await Goal.findOne({ company })
         if (!goal) return res.status(404).json({ message: 'Goal not found' })
         res.json(goal)
 
@@ -43,7 +49,7 @@ export const getGoalByCompany = async (req, res) => {
 
 export const deleteGoal = async (req, res) => {
     try {
-        const goal = await goal.findByIdAndDelete(req.params.id)
+        const goal = await Goal.findByIdAndDelete(req.params.id)
         if (!goal) return res.status(404).json({ message: 'Goal not found' })
         return res.sendStatus(204);
 
@@ -54,7 +60,7 @@ export const deleteGoal = async (req, res) => {
 
 export const updateGoal = async (req, res) => {
     try {
-        const goal = await goal.findByIdAndUpdate(req.params.id, req.body, {
+        const goal = await Goal.findByIdAndUpdate(req.params.id, req.body, {
             new: true,
         })
     } catch (error) {

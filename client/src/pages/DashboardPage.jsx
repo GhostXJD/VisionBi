@@ -3,11 +3,13 @@ import { Chart } from "react-google-charts";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router";
 import { getCsvDatoRequest, getPredictRequest } from "../api/csvDatos";
+import { getGoalRequest } from "../api/goals";
 import { Link } from "react-router-dom";
 import Papa from "papaparse";
 import moment from 'moment';
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
+import GoalDialog from '../components/GoalDialog';
 
 export default function DashboardPage() {
   const navigate = useNavigate();
@@ -18,6 +20,18 @@ export default function DashboardPage() {
   const [totalOrders, setTotalOrders] = useState(0);
   const [totalSales, setTotalSales] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [open, setOpen] = useState(false);
+  const [goalData, setGoalData] = useState([])
+  const [lastCsvDate, setLastCsvDate] = useState(null);
+
+  const handleOpen = (e) => {
+    setOpen(true)
+  };
+
+  const handleClose = () => {
+    getGoal();
+    setOpen(false);
+  }
 
   useEffect(() => {
     // Simulación de tiempo de carga
@@ -55,6 +69,13 @@ export default function DashboardPage() {
   }, []);
 
   useEffect(() => {
+    if (csvData.length > 0) {
+      const lastDate = csvData[csvData.length - 1].date;
+      setLastCsvDate(lastDate);
+    }
+  }, [csvData]);
+
+  useEffect(() => {
     if (isAuthenticated) navigate("/dashboard");
   }, [isAuthenticated]);
 
@@ -65,6 +86,10 @@ export default function DashboardPage() {
   useEffect(() => {
     getPredict();
   }, []);
+
+  useEffect(() => {
+    getGoal();
+  }, [])
 
   const ColorButton = styled(Button)(({ theme }) => ({
     color: theme.palette.getContrastText("#8F3C8A"),
@@ -90,6 +115,14 @@ export default function DashboardPage() {
     style: "currency",
     currency: "CLP",
   }).format(totalPredictedSales);
+
+  const formattedGoal = goalData.amount
+    ? new Intl.NumberFormat("es-CL", {
+      style: "currency",
+      currency: "CLP",
+    }).format(goalData.amount)
+    : "No registra meta";
+
 
   const getCsv = async () => {
     try {
@@ -126,6 +159,16 @@ export default function DashboardPage() {
       setLoading(false)
     }
   };
+
+  const getGoal = async () => {
+    try {
+      const res = await getGoalRequest(usuario.company);
+      setGoalData(res.data);
+      console.log("res.data", res.data);
+    } catch (error) {
+      console.log("Error al obtener la meta", error)
+    }
+  }
 
   const Prediction = () => {
     const sortedChartData = [["Date", "Total", "Predicted"]];
@@ -289,7 +332,31 @@ export default function DashboardPage() {
                     </button>
                   </div>
                 </div>
-
+                <div className="bg-gray-100 dark:text-gray-200 dark:bg-secondary-dark-bg h-44 rounded-xl w-full lg:w-80 p-8 pt-9 m-3 bg-hero-pattern bg-no-repeat bg-cover bg-center">
+                  <div className="flex justify-between items-center">
+                    <div>
+                      <p className="font-bold text-gray-400">Goal</p>
+                      <p className="text-2xl">{formattedGoal}</p>
+                    </div>
+                    <button type="button" className="ml-auto text-2xl opacity-0.9 rounded-full p-4 hover:drop-shadow-xl bg-amber-400 text-white">
+                      <svg
+                        stroke="currentColor"
+                        fill="currentColor"
+                        strokeWidth="0"
+                        viewBox="0 0 16 16"
+                        height="1em"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path d="M8.186 1.113a.5.5 0 0 0-.372 0L1.846 3.5l2.404.961L10.404 2l-2.218-.887zm3.564 1.426L5.596 5 8 5.961 14.154 3.5l-2.404-.961zm3.25 1.7-6.5 2.6v7.922l6.5-2.6V4.24zM7.5 14.762V6.838L1 4.239v7.923l6.5 2.6zM7.443.184a1.5 1.5 0 0 1 1.114 0l7.129 2.852A.5.5.5 0 1 1 16 3.5v8.662a1 1 0 0 1-.629.928l-7.185 2.874a.5.5 0 0 1-.372 0L.63 13.09a1 1 0 0 1-.63-.928V3.5a.5.5 0 0 1 .314-.464L7.443.184z"></path>
+                      </svg>
+                    </button>
+                  </div>
+                  <Button color='success' variant="contained" onClick={(e) => { handleOpen(e) }}>
+                    Add goal
+                  </Button>
+                  {open && <GoalDialog open={open} handleClose={handleClose} formattedTotalPredictedSales={formattedTotalPredictedSales} lastCsvDate={lastCsvDate} />}
+                </div>
               </div>
               {csvData.length > 0 && predictData.predictions ? (
                 <Prediction csvData={csvData} predictData={predictData} />
