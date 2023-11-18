@@ -1,3 +1,4 @@
+import { response } from "express";
 import mensaje from "../models/message.model.js";
 
 
@@ -50,6 +51,20 @@ export const deleteMessage = async (req, res) => {
         const messageEncontrado = await mensaje.findByIdAndDelete(req.params.id);
         if (!messageEncontrado) return res.status(404).json({ message: "Message not found" });
         return res.sendStatus(204);
+    } catch (error) {
+        res.status(404).json({ message: "Message not found" });
+    }
+};
+
+export const updateMessage = async (req, res) => {
+    try {
+        const updatedMessage = await mensaje.findByIdAndUpdate(
+            req.params.id,
+            req.body, { new: true }
+        )
+        if (!updatedMessage)
+            return res.status(404).json({ message: "Message not found" });
+        res.json(updatedMessage)
     } catch (error) {
         res.status(404).json({ message: "Message not found" });
     }
