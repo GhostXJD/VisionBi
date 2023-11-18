@@ -168,7 +168,7 @@ export const getPredict = async (req, res) => {
 
 export const postPredictCategory = async (req, res) => {
     try {
-    const modelPath = 'file://src/python/category/model.json';
+        const modelPath = 'file://src/python/category/model.json';
 
         const model = await tf.loadLayersModel(modelPath).catch((error) => {
             console.error('Error al cargar el modelo:', error);
@@ -197,9 +197,9 @@ export const postPredictCategory = async (req, res) => {
         });
 
         let data = parsedData.data;
-        
+
         data = data.filter(row => row.category === category);
-        
+
         data = data.map((row) => ({
             ...row,
             date: new Date(row.date)
@@ -207,9 +207,9 @@ export const postPredictCategory = async (req, res) => {
 
         data = data.sort((a, b) => a.date - b.date);
 
-        
 
-        const featureColumns = ['date','skuValue'];
+
+        const featureColumns = ['date', 'skuValue'];
         const filteredData = data.map((row) => {
             return featureColumns.map((col) => {
                 return row[col];
@@ -236,6 +236,8 @@ export const postPredictCategory = async (req, res) => {
             skuValue: sum,
         }));
 
+        const dataForScaler = aggregatedData.filter(item => item.order !== null);
+
         const dataForPrediction = aggregatedData.slice(-61).filter(item => item.order !== null);
 
         const predictColumns = ['skuValue'];
@@ -254,15 +256,34 @@ export const postPredictCategory = async (req, res) => {
             dataSequences.push(sequence);
         }
 
+        let minValue = Number.POSITIVE_INFINITY;
+        let maxValue = Number.NEGATIVE_INFINITY;
         let min = Infinity;
+        let max = -Infinity;
         let sum = 0;
         let count = 0;
+
+        dataForScaler.forEach((row) => {
+            const skuValue = row['skuValue'];
+            if (typeof skuValue === 'number') {
+                minValue = Math.min(minValue, skuValue);
+                maxValue = Math.max(maxValue, skuValue);
+                sum += skuValue;
+                count++;
+            }
+        });
+
+        const Average = count > 0 ? sum / count : 0;
+
 
         for (const sequence of dataSequences) {
             for (const row of sequence) {
                 for (const value of row) {
                     if (value < min) {
                         min = value;
+                    }
+                    if (value > max) {
+                        max = value;
                     }
                     sum += value;
                     count++;
@@ -271,24 +292,12 @@ export const postPredictCategory = async (req, res) => {
         }
 
         const average = sum / count;
-        const max = parseInt(average);
 
         const scaledDataSequences = dataSequences.map((sequence) =>
             sequence.map((row) =>
-                row.map((value) => (value - min) / (max - min))
+                row.map((value) => (value - min) / (average - min))
             )
         );
-
-        let minValue = Number.POSITIVE_INFINITY;
-        let maxValue = Number.NEGATIVE_INFINITY;
-
-        dataForPrediction.forEach((row) => {
-            const skuValue = row['skuValue'];
-            if (typeof skuValue === 'number') {
-                minValue = Math.min(minValue, skuValue);
-                maxValue = Math.max(maxValue, skuValue);
-            }
-        });
 
         const inputData = tf.tensor(scaledDataSequences);
 
@@ -298,7 +307,7 @@ export const postPredictCategory = async (req, res) => {
 
         const originalPredictions = scaledPredictions.map((scaledValue) => {
             return scaledValue.map((value) => {
-                const originalValue = (value - (-1)) / (1 - (-1)) * (max - min) + min;
+                const originalValue = (value - (-1)) / (1 - (-1)) * (Average - min) + min;
                 return parseInt(originalValue);
             });
         });

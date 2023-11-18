@@ -41,13 +41,25 @@ function DashboardByCategoryPage() {
     const getCsv = async () => {
         try {
             const response = await getCsvDatoRequest(usuario.company);
+            
             Papa.parse(response.data, {
                 complete: (parsedData) => {
                     const data = parsedData.data.map((row) => ({
                         ...row,
-                        date: moment(row.date).format('YYYY-MM-DD'),
+                        date: moment(row.date, 'YYYY-MM-DD'),
                     }));
-                    setCsvData(data);
+    
+                    const sixMonthsAgo = moment().subtract(3, 'months');
+                    const filteredData = data.filter((row) => row.date.isSameOrAfter(sixMonthsAgo, 'day'));
+    
+                    filteredData.sort((a, b) => a.date - b.date);
+    
+                    const formattedData = filteredData.map((row) => ({
+                        ...row,
+                        date: row.date.format('YYYY-MM-DD'),
+                    }));
+    
+                    setCsvData(formattedData);
                     setDataAvailable(true);
                 },
                 header: true,
@@ -61,7 +73,6 @@ function DashboardByCategoryPage() {
             setLoading(false)
         }
     };
-
     const getPredictByCategory = async () => {
         try {
             if (!selectedCategory) {
@@ -78,7 +89,7 @@ function DashboardByCategoryPage() {
 
             filteredData.forEach((rowData) => {
                 const date = rowData.date;
-                const sales = parseFloat(rowData.totalValue);
+                const sales = parseFloat(rowData.skuValue);
 
                 if (dailyTotal[date]) {
                     dailyTotal[date] += sales;
