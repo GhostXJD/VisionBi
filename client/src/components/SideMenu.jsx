@@ -16,7 +16,7 @@ function SideMenu({ handleMenuClose, handleDrawerClose }) {
     };
 
     return (
-        <aside className={`flex flex-col w-64 h-screen px-5 py-1 overflow-y-auto  text-white border-r rtl:border-r-0 rtl:border-l ${theme === "dark" ? "bg-black text-white" : "bg-white text-black"}`}>
+        <aside className={`flex flex-col custom-scrollbar w-64 h-screen px-5 py-1 overflow-y-auto  text-white border-r rtl:border-r-0 rtl:border-l ${theme === "dark" ? "bg-black text-white" : "bg-white text-black"}`}>
 
             <div className="flex flex-col justify-between flex-1 mt-6">
                 <nav className="-mx-3 space-y-6 ">

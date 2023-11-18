@@ -24,6 +24,41 @@ export default function DashboardPage() {
   const [goalData, setGoalData] = useState([])
   const [lastCsvDate, setLastCsvDate] = useState(null);
 
+  const getCsv = async () => {
+    try {
+        const response = await getCsvDatoRequest(usuario.company);
+        
+        Papa.parse(response.data, {
+            complete: (parsedData) => {
+                const data = parsedData.data.map((row) => ({
+                    ...row,
+                    date: moment(row.date, 'YYYY-MM-DD'), // Parse the date string
+                }));
+
+                // Sort the data by date
+                data.sort((a, b) => a.date - b.date);
+
+                // Format the date back to the desired format if needed
+                const formattedData = data.map((row) => ({
+                    ...row,
+                    date: row.date.format('YYYY-MM-DD'),
+                }));
+
+                setCsvData(formattedData);
+                setDataAvailable(true);
+            },
+            header: true,
+            skipEmptyLines: true,
+        });
+        setLoading(true);
+    } catch (error) {
+        console.log("Error al obtener los datos:", error);
+        setDataAvailable(false);
+    } finally {
+        setLoading(false)
+    }
+};
+
   const handleOpen = (e) => {
     setOpen(true)
   };
@@ -39,34 +74,23 @@ export default function DashboardPage() {
       const totalOrders = csvData.length;
       // Dar formato al número total de órdenes con puntos como separadores de miles
       const formattedTotalOrders = totalOrders.toLocaleString();
-
-      const totalSales = csvData.reduce((total, row) => {
-        return total + row.quantity * row.price;
+  
+      // Calcular el monto total de ventas sumando los valores de "skuValue" del CSV
+      const totalSales = csvData.reduce((accumulator, currentValue) => {
+        return accumulator + parseFloat(currentValue.skuValue);
       }, 0);
-
+  
       // Dar formato al monto total con puntos como separadores de miles
       const formattedTotalSales = totalSales.toLocaleString();
-
+  
       // Guardar los valores en localStorage
       localStorage.setItem('totalOrders', formattedTotalOrders);
       localStorage.setItem('totalSales', formattedTotalSales);
-
+  
       setTotalOrders(formattedTotalOrders);
       setTotalSales(formattedTotalSales);
     }, 1000); // Simulación de tiempo de carga
   }, [csvData]);
-
-  useEffect(() => {
-    // Comprueba si los valores están en localStorage
-    const savedTotalOrders = localStorage.getItem('totalOrders');
-    const savedTotalSales = localStorage.getItem('totalSales');
-
-    if (savedTotalOrders && savedTotalSales) {
-      // Utiliza los valores guardados en lugar de calcularlos nuevamente
-      setTotalOrders(savedTotalOrders);
-      setTotalSales(savedTotalSales);
-    }
-  }, []);
 
   const getLastDate = (data) => {
     if (data.length > 0) {
@@ -129,27 +153,7 @@ export default function DashboardPage() {
     }).format(goalData.amount)
     : "No registra meta";
 
-
-  const getCsv = async () => {
-    try {
-      const response = await getCsvDatoRequest(usuario.company);
-      Papa.parse(response.data, {
-        complete: (parsedData) => {
-          const data = parsedData.data;
-          setCsvData(data);
-          setDataAvailable(true);
-        },
-        header: true,
-        skipEmptyLines: true,
-      });
-      setLoading(true);
-    } catch (error) {
-      console.log("Error al obtener los datos:", error);
-      setDataAvailable(false);
-    } finally {
-      setLoading(false);
-    }
-  };
+  
 
   const getPredict = async () => {
     try {
@@ -200,15 +204,15 @@ export default function DashboardPage() {
     for (let i = 0; i < last30DaysData.length; i++) {
       const rowData = last30DaysData[i];
       const fecha = new Date(rowData.date);
-      const valorTotal = rowData.quantity * rowData.price;
-
+      const valorTotal = parseInt(rowData.skuValue); // Convertir a número
+    
       // Encuentra la predicción correspondiente para esta fecha
       const predictedValues = predictData.predictions[0]; // asumiendo que solo hay una predicción
       const predictedValue = predictedValues[i]; // predicción para el mismo período de tiempo que los datos originales
-
+    
       // Obtiene la fecha en formato YYYY-MM-DD
       const dateKey = fecha.toISOString().split('T')[0];
-
+    
       // Agrega el valor actual al valor acumulado para este día
       if (dailyTotal[dateKey]) {
         dailyTotal[dateKey].total += valorTotal;
@@ -219,7 +223,7 @@ export default function DashboardPage() {
           predicted: predictedValue,
         };
       }
-
+    
       // También almacena la predicción diaria
       dailyPredicted[dateKey] = predictedValue;
     }
