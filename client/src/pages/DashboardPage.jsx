@@ -68,11 +68,17 @@ export default function DashboardPage() {
     }
   }, []);
 
-  useEffect(() => {
-    if (csvData.length > 0) {
-      const lastDate = csvData[csvData.length - 1].date;
-      setLastCsvDate(lastDate);
+  const getLastDate = (data) => {
+    if (data.length > 0) {
+      const sortedData = data.sort((a, b) => new Date(a.date) - new Date(b.date));
+      const lastDate = sortedData[sortedData.length - 1].date;
+      return lastDate;
     }
+  };
+
+  useEffect(() => {
+    const lastDate = getLastDate(csvData);
+    setLastCsvDate(lastDate);
   }, [csvData]);
 
   useEffect(() => {
@@ -129,10 +135,7 @@ export default function DashboardPage() {
       const response = await getCsvDatoRequest(usuario.company);
       Papa.parse(response.data, {
         complete: (parsedData) => {
-          const data = parsedData.data.map((row) => ({
-            ...row,
-            date: moment(row.date).format('YYYY-MM-DD'),
-          }));
+          const data = parsedData.data;
           setCsvData(data);
           setDataAvailable(true);
         },
@@ -144,7 +147,7 @@ export default function DashboardPage() {
       console.log("Error al obtener los datos:", error);
       setDataAvailable(false);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   };
 
@@ -164,7 +167,6 @@ export default function DashboardPage() {
     try {
       const res = await getGoalRequest(usuario.company);
       setGoalData(res.data);
-      console.log("res.data", res.data);
     } catch (error) {
       console.log("Error al obtener la meta", error)
     }
