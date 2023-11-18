@@ -14,26 +14,25 @@ import { useTheme } from '../context/ThemeContext';
 import { useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import vision from '../images/visionBI (1).png';
-import { useState } from 'react';
-import Checkbox from '@mui/material/Checkbox';
 import { Link } from "react-router-dom";
-
-
 
 function LoginPage() {
   //Constants
-  const { signin, errors: signinErrors, isAuthenticated } = useAuth();
+  const { signin, errors: signinErrors, isAuthenticated, hasRole } = useAuth();
   const { theme } = useTheme();
   const navigate = useNavigate();
-  const { checked, setChecked } = useState(false)
-
-  const handleCheckboxChange = (event) => {
-    setChecked(event.target.checked);
-  }
 
   useEffect(() => {
-    if (isAuthenticated) navigate('/dashboard');
-  }, [isAuthenticated])
+    if (isAuthenticated) {
+      if (hasRole('admin')) {
+        navigate('/ListarUsuarios');
+      } else {
+        navigate('/dashboard');
+      }
+    } else {
+      navigate('/login');
+    }
+  }, [isAuthenticated, hasRole]);
 
   const formik = useFormik({
     initialValues: {
@@ -213,5 +212,3 @@ function LoginPage() {
 }
 
 export default LoginPage
-
-

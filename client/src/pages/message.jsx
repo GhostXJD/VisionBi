@@ -21,48 +21,53 @@ function message() {
   useEffect(() => {
     if (!isAuthenticated) navigate('/');
   }, [isAuthenticated]);
+
+  const initialValues = {
+    status: msg.status ? "Por revisar" : "Revisado",
+  };
+
   useEffect(() => {
     async function loadMessage() {
       if (params.id) {
-        const res = await getMessageRequest(params.id)
-        const mensaje = res.data
-        setMsg(mensaje)
+        const res = await getMessageRequest(params.id);
+        const mensaje = res.data;
+        setMsg(mensaje);
+        formik.setValues({ status: mensaje.status ? "Por revisar" : "Revisado" });
       }
     }
     loadMessage();
-  }, [])
+  }, [params.id]);
 
   const formik = useFormik({
-    initialValues: {
-        status: ''
-    },
+    initialValues,
     validationSchema: Yup.object({
-        status: Yup
-            .boolean()
+      status: Yup.string().required('El estado es requerido'),
     }),
 
     onSubmit: async (values, helpers) => {
-        try {
+      try {
+        const newStatus = values.status === "Por revisar" ? true : false;
 
-            const msgData = {
-                status: values.status,
-            }
-            await updateMessageRequest(msgData)
-            props.handleClose()
-            Swal.fire({
-                icon: 'success',
-                text: 'Estado Actualizado',
-                confirmButtonColor: '#8F3C8A',
-            }).then(() => {
-                window.location.replace('/ListarMensajes');
-            });
-        } catch (err) {
-            helpers.setStatus({ success: false });
-            helpers.setErrors({ submit: err.message });
-            helpers.setSubmitting(false);
-        }
-    }
-});
+        const msgData = {
+          ...msg,
+          status: newStatus,
+        };
+
+        await updateMessageRequest(msg._id, msgData);
+        Swal.fire({
+          icon: 'success',
+          text: 'Estado Actualizado',
+          confirmButtonColor: '#8F3C8A',
+        }).then(() => {
+          window.location.replace('/ListarMensajes');
+        });
+      } catch (err) {
+        helpers.setStatus({ success: false });
+        helpers.setErrors({ submit: err.message });
+        helpers.setSubmitting(false);
+      }
+    },
+  });
 
   return (
     <div className="flex flex-col justify-center items-center h-[70vh]">
@@ -96,26 +101,42 @@ function message() {
             </p>
           </div>
         </div>
-        <FormControl fullWidth>
 
+        <form onSubmit={formik.handleSubmit}>
           <div className="grid grid-cols-1 gap-4 px-2 w-full">
             <div className={`flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-zinc-700 dark:shadow-none`} style={{ border: '2px  #c1b9c7', borderRadius: '5px', boxShadow: '0 0 10px rgba(247, 240, 246, 0.7)' }}>
               <InputLabel className="text-sm font-bold" style={{ color: '#8F3C8A' }}>Estado</InputLabel>
-              <Select label="Estado" value={msg.status} color='secondary'  >
-                <MenuItem>Estado</MenuItem>
+              <Select
+                label="Estado"
+                value={formik.values.status}
+                onChange={formik.handleChange}
+                name="status"
+                color='secondary'
+              >
+                <MenuItem value="Por revisar">Por revisar</MenuItem>
+                <MenuItem value="Revisado">Revisado</MenuItem>
               </Select>
             </div>
+            <Button
+              fullWidth
+              size="large"
+              sx={{
+                mt: 3,
+                backgroundColor: '#8F3C8A',
+                '&:hover': {
+                  backgroundColor: '#b57edc',
+                },
+              }}
+              type="submit"
+              variant="contained"
+              color="success"
+            >
+              Actualizar
+            </Button>
           </div>
-        </FormControl>
-
-        <div className="justify-center items-center py-3">
-          <li className='bg-[#8F3C8A] px-3 py-1 rounded-lg h-8 scale-x-95 text-white '>
-            <Link to='ChangePassword'>Actualizar</Link>
-          </li>
-        </div>
+        </form>
       </div>
     </div>
-
   )
 }
 

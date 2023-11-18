@@ -121,3 +121,16 @@ export const updatePass = async (req, res) => {
         res.status(404).json({ message: "El correo ingresado no existe" });
     }
 };
+
+export const updateActive = async (req, res) => {
+    try {
+        const updatedActive = await usuario.findByIdAndUpdate(
+            req.params.id,
+            req.body, {new: true}
+        )
+        if (!updatedActive) return res.status(404).json({message : "Usuario no encontrado"})
+        res.json(updatedActive)
+    } catch (error) {
+        res.status(404).json({ message: "Usuario no encontrado"});
+    }
+};

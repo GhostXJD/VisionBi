@@ -54,6 +54,8 @@ export const login = async (req, res) => {
 
         const usuarioFound = await usuario.findOne({ correo })
 
+        if (!usuarioFound.active) return res.status(400).json({succes: false, message: "El usuario esta inactivo!"})
+        
         if (!usuarioFound) return res.status(400).json(["Correo incorrecto"]);
 
         const isMatch = await bcrypt.compare(password, usuarioFound.password);

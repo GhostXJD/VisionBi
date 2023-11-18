@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { deleteUsuarioRequest, getUsuariosRequest } from '../api/usuarios';
+import { deleteUsuarioRequest, getUsuariosRequest, updateActiveRequest } from '../api/usuarios';
 import Swal from 'sweetalert2';
 import { DataGrid } from '@mui/x-data-grid';
 import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Checkbox from '@mui/material/Checkbox';
 
 function ListarUsuariosPage() {
   const [usuarios, setUsuarios] = useState([]);
@@ -48,37 +49,56 @@ function ListarUsuariosPage() {
     }
   };
 
-  const columns = [
-    { field: 'id', headerName: 'ID', width: 110 },
-    { field: 'nombre', headerName: 'Name', width: 200 },
-    { field: 'rut', headerName: 'Rut', width: 200 },
-    { field: 'correo', headerName: 'E-mail', width: 250 },
-    { field: 'tipoUsuario', headerName: 'Job', width: 150 },
-    {
-      field: 'actions',
-      headerName: 'Actions',
-      renderCell: (params) => (
-        <>
-          <IconButton onClick={() => handleEditUsuario(params.row.id)}>
-            <EditIcon />
-          </IconButton>
-          <IconButton onClick={() => handleDeleteUsuario(params.row.id)}>
-            <DeleteIcon />
-          </IconButton>
-        </>
-      ),
-    },
-  ];
+  const handleToggleActive = async (id, isActive) => {
+    try {
+      await updateActiveRequest(id, { active: !isActive });
+      getUsuarios();
+    } catch (error) {
+      console.error('Error al cambiar el estado del usuario:', error);
+    }
+  };
 
   return (
     <div className="mx-auto my-5">
       {usuarios.length > 0 ? (
         <DataGrid
-          rows={usuarios.map((usuario, index) => ({
-            id: usuario._id, // Usar el id real del usuario
-            ...usuario,
+          rows={usuarios.map((usuario) => ({
+            id: usuario._id,
+            rut: usuario.rut,
+            nombre: usuario.nombre,
+            correo: usuario.correo,
+            compania: usuario.company,
+            tipoUsuario: usuario.tipoUsuario,
+            estado: usuario.active,
           }))}
-          columns={columns}
+          columns={[
+            { field: 'rut', headerName: 'Rut', flex: 1, headerClassName: 'custom-header-class' },
+            { field: 'nombre', headerName: 'Nombre', flex: 1, headerClassName: 'custom-header-class' },
+            { field: 'correo', headerName: 'E-mail', flex: 1, headerClassName: 'custom-header-class' },
+            { field: 'compania', headerName: 'Compañia', flex: 1, headerClassName: 'custom-header-class' },
+            { field: 'tipoUsuario', headerName: 'Tipo usuario', flex: 1, headerClassName: 'custom-header-class' },
+            {
+              field: 'estado',
+              headerName: 'Estado',
+              renderCell: (params) => (
+                <Checkbox
+                  checked={params.row.estado}
+                  onChange={() => handleToggleActive(params.row.id, params.row.estado)}
+                />
+              ),
+            },
+            {
+              field: 'actions',
+              headerName: 'Acciones',
+              renderCell: (params) => (
+                <>
+                  <IconButton onClick={() => handleDeleteUsuario(params.row.id)}>
+                    <DeleteIcon />
+                  </IconButton>
+                </>
+              ),
+            },
+          ]}
           pageSize={5}
           autoHeight
           rowHeight={40}

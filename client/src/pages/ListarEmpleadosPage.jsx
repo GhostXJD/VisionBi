@@ -44,7 +44,7 @@ export default function DataTable() {
                 </h1>
                 <DataGrid
                     rows={usuarios.map((user, index) =>({
-                        id: index + 1,
+                        id: user._id,
                         rut: user.rut,
                         nombre: user.nombre,
                         apellido: user.apellido,
@@ -59,7 +59,6 @@ export default function DataTable() {
                         },
                     }}
                     pageSizeOptions={[5, 10]}
-                    checkboxSelection
                 />
             </div>
     );
