@@ -23,7 +23,6 @@ import Profile from './pages/Profile';
 import ChangePasswordPage from './pages/ChangePasswordPage';
 import DashboardPage from './pages/DashboardPage';
 import DashboardByCategoryPage from './pages/DashboardByCategoryPage';
-import GoalsPage from './pages/GoalsPage';
 import RevenueByCategory from './components/Charts/RevenuebyCategory';
 import SalesByNeighborhood from './components/Charts/SalesByNeighborhood';
 import SalesTrendOverTime from './components/Charts/SalesTrendOverTime';
@@ -35,6 +34,7 @@ import ResetPass from './pages/resetPass';
 // Rutas admin
 import ListarUsuariosPage from './pages/ListarUsuariosPage';
 import ListarMenssagesPage from './pages/ListarMessagesPage';
+import Message from './pages/message';
 
 // Rutas representante
 import RegistroEmpleadoPage from './pages/RegistroEmpleadoPage';
@@ -43,7 +43,8 @@ import ListarEmpleadosPage from './pages/ListarEmpleadosPage';
 
 function App() {
   const hiddenRoutes = ['/login', '/registro']
-  const hiddenRoutesFooter = ['/login', '/registro','/uploadfile','/perfil','/perfil/ChangePassword','/dashboard','/dashboardByCategory','/goals','/revenue-by-category','/sales-by-neighborhood','/sales-trend-over-time','/sales-by-month','/sales-by-state','/orders-by-month','/ListarUsuarios','/RegistrarEmpleado','/ListarEmpleados','/resetPass','/recoverPass', '/ListarMensajes']
+  const hiddenRoutesFooter = ['/login', '/registro','/uploadfile','/perfil','/perfil/ChangePassword','/dashboard','/dashboardByCategory','/revenue-by-category','/sales-by-neighborhood','/sales-trend-over-time','/sales-by-month','/sales-by-state','/orders-by-month','/ListarUsuarios','/RegistrarEmpleado','/ListarEmpleados','/resetPass','/recoverPass', '/ListarMensajes' , '/message/:id']
+  
   return (
     <AuthProvider>
       <ThemeProvider>
@@ -70,7 +71,6 @@ function App() {
                     <Route path='/perfil/ChangePassword' element={<ChangePasswordPage />} />
                     <Route path='/dashboard' element={<DashboardPage />} />
                     <Route path='/dashboardByCategory' element={<DashboardByCategoryPage />} />
-                    <Route path='/goals' element={<GoalsPage />} />
                     <Route path='/resetPass' element={<ResetPass />} />
                     {/*Charts*/}
                     <Route path="/revenue-by-category" element={<RevenueByCategory />} />
@@ -84,6 +84,8 @@ function App() {
                   {/* Rutas Admin */}
                   <Route element={<ProtectedRoute role='admin' />}>
                     <Route path='/ListarUsuarios' element={<ListarUsuariosPage />} />
+                    <Route path='/ListarMensajes' element={<ListarMenssagesPage />} />
+                    <Route path='/message/:id' element={<Message />} />
                   </Route>
 
                   {/* Rutas Representante */}

@@ -58,6 +58,7 @@ export const getUsuario = async (req, res) => {
     }
 };
 
+
 export const deleteUsuario = async (req, res) => {
     try {
         const usuarioEncontrado = await usuario.findByIdAndDelete(req.params.id);
@@ -72,7 +73,7 @@ export const updateUsuario = async (req, res) => {
     try {
         let { rut, nombre, apellido, correo, password, active, tipoUsuario, company } = req.body
         password = bcrypt.hashSync(password, 10)
-
+        
         await usuario.findByIdAndUpdate({ _id: req.params.id }, {
             rut,
             nombre,
@@ -83,9 +84,9 @@ export const updateUsuario = async (req, res) => {
             tipoUsuario,
             company
         })
-
+        
         if (!usuario) return res.status(404).json({ message: "Usuario not found" });
-
+        
         res.json(usuario);
     } catch (error) {
         res.status(404).json({ message: "Usuario not found" });
@@ -93,19 +94,29 @@ export const updateUsuario = async (req, res) => {
 };
 
 function generatePassword(rut) {
-    return rut.replace(/[-.]/g, '').slice(0, -1);
+    const rutSinFormato = rut.replace(/\./g, "").replace("-", "").trim();
+    const funPass = rutSinFormato.substring(0, 5);
+    return funPass
 }
+
+const getUsuarioByCorreo = async (correo) => {
+    return await usuario.findOne({ correo });
+};
 
 export const updatePass = async (req, res) => {
     try {
-        const correo = req.params.correo
+        const { correo } = req.params
+        const usuarioEncontrado = await getUsuarioByCorreo( correo )
 
-        const passwordSinEncriptar = generatePassword(funpass)
-        const usuarioEncontrado = await usuario.findOneAndUpdate({ correo:correo },{
-            password: passwordHash
-        });
+        const rut = usuarioEncontrado.rut
+        const passwordSinEncriptar = generatePassword(rut)
+        const password = bcrypt.hashSync(passwordSinEncriptar, 10)
+
+        await usuario.findOneAndUpdate({correo: correo}, {
+            password
+        })
         
-        res.json(usuarioEncontrado);
+        res.json(usuario);
     } catch (error) {
         res.status(404).json({ message: "El correo ingresado no existe" });
     }

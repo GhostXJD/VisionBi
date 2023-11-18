@@ -27,21 +27,9 @@ function recoverPassPage() {
 
         onSubmit: async (values, helpers) => {
             try {
-
-                 
-
-                const userData = {
-                    nombre: usuario.nombre,
-                    apellido: usuario.apellido,
-                    rut: usuario.rut,
-                    correo: usuario.correo,
-                    password: funPass,
-                    tipoUsuario: usuario.tipoUsuario,
-                    active: true,
-                    company: usuario.company
-                }
-                await updatePassUsuarioRequest(usuario.id, userData)
-                if (updatePassUsuarioRequest(userData)) {
+                
+                await updatePassUsuarioRequest(values.mail)
+                if (updatePassUsuarioRequest(values.mail)) {
                     Swal.fire({
                         icon: 'success',
                         title: 'Contraseña se ha restablecida correctamente',

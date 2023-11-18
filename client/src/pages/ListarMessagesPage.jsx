@@ -1,23 +1,16 @@
-import { styled } from '@mui/material/styles';
-import Button from '@mui/material/Button';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { useAuth } from '../context/AuthContext';
-import { useCsv } from '../context/CsvContext';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getMessagesRequest } from '../api/messages';
-import Papa from 'papaparse';
 import { DataGrid } from '@mui/x-data-grid';
-import Paper from '@mui/material/Paper';
-import moment from 'moment';
-import Swal from 'sweetalert2'
 import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
+import { Link } from "react-router-dom";
 
 function ListarMenssage() {
     const navigate = useNavigate();
     const { isAuthenticated } = useAuth();
-    const [messages, setMessages] = useState([]);
+    const [msgs, setMessages] = useState([]);
 
     useEffect(() => {
         if (!isAuthenticated) navigate('/');
@@ -30,29 +23,20 @@ function ListarMenssage() {
           const mensajes = res.data
           setMessages(mensajes);
         } catch (error) {
-          console.error("Error al obtener usuarios:", error);
+          console.error("Error al obtener mensajes:", error);
         }
       };
-
-    const onSubmit = async (event) => {
-        try {
-            getMensaje();
-        } catch (error) {
-            console.error("Error al subir el archivo CSV:", error);
-        }
-    };
-
 
     return (
         <div className='uploadFile'>
             <div className='file'>
                 <DataGrid
-                    rows={messages.map((message, index) => ({
-                        id: index,
-                        nombre: message.nombre,
-                        correo: message.correo,
-                        message: message.message,
-                        status: message.status ? 'Por revisar' : 'Revisado',
+                    rows={msgs.map((msg) => ({
+                        id: msg._id,
+                        nombre: msg.nombre,
+                        correo: msg.correo,
+                        message: msg.message,
+                        status: msg.status ? 'Por revisar' : 'Revisado',
                     }))}
                     columns={[
                         { field: 'nombre', headerName: 'Nombre', flex: 1, headerClassName: 'custom-header-class' },
@@ -64,7 +48,8 @@ function ListarMenssage() {
                             headerName: 'Acción',
                             flex: 1,
                             headerClassName: 'custom-header-class',
-                            renderCell: (params) => (
+                            renderCell: (msg) => (
+                                <Link to={`/message/${msg.row.id}`}>
                                 <IconButton
                                     onClick={() => {
                                     }}
@@ -72,6 +57,7 @@ function ListarMenssage() {
                                 >
                                     <EditIcon sx={{ fontSize: '1.5rem', color: '#8F3C8A' }} /> 
                                 </IconButton>
+                                </Link>
                             ),
                         },
                     ]}

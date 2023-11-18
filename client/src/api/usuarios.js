@@ -8,6 +8,6 @@ export const createUsuarioRequest = (usuario) => axios.post("/usuarios", usuario
 
 export const updateUsuarioRequest = (id, usuario) => axios.put(`/usuarios/${id}`, usuario)
 
-export const updatePassUsuarioRequest = (correo, usuario) => axios.put(`/usuarios/${correo}`, usuario)
+export const updatePassUsuarioRequest = (correo) => axios.put(`/usuarios/recover/correo/${correo}`)
 
 export const deleteUsuarioRequest = (id) => axios.delete(`/usuarios/${id}`)
