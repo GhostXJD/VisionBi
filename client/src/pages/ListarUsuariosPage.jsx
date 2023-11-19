@@ -65,6 +65,7 @@ function ListarUsuariosPage() {
             id: usuario._id,
             rut: usuario.rut,
             nombre: usuario.nombre,
+            apellido: usuario.apellido,
             correo: usuario.correo,
             compania: usuario.company,
             tipoUsuario: usuario.tipoUsuario,
@@ -73,6 +74,7 @@ function ListarUsuariosPage() {
           columns={[
             { field: 'rut', headerName: 'Rut', flex: 1, headerClassName: 'custom-header-class' },
             { field: 'nombre', headerName: 'Nombre', flex: 1, headerClassName: 'custom-header-class' },
+            { field: 'apellido', headerName: 'Apellido', flex: 1, headerClassName: 'custom-header-class' },
             { field: 'correo', headerName: 'E-mail', flex: 1, headerClassName: 'custom-header-class' },
             { field: 'compania', headerName: 'Compañia', flex: 1, headerClassName: 'custom-header-class' },
             { field: 'tipoUsuario', headerName: 'Tipo usuario', flex: 1, headerClassName: 'custom-header-class' },

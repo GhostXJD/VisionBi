@@ -280,59 +280,166 @@ export default function DashboardPage() {
     }
     // FIN DE LOS DATOS DE LAS METAS
 
-    // Fusionar datos de predicciones, totales y metas en un solo arreglo ordenado por fecha
-    const allData = [...sortedChartData, ...dailyGoals].sort((a, b) => {
+    //Combinar fechas de meta y prediccion
+    let allData = [...sortedChartData]; // Comenzamos con los datos de ventas y predicciones
+
+    if (goalData.startDate && goalData.endDate && goalData.amount) {
+      for (const goal of dailyGoals) {
+        const existingIndex = allData.findIndex((item) => item[0] === goal[0]);
+
+        if (existingIndex !== -1) {
+          // Si la fecha ya existe en los datos combinados, actualiza la columna de meta
+          allData[existingIndex][3] = goal[3]; // Columna de meta
+        } else {
+          // Si la fecha no existe, agrega la información completa de la meta
+          allData.push(goal);
+        }
+      }
+    }
+    // Ordena los datos combinados por fecha
+    allData.sort((a, b) => {
       const dateA = new Date(a[0]);
       const dateB = new Date(b[0]);
       return dateA - dateB;
     });
 
-    console.log("allData", allData);
+    const hasGoals = goalData.startDate && goalData.endDate && goalData.amount;
 
-    return (
-      <div>
-        <Chart
-          chartType="LineChart"
-          width="100%"
-          height="400px"
-          data={allData}
-          options={{
-            hAxis: {
-              title: "Fecha",
-            },
-            vAxis: {
-              title: "Valor",
-            },
-            series: {
-              0: {
-                curveType: 'function', // Esto asegura que la línea esté curvada
-                lineWidth: 2, // Ajusta el grosor de la línea para la meta
-                lineDashStyle: [4, 4], // Establece un estilo de línea punteada
+    if (hasGoals && allData.length > 0) {
+      return (
+        <div>
+          <Chart
+            chartType="LineChart"
+            width="100%"
+            height="400px"
+            data={allData}
+            options={{
+              hAxis: {
+                title: "Fecha",
               },
-              1: {
-                curveType: 'function', // Esto asegura que la línea esté curvada
-                lineWidth: 2, // Ajusta el grosor de la línea para la meta
-                lineDashStyle: [4, 4], // Establece un estilo de línea punteada
+              vAxis: {
+                title: "Valor",
               },
-              2: {
-                curveType: 'function', // Esto asegura que la línea esté curvada
-                lineWidth: 2, // Ajusta el grosor de la línea para la meta
-                lineDashStyle: [4, 4], // Establece un estilo de línea punteada
+              series: {
+                0: {
+                  curveType: 'function', // Esto asegura que la línea esté curvada
+                  lineWidth: 2, // Ajusta el grosor de la línea para la meta
+                },
+                1: {
+                  curveType: 'function', // Esto asegura que la línea esté curvada
+                  lineWidth: 2, // Ajusta el grosor de la línea para la meta
+                },
+                2: {
+                  curveType: 'function', // Esto asegura que la línea esté curvada
+                  lineWidth: 2, // Ajusta el grosor de la línea para la meta
+                  lineDashStyle: [4, 4], // Establece un estilo de línea punteada
+                },
+                3: {
+                  curveType: 'function', // Esto asegura que la línea esté curvada
+                  lineWidth: 2, // Ajusta el grosor de la línea para la meta
+                  lineDashStyle: [4, 4], // Establece un estilo de línea punteada
+                },
               },
-              3: {
-                curveType: 'function', // Esto asegura que la línea esté curvada
-                lineWidth: 2, // Ajusta el grosor de la línea para la meta
-                lineDashStyle: [4, 4], // Establece un estilo de línea punteada
+              pointSize: 6,
+              legend: {
+                position: "bottom",
               },
-            },
-            pointSize: 6,
-            legend: {
-              position: "bottom",
-            },
-          }}
-        />
-      </div>
-    );
+            }}
+          />
+        </div>
+      );
+    } else {
+      const sortedChartData = [["Date", "Total", "Predicted"]];
+
+      if (csvData.length === 0) {
+        return <div>No hay datos disponibles para graficar.</div>;
+      }
+
+      // Encuentra la última fecha en el archivo CSV
+      const lastDate = new Date(csvData[csvData.length - 1].date);
+
+      // Calcula la fecha de inicio para los últimos 30 días
+      const thirtyDaysAgo = new Date(lastDate);
+      thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+      // Filtra los datos para incluir solo los últimos 30 días
+      const last30DaysData = csvData.filter((rowData) => {
+        const fecha = new Date(rowData.date);
+        return fecha >= thirtyDaysAgo;
+      });
+
+      // Crea un objeto para mantener un seguimiento de los valores acumulados por día
+      const dailyTotal = {};
+      const dailyPredicted = {}; // Para almacenar las predicciones diarias
+
+      // Recorre los datos de los últimos 30 días
+      for (let i = 0; i < last30DaysData.length; i++) {
+        const rowData = last30DaysData[i];
+        const fecha = new Date(rowData.date);
+        const valorTotal = parseInt(rowData.skuValue); // Convertir a número
+
+        // Encuentra la predicción correspondiente para esta fecha
+        const predictedValues = predictData.predictions[0]; // asumiendo que solo hay una predicción
+        const predictedValue = predictedValues[i]; // predicción para el mismo período de tiempo que los datos originales
+
+        // Obtiene la fecha en formato YYYY-MM-DD
+        const dateKey = fecha.toISOString().split('T')[0];
+
+        // Agrega el valor actual al valor acumulado para este día
+        if (dailyTotal[dateKey]) {
+          dailyTotal[dateKey].total += valorTotal;
+          dailyTotal[dateKey].predicted += predictedValue;
+        } else {
+          dailyTotal[dateKey] = {
+            total: valorTotal,
+            predicted: predictedValue,
+          };
+        }
+
+        // También almacena la predicción diaria
+        dailyPredicted[dateKey] = predictedValue;
+      }
+
+      // Convierte los datos diarios en un arreglo para el gráfico
+      const sortedDates = Object.keys(dailyTotal).sort();
+
+      for (const dateKey of sortedDates) {
+        sortedChartData.push([dateKey, dailyTotal[dateKey].total, dailyTotal[dateKey].predicted]);
+      }
+
+      if (predictData.predictions && predictData.predictions.length > 0) {
+        predictData.predictions.forEach((prediction) => {
+          sortedChartData.push([prediction.date, null, prediction.skuValue]);
+        });
+      }
+
+      return (
+        <div>
+          <Chart
+            chartType="LineChart"
+            width="100%"
+            height="400px"
+            data={sortedChartData}
+            options={{
+              hAxis: {
+                title: "Date",
+              },
+              vAxis: {
+                title: "Value",
+              },
+              series: {
+                0: { curveType: "function" },
+                1: { curveType: "function" },
+              },
+              pointSize: 6, // Ajusta el tamaño de los puntos en la línea
+              legend: {
+                position: "bottom",
+              },
+            }}
+          />
+        </div>
+      );
+    }
   };
 
   return (
@@ -407,7 +514,7 @@ export default function DashboardPage() {
                 <div className="bg-gray-100 dark:text-gray-200 dark:bg-secondary-dark-bg h-44 rounded-xl w-full lg:w-80 p-8 pt-9 m-3 bg-hero-pattern bg-no-repeat bg-cover bg-center">
                   <div className="flex justify-between items-center">
                     <div>
-                      <p className="font-bold text-gray-400">Goal</p>
+                      <p className="font-bold text-gray-400">Meta</p>
                       <p className="text-2xl">{formattedGoal}</p>
                     </div>
                     <button type="button" className="ml-auto text-2xl opacity-0.9 rounded-full p-4 hover:drop-shadow-xl bg-amber-400 text-white">
@@ -424,8 +531,8 @@ export default function DashboardPage() {
                       </svg>
                     </button>
                   </div>
-                  <Button color='success' variant="contained" onClick={(e) => { handleOpen(e) }}>
-                    Add goal
+                  <Button color='secondary' variant="contained" onClick={(e) => { handleOpen(e) }}>
+                    Añadir meta
                   </Button>
                   {open && <GoalDialog open={open} handleClose={handleClose} formattedTotalPredictedSales={formattedTotalPredictedSales} lastCsvDate={lastCsvDate} />}
                 </div>

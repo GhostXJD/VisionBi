@@ -62,8 +62,9 @@ const AddGoal = (props) => {
             {props.open && (
                 <Dialog open={props.open} onClose={props.handleClose} fullWidth maxWidth="md">
                     <DialogTitle style={{ marginTop: "5px", marginBottom: "20px", fontSize: "bold", color: "black" }}>
-                        <h1 style={{ marginBottom: '15px' }}> <LocalGroceryStoreRoundedIcon sx={{ fontSize: 45 }} /> Add Goal</h1>
+                        <h1 style={{ marginBottom: '15px' }}> <LocalGroceryStoreRoundedIcon sx={{ fontSize: 45 }} /> Añadir meta</h1>
                         <div><p>Las ventas previstas para el siguiente mes son: {props?.formattedTotalPredictedSales}</p></div>
+                        <p>Añada una meta para los siguientes 30 dias.</p>
                         <IconButton
                             style={{ marginTop: "5px", marginBottom: "5px" }}
                             aria-label="close"
