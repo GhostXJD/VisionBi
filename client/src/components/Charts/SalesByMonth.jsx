@@ -64,8 +64,8 @@ function SalesByMonth() {
     const monthlySales = {};
 
     const monthNames = [
-        "January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December"
+        "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+        "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
     ];
 
     for (let i = 0; i < csvDataFiltered.length; i++) {
@@ -100,12 +100,12 @@ function SalesByMonth() {
             xaxis: {
                 categories: monthNames,
                 title: {
-                    text: "Month",
+                    text: "Mes",
                 },
             },
             yaxis: {
                 title: {
-                    text: "Total Value",
+                    text: "Valor total",
                 },
                 labels: {
                     formatter: (value) => formatNumber(value), // Usa la función de formato
@@ -115,7 +115,7 @@ function SalesByMonth() {
         },
         series: [
             {
-                name: "Total Value",
+                name: "Valor total",
                 data: monthNames.map((month, index) => monthlySales[index] || 0),
             },
         ],
@@ -130,7 +130,7 @@ function SalesByMonth() {
                     value={selectedYear}
                     onChange={handleYearChange}
                 >
-                    <option value="">Select a Year</option>
+                    <option value="">Seleccionar año</option>
                     {csvData
                         .map((rowData) => new Date(rowData.date).getFullYear())
                         .filter((value, index, self) => self.indexOf(value) === index)
@@ -145,7 +145,7 @@ function SalesByMonth() {
                         ))}
                 </select>
             </div>
-            <h1 className="text-center">Monthly Sales</h1>
+            <h1 className="text-center">Ventas mensuales</h1>
             <ApexCharts options={chartData.options} series={chartData.series} type="bar" height={600} />
         </div>
     );

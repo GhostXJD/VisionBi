@@ -126,7 +126,7 @@ export default function PersistentDrawerLeft({ children, hiddenRoutes }) {
                             </IconButton>
 
                             <li className={`text-center px-9 py-10 font-bold text-gray-500  dark:text-white `}>
-                                Welcome {usuario.nombre}!
+                                Bienvenido {usuario.nombre}!
                             </li>
 
                             <div className='ml-auto'>
@@ -183,11 +183,11 @@ export default function PersistentDrawerLeft({ children, hiddenRoutes }) {
                                     </MenuItem>
 
                                     <MenuItem className='text-gray-600 hover:text-[#8F3C8A]' onClick={() => { handleMenuClose(); profile(); }} >
-                                        <AccountCircle className='text-[#8F3C8A]' /> Profile
+                                        <AccountCircle className='text-[#8F3C8A]' /> Perfil
                                     </MenuItem>
 
                                     <MenuItem className='text-gray-600 hover:text-[#8F3C8A]' onClick={() => { handleMenuClose(); logout(); handleDrawerClose(); }} >
-                                        <LogoutIcon className='text-[#8F3C8A]' /> Log out
+                                        <LogoutIcon className='text-[#8F3C8A]' /> Salir
                                     </MenuItem>
 
                                 </Menu>
@@ -224,7 +224,7 @@ export default function PersistentDrawerLeft({ children, hiddenRoutes }) {
                                 </div>
                             </button>
                             <li hidden className="border border-red-500 hover:border-red-300 bg-transparent  rounded-md text-red-500 hover:text-red-300 px-4 py-1  h-8">
-                                <Link to='/' onClick={() => { logout(); }}><LogoutIcon />Log out</Link>
+                                <Link to='/' onClick={() => { logout(); }}><LogoutIcon />Salir</Link>
                             </li>
                         </>
                     ) : (
@@ -234,27 +234,27 @@ export default function PersistentDrawerLeft({ children, hiddenRoutes }) {
                             </Link>
                             <div className="info-navbar">
                                 <li className='dark:text-white'>
-                                    <Link to='/mission' > Mission</Link>
+                                    <Link to='/mission' > Misión</Link>
                                 </li>
                             </div>
                             <div className="info-navbar">
                                 <li className='dark:text-white'>
-                                    <Link to='/vision' > Vision</Link>
+                                    <Link to='/vision' > Visión</Link>
                                 </li>
                             </div>
                             <div className="info-navbar">
                                 <li className='dark:text-white'>
-                                    <Link to='/aboutus' > About Us</Link>
+                                    <Link to='/aboutus' > Sobre nosotros</Link>
                                 </li>
                             </div>
                             <div className='ml-auto'>
                                 <li className="bg-[#8F3C8A] px-3 py-1 rounded-lg h-8 text-white">
-                                    <Link to='/login' >Sign in</Link>
+                                    <Link to='/login' >Ingresar</Link>
                                 </li>
                             </div>
 
                             <li hidden className="bg-[#b57edc] px-3 py-1  h-8 rounded-lg text-white">
-                                <Link to='/registro' >Sign up</Link>
+                                <Link to='/registro' >Crear</Link>
                             </li>
                             <button
                                 hidden

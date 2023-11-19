@@ -26,38 +26,38 @@ export default function DashboardPage() {
 
   const getCsv = async () => {
     try {
-        const response = await getCsvDatoRequest(usuario.company);
-        
-        Papa.parse(response.data, {
-            complete: (parsedData) => {
-                const data = parsedData.data.map((row) => ({
-                    ...row,
-                    date: moment(row.date, 'YYYY-MM-DD'), // Parse the date string
-                }));
+      const response = await getCsvDatoRequest(usuario.company);
 
-                // Sort the data by date
-                data.sort((a, b) => a.date - b.date);
+      Papa.parse(response.data, {
+        complete: (parsedData) => {
+          const data = parsedData.data.map((row) => ({
+            ...row,
+            date: moment(row.date, 'YYYY-MM-DD'), // Parse the date string
+          }));
 
-                // Format the date back to the desired format if needed
-                const formattedData = data.map((row) => ({
-                    ...row,
-                    date: row.date.format('YYYY-MM-DD'),
-                }));
+          // Sort the data by date
+          data.sort((a, b) => a.date - b.date);
 
-                setCsvData(formattedData);
-                setDataAvailable(true);
-            },
-            header: true,
-            skipEmptyLines: true,
-        });
-        setLoading(true);
+          // Format the date back to the desired format if needed
+          const formattedData = data.map((row) => ({
+            ...row,
+            date: row.date.format('YYYY-MM-DD'),
+          }));
+
+          setCsvData(formattedData);
+          setDataAvailable(true);
+        },
+        header: true,
+        skipEmptyLines: true,
+      });
+      setLoading(true);
     } catch (error) {
-        console.log("Error al obtener los datos:", error);
-        setDataAvailable(false);
+      console.log("Error al obtener los datos:", error);
+      setDataAvailable(false);
     } finally {
-        setLoading(false)
+      setLoading(false)
     }
-};
+  };
 
   const handleOpen = (e) => {
     setOpen(true)
@@ -74,19 +74,19 @@ export default function DashboardPage() {
       const totalOrders = csvData.length;
       // Dar formato al número total de órdenes con puntos como separadores de miles
       const formattedTotalOrders = totalOrders.toLocaleString();
-  
+
       // Calcular el monto total de ventas sumando los valores de "skuValue" del CSV
       const totalSales = csvData.reduce((accumulator, currentValue) => {
         return accumulator + parseFloat(currentValue.skuValue);
       }, 0);
-  
+
       // Dar formato al monto total con puntos como separadores de miles
       const formattedTotalSales = totalSales.toLocaleString();
-  
+
       // Guardar los valores en localStorage
       localStorage.setItem('totalOrders', formattedTotalOrders);
       localStorage.setItem('totalSales', formattedTotalSales);
-  
+
       setTotalOrders(formattedTotalOrders);
       setTotalSales(formattedTotalSales);
     }, 1000); // Simulación de tiempo de carga
@@ -153,8 +153,6 @@ export default function DashboardPage() {
     }).format(goalData.amount)
     : "No registra meta";
 
-  
-
   const getPredict = async () => {
     try {
       const res = await getPredictRequest(usuario.company);
@@ -167,17 +165,33 @@ export default function DashboardPage() {
     }
   };
 
+  const formatDate = (date) => {
+    const formattedDate = new Date(date);
+    formattedDate.setDate(formattedDate.getDate() + 1);
+
+    const year = formattedDate.getFullYear();
+    const month = String(formattedDate.getMonth() + 1).padStart(2, '0');
+    const day = String(formattedDate.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
   const getGoal = async () => {
     try {
       const res = await getGoalRequest(usuario.company);
-      setGoalData(res.data);
+      const formattedStartDate = formatDate(res.data.startDate);
+      const formattedEndDate = formatDate(res.data.endDate);
+      setGoalData({
+        ...res.data,
+        startDate: formattedStartDate,
+        endDate: formattedEndDate,
+      });
     } catch (error) {
-      console.log("Error al obtener la meta", error)
+      console.log("Error al obtener la meta", error);
     }
-  }
+  };
 
   const Prediction = () => {
-    const sortedChartData = [["Date", "Total", "Predicted"]];
+    let sortedChartData = [["Date", "Total", "Prediccion", "Meta"]];
 
     if (csvData.length === 0) {
       return <div>No hay datos disponibles para graficar.</div>;
@@ -200,19 +214,20 @@ export default function DashboardPage() {
     const dailyTotal = {};
     const dailyPredicted = {}; // Para almacenar las predicciones diarias
 
+
     // Recorre los datos de los últimos 30 días
     for (let i = 0; i < last30DaysData.length; i++) {
       const rowData = last30DaysData[i];
       const fecha = new Date(rowData.date);
       const valorTotal = parseInt(rowData.skuValue); // Convertir a número
-    
+
       // Encuentra la predicción correspondiente para esta fecha
       const predictedValues = predictData.predictions[0]; // asumiendo que solo hay una predicción
       const predictedValue = predictedValues[i]; // predicción para el mismo período de tiempo que los datos originales
-    
+
       // Obtiene la fecha en formato YYYY-MM-DD
       const dateKey = fecha.toISOString().split('T')[0];
-    
+
       // Agrega el valor actual al valor acumulado para este día
       if (dailyTotal[dateKey]) {
         dailyTotal[dateKey].total += valorTotal;
@@ -223,7 +238,7 @@ export default function DashboardPage() {
           predicted: predictedValue,
         };
       }
-    
+
       // También almacena la predicción diaria
       dailyPredicted[dateKey] = predictedValue;
     }
@@ -232,14 +247,47 @@ export default function DashboardPage() {
     const sortedDates = Object.keys(dailyTotal).sort();
 
     for (const dateKey of sortedDates) {
-      sortedChartData.push([dateKey, dailyTotal[dateKey].total, dailyTotal[dateKey].predicted]);
+      const total = dailyTotal[dateKey].total;
+      const predicted = dailyTotal[dateKey].predicted;
+      sortedChartData.push([dateKey, total, predicted, null]);
     }
 
     if (predictData.predictions && predictData.predictions.length > 0) {
       predictData.predictions.forEach((prediction) => {
-        sortedChartData.push([prediction.date, null, prediction.skuValue]);
+        sortedChartData.push([prediction.date, null, prediction.skuValue, null]);
       });
     }
+
+    //AQUI VAN LOS DATOS DE LAS METAS
+    // Obtener la fecha de inicio y fin de la meta y el monto total
+    const startDate = new Date(goalData.startDate);
+    const endDate = new Date(goalData.endDate);
+    const totalAmount = goalData.amount;
+
+    // Calcular la cantidad diaria para alcanzar la meta
+    const daysDiff = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24)); // Diferencia en días
+    const dailyAmount = totalAmount / daysDiff;
+
+    /// Crear datos para la línea de meta
+    const dailyGoals = [];
+
+    const currentDate = new Date(startDate);
+
+    while (currentDate <= endDate) {
+      const dateKey = currentDate.toISOString().split('T')[0];
+      dailyGoals.push([dateKey, null, null, dailyAmount]);
+      currentDate.setDate(currentDate.getDate() + 1); // Avanzar al siguiente día
+    }
+    // FIN DE LOS DATOS DE LAS METAS
+
+    // Fusionar datos de predicciones, totales y metas en un solo arreglo ordenado por fecha
+    const allData = [...sortedChartData, ...dailyGoals].sort((a, b) => {
+      const dateA = new Date(a[0]);
+      const dateB = new Date(b[0]);
+      return dateA - dateB;
+    });
+
+    console.log("allData", allData);
 
     return (
       <div>
@@ -247,19 +295,37 @@ export default function DashboardPage() {
           chartType="LineChart"
           width="100%"
           height="400px"
-          data={sortedChartData}
+          data={allData}
           options={{
             hAxis: {
-              title: "Date",
+              title: "Fecha",
             },
             vAxis: {
-              title: "Value",
+              title: "Valor",
             },
             series: {
-              0: { curveType: "function" },
-              1: { curveType: "function" },
+              0: {
+                curveType: 'function', // Esto asegura que la línea esté curvada
+                lineWidth: 2, // Ajusta el grosor de la línea para la meta
+                lineDashStyle: [4, 4], // Establece un estilo de línea punteada
+              },
+              1: {
+                curveType: 'function', // Esto asegura que la línea esté curvada
+                lineWidth: 2, // Ajusta el grosor de la línea para la meta
+                lineDashStyle: [4, 4], // Establece un estilo de línea punteada
+              },
+              2: {
+                curveType: 'function', // Esto asegura que la línea esté curvada
+                lineWidth: 2, // Ajusta el grosor de la línea para la meta
+                lineDashStyle: [4, 4], // Establece un estilo de línea punteada
+              },
+              3: {
+                curveType: 'function', // Esto asegura que la línea esté curvada
+                lineWidth: 2, // Ajusta el grosor de la línea para la meta
+                lineDashStyle: [4, 4], // Establece un estilo de línea punteada
+              },
             },
-            pointSize: 6, // Ajusta el tamaño de los puntos en la línea
+            pointSize: 6,
             legend: {
               position: "bottom",
             },
@@ -272,7 +338,7 @@ export default function DashboardPage() {
   return (
     <div className="mt-14">
       {loading ? (
-        <div className="text-center"> Loading ... </div>
+        <div className="text-center"> Cargando ... </div>
       ) : (
         <>
           {dataAvailable ? (
@@ -281,7 +347,7 @@ export default function DashboardPage() {
                 <div className="bg-gray-100 dark:text-gray-200 dark:bg-secondary-dark-bg h-44 rounded-xl w-full lg:w-80 p-8 pt-9 m-3 bg-hero-pattern bg-no-repeat bg-cover bg-center">
                   <div className="flex justify-between items-center">
                     <div>
-                      <p className="font-bold text-gray-400">Earnings</p>
+                      <p className="font-bold text-gray-400">Ganancias</p>
                       <p className="text-2xl">${totalSales}</p>
                     </div>
                     <button type="button" className="ml-auto text-2xl opacity-0.9 text-white hover:drop-shadow-xl rounded-full p-4 bg-[#7f3ca5]">
@@ -301,7 +367,7 @@ export default function DashboardPage() {
                 <div className="bg-gray-100 dark:text-gray-200 dark:bg-secondary-dark-bg h-44 rounded-xl w-full lg:w-60 p-8 pt-9 m-3 bg-hero-pattern bg-no-repeat bg-cover bg-center">
                   <div className="flex justify-between items-center">
                     <div>
-                      <p className="font-bold text-gray-400">Orders sold</p>
+                      <p className="font-bold text-gray-400">Total de pedidos</p>
                       <p className="text-2xl">{totalOrders}</p>
                     </div>
                     <button type="button" className="ml-auto text-2xl opacity-0.9 rounded-full p-4 hover:drop-shadow-xl bg-amber-400 text-white">
@@ -320,7 +386,7 @@ export default function DashboardPage() {
                 <div className="bg-gray-100 dark:text-gray-200 dark:bg-secondary-dark-bg h-44 rounded-xl w-full lg:w-80 p-8 pt-9 m-3 bg-hero-pattern bg-no-repeat bg-cover bg-center">
                   <div className="flex justify-between items-center">
                     <div>
-                      <p className="font-bold text-gray-400">Predicted Sales</p>
+                      <p className="font-bold text-gray-400">Ventas previstas</p>
                       <p className="text-2xl">{formattedTotalPredictedSales}</p>
                     </div>
                     <button type="button" className="ml-auto text-2xl opacity-0.9 rounded-full p-4 hover:drop-shadow-xl bg-amber-400 text-white">
@@ -366,13 +432,13 @@ export default function DashboardPage() {
               </div>
               {csvData.length > 0 && predictData.predictions ? (
                 <Prediction csvData={csvData} predictData={predictData} />
-              ) : (<h1 className="text-center">There is not enough data to predict</h1>)}
+              ) : (<h1 className="text-center">No hay suficientes datos para predecir</h1>)}
             </div>
           ) : (
             <>
-              <h1 className="text-center">No data uploaded, you must upload a CSV</h1>
+              <h1 className="text-center">No se han subido datos, debes subir un CSV</h1>
               <div className="font-sans text-center">
-                <Link to="/uploadfile" ><ColorButton >Click here, For upload CSV</ColorButton></Link>
+                <Link to="/uploadfile" ><ColorButton >Haga clic aquí para cargar CSV</ColorButton></Link>
               </div>
             </>
           )}

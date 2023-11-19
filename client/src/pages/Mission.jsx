@@ -6,11 +6,11 @@ function AboutUs() {
             <div className="about">
                 <div className="about-banner">
                     <div className="presentation">
-                        <h3>MISSION</h3>
-                        <p>To facilitate business success through innovative and precise solutions.
-                     Our mission is to provide companies with the necessary tools to make
-                      informed and strategic decisions, enhancing their performance and
-                       growth through data analytics and accurate forecasting.</p>
+                        <h3>MISIÓN</h3>
+                        <p>Facilitar el éxito empresarial a través de soluciones innovadoras y precisas.
+                            Nuestra misión es proporcionar a las empresas las herramientas necesarias para hacer
+                            decisiones informadas y estratégicas, mejorando su desempeño y
+                            crecimiento a través del análisis de datos y pronósticos precisos.</p>
                     </div>
                     <div className="presentation-photo">
                         <img src={mision} alt="mision" className='about-img' />
@@ -18,7 +18,7 @@ function AboutUs() {
                 </div>
             </div>
             <div className="about-info">
-                
+
             </div>
         </section>
     );

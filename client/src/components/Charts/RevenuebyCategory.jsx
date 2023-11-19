@@ -91,19 +91,19 @@ function Top10RevenuesByCategory() {
             xaxis: {
                 categories: top10Categories,
                 title: {
-                    text: "Category",
+                    text: "Categoria",
                 },
             },
             yaxis: {
                 title: {
-                    text: "Sales Quantity",
+                    text: "Cantidad",
                 },
             },
             colors: ["#8F3C8A"],
         },
         series: [
             {
-                name: "Sales Quantity",
+                name: "Cantidad vendida",
                 data: top10Categories.map((category) => categorySales[category]),
             },
         ],
@@ -132,7 +132,7 @@ function Top10RevenuesByCategory() {
                         ))}
                 </select>
             </div>
-            <h1 className="text-center">TOP 10 REVENUES BY CATEGORY</h1>
+            <h1 className="text-center">TOP 10 CATEGORIAS MAS VENDIDAS</h1>
             <ApexCharts options={chartData.options} series={chartData.series} type="area" height={400} />
         </div>
 

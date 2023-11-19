@@ -8,7 +8,6 @@ import { useNavigate } from 'react-router-dom';
 import { getCsvDatoRequest } from '../api/csvDatos';
 import Papa from 'papaparse';
 import { DataGrid } from '@mui/x-data-grid';
-import Paper from '@mui/material/Paper';
 import moment from 'moment';
 import Swal from 'sweetalert2'
 
@@ -113,10 +112,10 @@ function HomePage() {
     return (
         <div className='uploadFile'>
             <div className='text-center'>
-                <h1>Load your history File here</h1>
+                <h1>Cargue su archivo histórico aquí</h1>
                 <form onSubmit={onSubmit}>
                     <Button component="label" variant="contained" startIcon={<CloudUploadIcon />} color="secondary">
-                        Attach CSV
+                        Adjuntar CSV
                         <VisuallyHiddenInput
                             type="file"
                             name="archivoCSV"
@@ -128,7 +127,7 @@ function HomePage() {
                     <div className='p-2'>
                         {hasUploadedFile && (
                             <>
-                                <Button type="submit" variant="contained" color="secondary">SAVE FILE</Button>
+                                <Button type="submit" variant="contained" color="secondary">GUARDAR EL ARCHIVO</Button>
                             </>
                         )}
                     </div>
@@ -137,22 +136,22 @@ function HomePage() {
 
             {/* Mostrar los datos del CSV en una tabla */}
             <div className='file'>
-                <h2 >CSV file content </h2>
-                    <DataGrid
-                        rows={csvData.map((row, rowIndex) => ({
-                            id: rowIndex,
-                            ...row,
-                        }))}
-                        columns={csvData.length > 0 ? Object.keys(csvData[0]).map((header) => ({
-                            field: header,
-                            headerName: header,
-                            flex: 1,
-                            headerClassName: 'custom-header-class', // Agregar una clase personalizada para el encabezado
-                        })) : []}
-                        pageSize={5}
-                        headerClassName='sticky-header' // Agregar una clase para el encabezado
-                        className='scrollable-body'
-                    />
+                <h2 >Contenido del archivo CSV </h2>
+                <DataGrid
+                    rows={csvData.map((row, rowIndex) => ({
+                        id: rowIndex,
+                        ...row,
+                    }))}
+                    columns={csvData.length > 0 ? Object.keys(csvData[0]).map((header) => ({
+                        field: header,
+                        headerName: header,
+                        flex: 1,
+                        headerClassName: 'custom-header-class', // Agregar una clase personalizada para el encabezado
+                    })) : []}
+                    pageSize={5}
+                    headerClassName='sticky-header' // Agregar una clase para el encabezado
+                    className='scrollable-body'
+                />
             </div>
         </div>
     );

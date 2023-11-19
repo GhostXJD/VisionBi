@@ -43,13 +43,13 @@ function LoginPage() {
     validationSchema: Yup.object({
       correo: Yup
         .string()
-        .email('Must be a valid email')
+        .email('Debe ser un correo válido')
         .max(255)
-        .required('Email is required'),
+        .required('Se requiere correo'),
       password: Yup
         .string()
         .max(255)
-        .required('Password is required')
+        .required('Se requiere contraseña')
     }),
 
     onSubmit: async (values, helpers) => {
@@ -100,8 +100,8 @@ function LoginPage() {
             <Link to="/"><img src={vision} alt="Descripción de la imagen" /></Link>
           </div>
           <div className="LoginMsg">
-            <h2 className="LoginTxt1"> Hi, Welcome Back</h2>
-            <span className="LoginTxt2">Enter your credentials to continue</span>
+            <h2 className="LoginTxt1"> Hola, bienvenido de nuevo</h2>
+            <span className="LoginTxt2">Introduce tus credenciales para continuar</span>
           </div>
 
           <div className="LoginSeparacion"></div>
@@ -121,7 +121,7 @@ function LoginPage() {
                 error={!!(formik.touched.correo && formik.errors.correo)}
                 fullWidth
                 helperText={formik.touched.correo && formik.errors.correo}
-                label="Email Address"
+                label="Correo"
                 name="correo"
                 onBlur={formik.handleBlur}
                 onChange={formik.handleChange}
@@ -137,7 +137,7 @@ function LoginPage() {
                 error={!!(formik.touched.password && formik.errors.password)}
                 fullWidth
                 helperText={formik.touched.password && formik.errors.password}
-                label="Password"
+                label="Contraseña"
                 name="password"
                 onBlur={formik.handleBlur}
                 onChange={formik.handleChange}
@@ -166,7 +166,7 @@ function LoginPage() {
               </div>
               <Link to='/recoverPass' >
               <h6 className='LoginForgot'>
-                Forgot Password?
+              ¿Has olvidado tu contraseña?
               </h6>
               </Link>
             </div>
@@ -191,7 +191,7 @@ function LoginPage() {
               type="submit"
               variant="contained"
             >
-              Sing in
+              Iniciar sesión
             </Button>
 
           </form>
@@ -201,7 +201,7 @@ function LoginPage() {
 
           <div className='LoginNoAccount'>
             <Link to='/registro' >
-              Don't have an account?
+            ¿No tienes una cuenta?
             </Link>
           </div>
 

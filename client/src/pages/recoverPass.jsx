@@ -1,7 +1,3 @@
-import bcrypt from 'bcryptjs';
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext'
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { Button, Typography } from '@mui/material';
@@ -51,8 +47,8 @@ function recoverPassPage() {
     return (
 
         <div className={`flex  h-[80vh] items-center justify-right justify-center`}>
-            <div className={` max-w-md w-full  rounded-md p-8 bg-[#fff] `}style={{ border: '2px  #c1b9c7', borderRadius: '5px', boxShadow: '0 0 10px rgba(219, 207, 228, 0.7)' }}>
-                <h1> <LockIcon sx={{ fontSize: 45 }} /> Create your password</h1>
+            <div className={` max-w-md w-full  rounded-md p-8 bg-[#fff] `} style={{ border: '2px  #c1b9c7', borderRadius: '5px', boxShadow: '0 0 10px rgba(219, 207, 228, 0.7)' }}>
+                <h1> <LockIcon sx={{ fontSize: 45 }} /> Recuperar contraseña</h1>
                 <div className="">
                     <form
                         noValidate
@@ -73,7 +69,7 @@ function recoverPassPage() {
                                 value={formik.values.mail}
                                 InputProps={{
                                     sx: { borderRadius: 3 }
-                                  }}
+                                }}
                             />
                         </Stack>
 

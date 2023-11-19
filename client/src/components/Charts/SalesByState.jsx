@@ -60,7 +60,7 @@ function SalesByState() {
     }
     const csvDataFiltered = useMemo(() => filterAndProcessDataByYear(csvData, selectedYear), [csvData, selectedYear]);
     const stateSales = {};
-    const chartData = [["State", "Sales Quantity"]];
+    const chartData = [["Región", "Cantidad de pedidos"]];
 
     for (let i = 0; i < csvDataFiltered.length; i++) {
         const rowData = csvDataFiltered[i];
@@ -86,7 +86,7 @@ function SalesByState() {
                     value={selectedYear}
                     onChange={handleYearChange}
                 >
-                    <option value="">Select a Year</option>
+                    <option value="">Seleccionar año</option>
                     {csvData
                         .map((rowData) => new Date(rowData.date).getFullYear())
                         .filter((value, index, self) => self.indexOf(value) === index)
@@ -101,7 +101,7 @@ function SalesByState() {
                         ))}
                 </select>
             </div>
-            <h1 className="font-normal text-center">Sales Quantity by State</h1>
+            <h1 className="font-normal text-center">Cantidad de ventas por región</h1>
             <Chart
                 chartType="Scatter"
                 width="100%"
@@ -109,8 +109,8 @@ function SalesByState() {
                 data={chartData}
                 options={{
                     title: "",
-                    hAxis: { title: "Sales Quantity" },
-                    vAxis: { title: "State" },
+                    hAxis: { title: "Cantidad de pedidos" },
+                    vAxis: { title: "Región" },
                     colors: ["#8F3C8A"],
                 }}
             />

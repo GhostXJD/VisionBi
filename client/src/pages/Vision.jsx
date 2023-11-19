@@ -6,13 +6,13 @@ function AboutUs() {
             <div className="about">
                 <div className="about-banner">
                     <div className="presentation">
-                        <h3>VISION</h3>
-                        <p>To be recognized as leaders in the field of data analytics and
-                            sales prediction. Our vision is to empower businesses worldwide,
-                            helping them reach their full potential, optimize their operations,
-                            and turn their data into competitive advantages. We aim to be the
-                            trusted partner for companies aspiring to a more successful and
-                            sustainable future.</p>
+                        <h3>VISIÓN</h3>
+                        <p>Ser reconocidos como líderes en el campo del análisis de datos y
+                            predicción de ventas. Nuestra visión es empoderar a las empresas en todo el mundo,
+                            ayudándolos a alcanzar su máximo potencial, optimizar sus operaciones,
+                            y convertir sus datos en ventajas competitivas. Nuestro objetivo es ser el
+                            socio confiable para empresas que aspiran a una vida más exitosa y
+                            futuro sostenible.</p>
                     </div>
                     <div className="presentation-photo">
                         <img src={vision} alt="vision" className='about-img' />

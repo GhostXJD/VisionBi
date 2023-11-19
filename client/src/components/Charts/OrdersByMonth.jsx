@@ -82,7 +82,7 @@ function OrdersByMonth() {
             },
             labels: Object.keys(ordersByTimeUnit),
             title: {
-                text: "Orders by Month",
+                text: "Total de pedidos por mes",
             },
         },
         series: Object.values(ordersByTimeUnit),
@@ -96,7 +96,7 @@ function OrdersByMonth() {
                     value={selectedYear}
                     onChange={handleYearChange}
                 >
-                    <option value="">Select a Year</option>
+                    <option value="">Seleccionar año</option>
                     {csvData
                         .map((rowData) => new Date(rowData.date).getFullYear())
                         .filter((value, index, self) => self.indexOf(value) === index)
@@ -111,7 +111,7 @@ function OrdersByMonth() {
                         ))}
                 </select>
             </div>
-            <h1 className="text-center">Orders by Month</h1>
+            <h1 className="text-center">Pedidos por mes</h1>
             <ApexCharts options={chartData.options} series={chartData.series} type="pie" height={600} />
         </div>
     );

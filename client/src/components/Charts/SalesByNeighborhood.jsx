@@ -90,12 +90,12 @@ function Top10NeighborhoodSales() {
       xaxis: {
         categories: top10Neighborhoods,
         title: {
-          text: "Neighborhood",
+          text: "Comuna",
         },
       },
       yaxis: {
         title: {
-          text: "Sales Quantity",
+          text: "Cantidad",
         },
         labels: {
           formatter: function (value) {
@@ -108,7 +108,7 @@ function Top10NeighborhoodSales() {
     },
     series: [
       {
-        name: "Sales Quantity",
+        name: "Cantidad de pedidos",
         data: top10Neighborhoods.map((neighborhood) => neighborhoodSales[neighborhood]),
       },
     ],
@@ -122,7 +122,7 @@ function Top10NeighborhoodSales() {
           value={selectedYear}
           onChange={handleYearChange}
         >
-          <option value="">Select a Time</option>
+          <option value="">Seleccionar año</option>
           {csvData
             .map((rowData) => new Date(rowData.date).getFullYear())
             .filter((value, index, self) => self.indexOf(value) === index)
@@ -137,7 +137,7 @@ function Top10NeighborhoodSales() {
             ))}
         </select>
       </div>
-      <h1 className="text-center">TOP 10 NEIGHBORHOOD SALES</h1>
+      <h1 className="text-center">TOP 10 VENTAS POR COMUNAS</h1>
       <ApexCharts options={chartData.options} series={chartData.series} type="line" height={400} />
     </div>
   );

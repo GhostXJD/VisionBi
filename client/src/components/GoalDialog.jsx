@@ -15,7 +15,7 @@ const AddGoal = (props) => {
     const formik = useFormik({
         initialValues: {
             amount: '',
-            startDate: props.lastCsvDate ? moment(props.lastCsvDate).subtract(30, 'days').format('YYYY-MM-DD') : '',
+            startDate: props.lastCsvDate ? moment(props.lastCsvDate).add(1, 'days').format('YYYY-MM-DD') : '',
             endDate: props.lastCsvDate ? moment(props.lastCsvDate).add(30, 'days').format('YYYY-MM-DD') : '',
             submit: null
         },
