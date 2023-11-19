@@ -89,7 +89,7 @@ function resetPassPage() {
 
         <div className={`flex  h-[80vh] items-center justify-right justify-center`}>
             <div className={` max-w-md w-full  rounded-md p-8 bg-[#fff] `}style={{ border: '2px  #c1b9c7', borderRadius: '5px', boxShadow: '0 0 10px rgba(219, 207, 228, 0.7)' }}>
-                <h1> <LockIcon sx={{ fontSize: 45 }} /> Restablecer Contraseña</h1>
+                <h1> <LockIcon sx={{ fontSize: 45 }} /> Crea tu Contraseña</h1>
                 <p></p>
                 <div className="">
                     <form
@@ -103,7 +103,7 @@ function resetPassPage() {
                                 fullWidth
                                 color="secondary"
                                 helperText={formik.touched.password && formik.errors.password}
-                                label="Password"
+                                label="Contraseña"
                                 name="password"
                                 onBlur={formik.handleBlur}
                                 onChange={formik.handleChange}
@@ -134,7 +134,7 @@ function resetPassPage() {
                                     (formik.touched.passwordC && formik.errors.passwordC) ||
                                     (formik.values.password !== formik.values.passwordC && 'Passwords do not match')
                                 }
-                                label="Confirm Password"
+                                label="Confirmar contraseña"
                                 name="passwordC"
                                 onBlur={formik.handleBlur}
                                 onChange={formik.handleChange}
@@ -182,7 +182,7 @@ function resetPassPage() {
                                 variant="contained"
                                 color="success"
                             >
-                                Change Password
+                                Cambiar contraseña
                             </Button>
 
                         </div>

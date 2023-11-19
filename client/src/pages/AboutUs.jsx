@@ -15,16 +15,16 @@ function AboutUs() {
             <div className="about">
                 <div className="about-banner">
                     <div className="presentation">
-                        <h3>About Us</h3>
-                        <p>We are a group of computer engineering students at Duoc UC.
-                            Since the first week of classes, we came together and have
-                            functioned as a cohesive team, tackling every challenge
-                            that has come our way. This collaborative approach has
-                            been a consistent thread throughout our academic journey,
-                            and it is particularly evident in our final endeavor:
-                            the portfolio project. This project serves as the culmination,
-                            showcasing our readiness to earn the title of computer engineers,
-                            and we are committed to successfully surmounting this ultimate challenge.</p>
+                        <h3>Sobre Nosotros</h3>
+                        <p>Somos un grupo de estudiantes de ingeniería informática en Duoc UC.
+                            Desde la primera semana de clases, nos unimos y hemos
+                            funcionado como un equipo cohesionado, enfrentando cada desafío
+                            que se nos ha presentado. Este enfoque colaborativo ha sido
+                            un hilo conductor constante a lo largo de nuestro viaje académico,
+                            y es particularmente evidente en nuestro proyecto final:
+                            el proyecto del portafolio. Este proyecto sirve como la culminación,
+                            mostrando nuestra preparación para obtener el título de ingenieros informáticos,
+                            y estamos comprometidos a superar con éxito este desafío final.</p>
                     </div>
                     <div className="presentation-photo">
                         <img src={aboutus} alt="aboutus" className='about-img' />
@@ -33,12 +33,12 @@ function AboutUs() {
             </div>
             
             <div className="about-info">
-                <h3>Great team is the key</h3>
+                <h3>Un gran equipo es la clave</h3>
                 <div className="about-members">
                     <div className="box-members">
                         <Avatar className="avatar" alt="MiguelBadilla" src={MiguelBadilla} sx={{ width: 200, height: 200 }} />
                         <h2>Miguel Badilla</h2>
-                        <p className='dark:text-black'>Computer engineering student</p>
+                        <p className='dark:text-black'>Estudiante de ingeniería informática</p>
                         <div className="redes">
                             <div>
                                 <a href="https://www.instagram.com/mmigueell__/" ><SocialIcon className="red-logo" network="instagram" /></a>
@@ -54,7 +54,7 @@ function AboutUs() {
                     <div className="box-members">
                         <Avatar className="avatar" src={JavierDiaz} alt="JavierDiaz" sx={{ width: 200, height: 200 }} />
                         <h2>Javier Díaz</h2>
-                        <p className='dark:text-black'>Computer engineering student</p>
+                        <p className='dark:text-black'>Estudiante de ingeniería informática</p>
                         <div className="redes">
                             <div>
                                 <a href="https://www.instagram.com/aliensutro/" ><SocialIcon network="instagram" /></a>
@@ -71,7 +71,7 @@ function AboutUs() {
                         <Avatar className="avatar" src={EstefaniNavarro} alt="EstefaniNavarro" sx={{ width: 200, height: 200 }} />
 
                         <h2>Estefani Navarro</h2>
-                        <p className='dark:text-black'>Computer engineering student</p>
+                        <p className='dark:text-black'>Estudiante de ingeniería informática</p>
                         <div className="redes">
                             <div>
                                 <a href="https://www.instagram.com/steffieess/"><SocialIcon network="instagram" /></a>
@@ -87,7 +87,7 @@ function AboutUs() {
                     <div className="box-members">
                         <Avatar className="avatar" src={IgnacioRuiz} alt="IgnacioRuiz" sx={{ width: 200, height: 200 }} />
                         <h2>Ignacio Ruiz</h2>
-                        <p className='dark:text-black'>Computer engineering student</p>
+                        <p className='dark:text-black'>Estudiante de ingeniería informática</p>
                         <div className="redes">
                             <div>
                                 <a href="https://instagram.com/http._ign_.rs/"><SocialIcon network="instagram" /></a>

@@ -12,13 +12,13 @@ function PresentationPage() {
             <div className="index">
                 <div className="index-banner">
                     <div className="presentation">
-                        <h3>Transforming data into strategy</h3>
-                        <p>Business Intelligence is the key to our success. We are
-                            dedicated to leveraging business intelligence to make
-                            informed and strategic decisions that enable us to
-                            innovate and create exceptional solutions.</p>
-                        <div className='index-btn'>    
-                                <Link to='/registro' >JOIN US</Link>    
+                        <h3>Transformar datos en estrategia</h3>
+                        <p>La Inteligencia Empresarial es la clave de nuestro éxito. Somos
+                            dedicado a aprovechar la inteligencia empresarial para hacer
+                            decisiones informadas y estratégicas que nos permitan
+                            innovar y crear soluciones excepcionales.</p>
+                        <div className='index-btn'>
+                            <Link to='/registro' >Únete a nosotros</Link>
                         </div>
                     </div>
                     <div className="">
@@ -28,34 +28,34 @@ function PresentationPage() {
 
             </div>
             <div className="services">
-                <h3>SERVICES</h3>
+                <h3>SERIVICOS</h3>
                 <div className="index-info" >
                     <div className="box-services">
                         <img src={comparativas} alt="comparativas" className='services-img' />
-                        <h2>COMPARE</h2>
-                        <p className='dark:text-black'>We assess your sales goals and compare them against your actual sales figures. Gain a clear understanding of how you're performing in relation to your targets and make data-driven decisions.</p>
+                        <h2>COMPARACIONES</h2>
+                        <p className='dark:text-black'>Evaluamos sus objetivos de ventas y los comparamos con sus cifras de ventas reales. Obtenga una comprensión clara de su desempeño en relación con sus objetivos y tome decisiones basadas en datos.</p>
                     </div>
                     <div className="box-services">
                         <img src={predicciones} alt="predicciones" className='services-img' />
-                        <h2>PREDICT</h2>
-                        <p className='dark:text-black'>Based on your sales history, we generate accurate forecasts for your sales over the next six months. Use this information to plan your operations, adjust your inventory, and take proactive steps to optimize your outcomes.</p>
+                        <h2>PREDICCIÓN</h2>
+                        <p className='dark:text-black'>Basándonos en su historial de ventas, generamos pronósticos precisos para sus ventas durante los próximos seis meses. Utilice esta información para planificar sus operaciones, ajustar su inventario y tomar medidas proactivas para optimizar sus resultados.</p>
                     </div>
                     <div className="box-services">
                         <img src={graficos} alt="graficos" className='services-img' />
-                        <h2>GRAPH</h2>
-                        <p className='dark:text-black'>Visualize the movement of your sales intuitively through interactive graphs. Observe trends, seasonal patterns, and changes in your sales data to make informed and strategic decisions.</p>
+                        <h2>GRÁFICOS</h2>
+                        <p className='dark:text-black'>Visualiza el movimiento de tus ventas de forma intuitiva a través de gráficos interactivos. Observe tendencias, patrones estacionales y cambios en sus datos de ventas para tomar decisiones estratégicas e informadas.</p>
                     </div>
                 </div>
             </div>
             <div className="file">
-                <h3>Upload your history data</h3>
+                <h3>Sube los datos de tu historial</h3>
                 <div className="index-file" >
                     <div className="box-file">
                         <img src={csv} alt="csv" className='file-img' />
                     </div>
                     <div className="box-file">
                         <p>To upload your sales history, you can use a CSV file (Comma-Separated Values) that includes the following information:</p>
-                        <ul> • OrderNumber: This field records the unique number associated with each purchase transaction.</ul>
+                        <ul> • Order: This field records the unique number associated with each purchase transaction.</ul>
                         <ul> • Date: Indicates the date on which the sale occurred.</ul>
 
                         <ul> • Category: Describes the category or type of product sold in that transaction.</ul>

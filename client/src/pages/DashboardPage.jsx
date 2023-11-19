@@ -298,10 +298,10 @@ export default function DashboardPage() {
           data={allData}
           options={{
             hAxis: {
-              title: "Date",
+              title: "Fecha",
             },
             vAxis: {
-              title: "Value",
+              title: "Valor",
             },
             series: {
               0: {
@@ -338,7 +338,7 @@ export default function DashboardPage() {
   return (
     <div className="mt-14">
       {loading ? (
-        <div className="text-center"> Loading ... </div>
+        <div className="text-center"> Cargando ... </div>
       ) : (
         <>
           {dataAvailable ? (
@@ -347,7 +347,7 @@ export default function DashboardPage() {
                 <div className="bg-gray-100 dark:text-gray-200 dark:bg-secondary-dark-bg h-44 rounded-xl w-full lg:w-80 p-8 pt-9 m-3 bg-hero-pattern bg-no-repeat bg-cover bg-center">
                   <div className="flex justify-between items-center">
                     <div>
-                      <p className="font-bold text-gray-400">Earnings</p>
+                      <p className="font-bold text-gray-400">Ganancias</p>
                       <p className="text-2xl">${totalSales}</p>
                     </div>
                     <button type="button" className="ml-auto text-2xl opacity-0.9 text-white hover:drop-shadow-xl rounded-full p-4 bg-[#7f3ca5]">
@@ -367,7 +367,7 @@ export default function DashboardPage() {
                 <div className="bg-gray-100 dark:text-gray-200 dark:bg-secondary-dark-bg h-44 rounded-xl w-full lg:w-60 p-8 pt-9 m-3 bg-hero-pattern bg-no-repeat bg-cover bg-center">
                   <div className="flex justify-between items-center">
                     <div>
-                      <p className="font-bold text-gray-400">Orders sold</p>
+                      <p className="font-bold text-gray-400">Total de pedidos</p>
                       <p className="text-2xl">{totalOrders}</p>
                     </div>
                     <button type="button" className="ml-auto text-2xl opacity-0.9 rounded-full p-4 hover:drop-shadow-xl bg-amber-400 text-white">
@@ -386,7 +386,7 @@ export default function DashboardPage() {
                 <div className="bg-gray-100 dark:text-gray-200 dark:bg-secondary-dark-bg h-44 rounded-xl w-full lg:w-80 p-8 pt-9 m-3 bg-hero-pattern bg-no-repeat bg-cover bg-center">
                   <div className="flex justify-between items-center">
                     <div>
-                      <p className="font-bold text-gray-400">Predicted Sales</p>
+                      <p className="font-bold text-gray-400">Ventas previstas</p>
                       <p className="text-2xl">{formattedTotalPredictedSales}</p>
                     </div>
                     <button type="button" className="ml-auto text-2xl opacity-0.9 rounded-full p-4 hover:drop-shadow-xl bg-amber-400 text-white">
@@ -432,13 +432,13 @@ export default function DashboardPage() {
               </div>
               {csvData.length > 0 && predictData.predictions ? (
                 <Prediction csvData={csvData} predictData={predictData} />
-              ) : (<h1 className="text-center">There is not enough data to predict</h1>)}
+              ) : (<h1 className="text-center">No hay suficientes datos para predecir</h1>)}
             </div>
           ) : (
             <>
-              <h1 className="text-center">No data uploaded, you must upload a CSV</h1>
+              <h1 className="text-center">No se han subido datos, debes subir un CSV</h1>
               <div className="font-sans text-center">
-                <Link to="/uploadfile" ><ColorButton >Click here, For upload CSV</ColorButton></Link>
+                <Link to="/uploadfile" ><ColorButton >Haga clic aquí para cargar CSV</ColorButton></Link>
               </div>
             </>
           )}

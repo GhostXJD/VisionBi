@@ -17,21 +17,21 @@ export default function Footer({ hiddenRoutes }) {
             <section className="footer">
                 <div className="box-footer">
                     <div className="box">
-                        <h3>Contact</h3>
+                        <h3>Contacto</h3>
                         <Link><a> <i><LocalPhoneRoundedIcon /></i> +56 2 2789 5411 </a></Link>
                         <Link><a> <i><PhoneAndroidRoundedIcon /></i> +56 9 4245 6139 </a></Link>
-                        <Link to='/contactus'><a><i><EmailRoundedIcon /></i> Contact Us </a></Link>
+                        <Link to='/contactus'><a><i><EmailRoundedIcon /></i> Contactanos </a></Link>
                     </div>
 
                     <div className="box">
-                        <h3>About</h3>
-                        <Link to='/aboutus'><a><i></i>About us</a></Link>
-                        <Link to='/mission'><a><i></i>Mission</a></Link>
-                        <Link to='/vision'><a><i></i>Vision</a></Link>
+                        <h3>Acerca de</h3>
+                        <Link to='/aboutus'><a><i></i>Sobre nosotros</a></Link>
+                        <Link to='/mission'><a><i></i>Misión</a></Link>
+                        <Link to='/vision'><a><i></i>Visión</a></Link>
                     </div>
 
                     <div className="box">
-                        <h3>Follow Us</h3>
+                        <h3>Siguenos</h3>
                         <Link><a><i><FacebookRoundedIcon /></i> VisionBI </a></Link>
                         <Link><a><i><TwitterIcon /></i> @visionBI </a></Link>
                         <Link><a><i><InstagramIcon /></i> @visionBI </a></Link>

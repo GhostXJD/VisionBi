@@ -19,13 +19,13 @@ function ListarMenssage() {
 
     const getMensaje = async () => {
         try {
-          const res = await getMessagesRequest();
-          const mensajes = res.data
-          setMessages(mensajes);
+            const res = await getMessagesRequest();
+            const mensajes = res.data
+            setMessages(mensajes);
         } catch (error) {
-          console.error("Error al obtener mensajes:", error);
+            console.error("Error al obtener mensajes:", error);
         }
-      };
+    };
 
     return (
         <div className='uploadFile'>
@@ -50,13 +50,13 @@ function ListarMenssage() {
                             headerClassName: 'custom-header-class',
                             renderCell: (msg) => (
                                 <Link to={`/message/${msg.row.id}`}>
-                                <IconButton
-                                    onClick={() => {
-                                    }}
-                                    disableRipple
-                                >
-                                    <EditIcon sx={{ fontSize: '1.5rem', color: '#8F3C8A' }} /> 
-                                </IconButton>
+                                    <IconButton
+                                        onClick={() => {
+                                        }}
+                                        disableRipple
+                                    >
+                                        <EditIcon sx={{ fontSize: '1.5rem', color: '#8F3C8A' }} />
+                                    </IconButton>
                                 </Link>
                             ),
                         },

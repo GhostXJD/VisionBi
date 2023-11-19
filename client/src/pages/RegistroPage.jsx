@@ -114,39 +114,39 @@ function RegistroPage() {
       nombre: Yup
         .string()
         .max(255)
-        .required('First name is required'),
+        .required('Se requiere el nombre'),
       apellido: Yup
         .string()
         .max(255)
-        .required('Last name is required'),
+        .required('Se requiere apellido'),
       rut: Yup
         .string()
         .max(12, 'Rut must be at most 12 characters')
-        .matches(/^(\d{1,2}\.\d{3}\.\d{3}-[\dkK])$/, 'Invalid RUT format')
-        .required('Rut is required'),
+        .matches(/^(\d{1,2}\.\d{3}\.\d{3}-[\dkK])$/, 'Formato RUT no válido')
+        .required('Se requiere Rut'),
       correo: Yup
         .string()
-        .email('Must be a valid email')
+        .email('Debe ser un correo válido')
         .max(255)
-        .required('Email is required'),
+        .required('Se requiere un correo'),
       password: Yup
         .string()
         .max(255)
-        .min(5, 'Must be at least 5 characters')
-        .required('Password is required'),
+        .min(5, 'Debe tener al menos 5 caracteres')
+        .required('Se requiere contraseña'),
       passwordC: Yup
         .string()
         .max(255)
-        .min(5, 'Must be at least 5 characters')
-        .required('Repeat your password'),
+        .min(5, 'Debe tener al menos 5 caracteres')
+        .required('Repita su contraseña'),
       businessRut: Yup
         .string()
         .max(255)
-        .required('Business rut is required'),
+        .required('Se requiere rut de la empresa'),
       businessName: Yup
         .string()
         .max(255)
-        .required('Business name is required')
+        .required('Se requiere el nombre de empresa')
     }),
 
     onSubmit: async (values, helpers) => {
@@ -248,14 +248,14 @@ function RegistroPage() {
   return (
     <div className={`flex h-[70vh] items-center justify-center ${theme === 'dark' ? 'dark' : ''}`}>
       <div className={` max-w-md w-full rounded-md ${theme === 'dark' ? "#3b0764" : "bg-white"}`}>
-        <div className={`RegistroCard ${theme === 'dark' ? 'bg-zinc-800' : 'bg-white border-black'}`} style={{ border: '2px  #c1b9c7', borderRadius: '5px', boxShadow: '0 0 10px rgba(207, 195, 218, 0.7)', backgroundColor:'#fffdfe' }}>
+        <div className={`RegistroCard ${theme === 'dark' ? 'bg-zinc-800' : 'bg-white border-black'}`} style={{ border: '2px  #c1b9c7', borderRadius: '5px', boxShadow: '0 0 10px rgba(207, 195, 218, 0.7)', backgroundColor: '#fffdfe' }}>
           <div className="RegistroPrueba">
             <div className="LoginImg">
               <Link to="/"><img src={vision} alt="Descripción de la imagen" /></Link>
             </div>
             <div className="RegistroMsg">
-              <h2 className='RegistroTxt1'>Sign up</h2>
-              <span className='Registrotxt2'>Enter your credentials to continue</span>
+              <h2 className='RegistroTxt1'>Registro</h2>
+              <span className='Registrotxt2'>Completa el formulario para continuar</span>
             </div>
 
             <div className="LoginSeparacion"></div>
@@ -271,12 +271,12 @@ function RegistroPage() {
               <Stack spacing={3}>
                 <div className='names'>
                   <TextField
-                  className='textform'
+                    className='textform'
                     color="secondary"
                     error={!!(formik.touched.nombre && formik.errors.nombre)}
                     fullWidth
                     helperText={formik.touched.nombre && formik.errors.nombre}
-                    label="First Name"
+                    label="Nombre"
                     name="nombre"
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
@@ -287,12 +287,12 @@ function RegistroPage() {
                     }}
                   />
                   <TextField
-                  className='textformA'
+                    className='textformA'
                     color="secondary"
                     error={!!(formik.touched.apellido && formik.errors.apellido)}
                     fullWidth
                     helperText={formik.touched.apellido && formik.errors.apellido}
-                    label="Last Name"
+                    label="Apellido"
                     name="apellido"
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
@@ -330,7 +330,7 @@ function RegistroPage() {
                   error={!!(formik.touched.correo && formik.errors.correo)}
                   fullWidth
                   helperText={formik.touched.correo && formik.errors.correo}
-                  label="Email Address"
+                  label="Correo"
                   name="correo"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
@@ -346,7 +346,7 @@ function RegistroPage() {
                   error={!!(formik.touched.password && formik.errors.password)}
                   fullWidth
                   helperText={formik.touched.password && formik.errors.password}
-                  label="Password"
+                  label="Contraseña"
                   name="password"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
@@ -377,7 +377,7 @@ function RegistroPage() {
                     (formik.touched.passwordC && formik.errors.passwordC) ||
                     (formik.values.password !== formik.values.passwordC && 'Passwords do not match')
                   }
-                  label="Confirm Password"
+                  label="Confirmar contraseña"
                   name="passwordC"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
@@ -404,7 +404,7 @@ function RegistroPage() {
                   color="secondary"
                   error={!!(formik.touched.businessRut && formik.errors.businessRut) || !!rutErrorBusiness}
                   helperText={formik.touched.businessRut && formik.errors.businessRut ? formik.errors.businessRut : rutErrorBusiness}
-                  label="Business rut"
+                  label="Rut de la empresa"
                   name="businessRut"
                   onBlur={(e) => {
                     const formattedRut = validarRutEmpresa(e.target.value);
@@ -427,7 +427,7 @@ function RegistroPage() {
                   error={!!(formik.touched.businessName && formik.errors.businessName)}
                   fullWidth
                   helperText={formik.touched.businessName && formik.errors.businessName}
-                  label="Business name"
+                  label="Nombre de la empresa"
                   name="businessName"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
@@ -459,7 +459,7 @@ function RegistroPage() {
                 type="submit"
                 variant="contained"
               >
-                Sing up
+                Registrarse
               </Button>
             </form>
 
@@ -469,7 +469,7 @@ function RegistroPage() {
 
             <div className='RegistroAlredyAccount'>
               <Link to="/login" >
-                Already have an account?
+                ¿Ya tienes una cuenta?
               </Link>
             </div>
 

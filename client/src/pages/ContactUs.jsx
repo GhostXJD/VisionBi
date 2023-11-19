@@ -20,16 +20,16 @@ function ContactUs() {
             nombre: Yup
                 .string()
                 .max(255)
-                .required('Name is required'),
+                .required('Se requiere el nombre'),
             correo: Yup
                 .string()
-                .email('Must be a valid email')
+                .email('Debe ser un correo válido')
                 .max(255)
-                .required('Email is required'),
+                .required('Se requiere el correo'),
             message: Yup
                 .string()
                 .max(255)
-                .required('Please enter a message'),
+                .required('Por favor introduce un mensaje'),
         }),
         onSubmit: async (values, helpers) => {
             try {
@@ -42,7 +42,7 @@ function ContactUs() {
                 await createMessageRequest(msgData)
                 Swal.fire({
                     icon: 'success',
-                    text: 'Message sent',
+                    text: 'Mensaje enviado',
                     confirmButtonColor: '#8F3C8A',
                 }).then(() => {
                     // Redirigir al usuario a la página de inicio después de hacer clic en "Ok"
@@ -61,7 +61,7 @@ function ContactUs() {
             <div className="about">
                 <div className="about-banner">
                     <div className="presentation">
-                        <h3>CONTACT US</h3>
+                        <h3>CONTACTANOS</h3>
                         <div className="form-contact">
                             <form
 
@@ -74,7 +74,7 @@ function ContactUs() {
                                         error={!!(formik.touched.nombre && formik.errors.nombre)}
                                         fullWidth
                                         helperText={formik.touched.nombre && formik.errors.nombre}
-                                        label="Name"
+                                        label="Nombre"
                                         name="nombre"
                                         onBlur={formik.handleBlur}
                                         onChange={formik.handleChange}
@@ -90,7 +90,7 @@ function ContactUs() {
                                         error={!!(formik.touched.correo && formik.errors.correo)}
                                         fullWidth
                                         helperText={formik.touched.correo && formik.errors.correo}
-                                        label="Email Address"
+                                        label="Correo"
                                         name="correo"
                                         onBlur={formik.handleBlur}
                                         onChange={formik.handleChange}
@@ -106,7 +106,7 @@ function ContactUs() {
                                         error={!!(formik.touched.message && formik.errors.message)}
                                         fullWidth
                                         helperText={formik.touched.message && formik.errors.message}
-                                        label="Message"
+                                        label="Mensaje"
                                         name="message"
                                         onBlur={formik.handleBlur}
                                         onChange={formik.handleChange}
@@ -140,7 +140,7 @@ function ContactUs() {
                                         variant="contained"
                                         font-family='Poppins'
                                     >
-                                        Send Message
+                                        Enviar mensaje
                                     </Button>
                                 </div>
                             </form>

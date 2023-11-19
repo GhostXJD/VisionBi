@@ -35,17 +35,17 @@ function ChangePasswordPage() {
             currentPassword: Yup
                 .string()
                 .max(255)
-                .required('Current password is required'),
+                .required('Se requiere contraseña actual'),
             password: Yup
                 .string()
                 .max(255)
-                .min(5, 'Must be at least 5 characters')
-                .required('Password is required'),
+                .min(5, 'Debe tener al menos 5 caracteres')
+                .required('Se requiere contraseña'),
             passwordC: Yup
                 .string()
                 .max(255)
-                .min(5, 'Must be at least 5 characters')
-                .required('Repeat your password'),
+                .min(5, 'Debe tener al menos 5 caracteres')
+                .required('Repita su contraseña'),
         }),
 
         onSubmit: async (values, helpers) => {
@@ -54,7 +54,7 @@ function ChangePasswordPage() {
                 const isPasswordValid = await bcrypt.compare(values.currentPassword, usuario.password);
 
                 if (!isPasswordValid) {
-                    helpers.setErrors({ currentPassword: 'Current password is incorrect' });
+                    helpers.setErrors({ currentPassword: 'La contraseña actual es incorrecta' });
                     return;
                 }
 
@@ -109,7 +109,7 @@ function ChangePasswordPage() {
 
         <div className={`flex  h-[80vh] items-center justify-right justify-center`}>
             <div className={` max-w-md w-full  rounded-md p-8 bg-[#fff] `}style={{ border: '2px  #c1b9c7', borderRadius: '5px', boxShadow: '0 0 10px rgba(219, 207, 228, 0.7)' }}>
-                <h1> <LockIcon sx={{ fontSize: 45 }} /> Change Password</h1>
+                <h1> <LockIcon sx={{ fontSize: 45 }} />Cambiar contraseña</h1>
                 <div className="">
                     <form
                         noValidate
@@ -122,7 +122,7 @@ function ChangePasswordPage() {
                                 fullWidth
                                 color="secondary"
                                 helperText={formik.touched.currentPassword && formik.errors.currentPassword}
-                                label="Current Password"
+                                label="Contraseña actual"
                                 name="currentPassword"
                                 onBlur={formik.handleBlur}
                                 onChange={formik.handleChange}
@@ -149,7 +149,7 @@ function ChangePasswordPage() {
                                 fullWidth
                                 color="secondary"
                                 helperText={formik.touched.password && formik.errors.password}
-                                label="Password"
+                                label="Nueva contraseña"
                                 name="password"
                                 onBlur={formik.handleBlur}
                                 onChange={formik.handleChange}
@@ -178,9 +178,9 @@ function ChangePasswordPage() {
                                 color="secondary"
                                 helperText={
                                     (formik.touched.passwordC && formik.errors.passwordC) ||
-                                    (formik.values.password !== formik.values.passwordC && 'Passwords do not match')
+                                    (formik.values.password !== formik.values.passwordC && 'Las contraseñas no coinciden')
                                 }
-                                label="Confirm Password"
+                                label="Confirmar contraseña"
                                 name="passwordC"
                                 onBlur={formik.handleBlur}
                                 onChange={formik.handleChange}
@@ -228,7 +228,7 @@ function ChangePasswordPage() {
                                 variant="contained"
                                 color="success"
                             >
-                                Change Password
+                                Cambiar la contraseña
                             </Button>
 
                         </div>

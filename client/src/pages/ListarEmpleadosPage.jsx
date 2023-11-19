@@ -30,17 +30,17 @@ export default function DataTable() {
 
     const columns = [
         { field: 'rut', headerName: 'Rut', width: 110 },
-        { field: 'nombre', headerName: 'Name', width: 150 },
-        { field: 'apellido', headerName: 'Last name', width: 110 },
+        { field: 'nombre', headerName: 'Nombre', width: 150 },
+        { field: 'apellido', headerName: 'Apellido', width: 110 },
         { field: 'correo', headerName: 'Correo', width: 200 },
-        { field: 'active', headerName: 'Active', width: 90 },
-        { field: 'company', headerName: 'Company', width: 150 },
+        { field: 'active', headerName: 'Activo', width: 90 },
+        { field: 'company', headerName: 'Compañia', width: 150 },
     ];
 
     return (
             <div style={{ height: 600, width: '100%', backgroundColor: 'white', marginTop: '60px' }}>
                 <h1 style={{ marginBottom: '30px' }}>
-                    <PeopleAltRoundedIcon sx={{ fontSize: 45 }}/> Your Employees
+                    <PeopleAltRoundedIcon sx={{ fontSize: 45 }}/> Tus empleados
                 </h1>
                 <DataGrid
                     rows={usuarios.map((user, index) =>({

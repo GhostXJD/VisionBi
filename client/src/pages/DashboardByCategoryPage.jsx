@@ -144,10 +144,10 @@ function DashboardByCategoryPage() {
                     {dataAvailable ? (
                         <div sx={{ minWidth: 120 }}>
                             <FormControl sx={{ minWidth: 300 }}>
-                                <InputLabel id="">Select Category:</InputLabel>
+                                <InputLabel id="">Seleccionar categoría:</InputLabel>
                                 <Select
                                     id="categorySelect"
-                                    label="Select Category"
+                                    label="Seleccionar categoría"
                                     value={selectedCategory}
                                     onChange={(e) => setSelectedCategory(e.target.value)}
                                 >
@@ -161,7 +161,7 @@ function DashboardByCategoryPage() {
                                 </Select>
                             </FormControl>
                                 <Button disabled={!isCategorySelected} onClick={getPredictByCategory} color='success' variant="contained">
-                                    Get Predictions
+                                Obtener predicciones
                                 </Button>
                             {chartData.length > 0 && (
                                 <Chart
@@ -170,16 +170,16 @@ function DashboardByCategoryPage() {
                                     chartType="LineChart"
                                     loader={<div>Loading Chart</div>}
                                     data={[
-                                        ['Date', 'Total Sales', 'Predicted Sales'],
+                                        ['Fecha', 'Ventas', 'Previstas'],
                                         ...chartData,
                                     ]}
                                     options={{
-                                        title: `Total vs Predicted Sales by Day for ${selectedCategory}`,
+                                        title: `Ventas totales vs ventas previstas por día para ${selectedCategory}`,
                                         hAxis: {
-                                            title: 'Date',
+                                            title: 'Fecha',
                                         },
                                         vAxis: {
-                                            title: 'Value',
+                                            title: 'Valor',
                                         },
                                     }}
                                     rootProps={{ 'data-testid': '1' }}
@@ -189,9 +189,9 @@ function DashboardByCategoryPage() {
                         </div>
                     ) : (
                         <>
-                            <h1 className="text-center">No data uploaded, you must upload a CSV</h1>
+                            <h1 className="text-center">No se han subido datos, debes subir un CSV</h1>
                             <div className="font-sans text-center">
-                                <Link to="/uploadfile" ><ColorButton >Click here, For upload CSV</ColorButton></Link>
+                                <Link to="/uploadfile" ><ColorButton >Haga clic aquí para cargar CSV</ColorButton></Link>
                             </div>
                         </>
                     )}

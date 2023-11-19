@@ -101,12 +101,12 @@ function SalesTrendOverTime() {
             xaxis: {
                 categories: sortedDates,
                 title: {
-                    text: "Date",
+                    text: "Fecha",
                 },
             },
             yaxis: {
                 title: {
-                    text: "Sales Quantity",
+                    text: "Monto vendido",
                 },
                 labels: {
                     formatter: function (value) {
@@ -124,24 +124,24 @@ function SalesTrendOverTime() {
         },
         series: [
             {
-                name: "Sales Quantity",
+                name: "Monto vendido",
                 data: sortedDates.map((date) => salesByDate[date]),
             },
         ],
     };
     const monthNames = [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December"
+        "Enero",
+        "Febrero",
+        "Marzo",
+        "Abril",
+        "Mayo",
+        "Junio",
+        "Julio",
+        "Agosto",
+        "Septiembre",
+        "Octubre",
+        "Noviembre",
+        "Diciembre",
     ];
 
     return (
@@ -152,7 +152,7 @@ function SalesTrendOverTime() {
                     value={selectedYear}
                     onChange={handleYearChange}
                 >
-                    <option value="">Select a Year</option>
+                    <option value="">Seleccionar año</option>
                     {csvData
                         .map((rowData) => rowData.date.getFullYear())
                         .filter((value, index, self) => self.indexOf(value) === index)
@@ -173,7 +173,7 @@ function SalesTrendOverTime() {
                     value={selectedMonth}
                     onChange={handleMonthChange}
                 >
-                    <option value="">Select a Month</option>
+                    <option value="">Seleccionar mes</option>
                     {monthNames.map((monthName, index) => (
                         <option
                             key={index}
@@ -185,7 +185,7 @@ function SalesTrendOverTime() {
                     ))}
                 </select>
             </div>
-            <h1 className="text-center">Sales Trend Over Time</h1>
+            <h1 className="text-center">Tendencia de ventas a lo largo del tiempo</h1>
             <ApexCharts options={chartData.options} series={chartData.series} type="line" height={400} />
         </div>
     );
