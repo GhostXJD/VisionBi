@@ -262,18 +262,20 @@ export const postPredictCategory = async (req, res) => {
         let max = -Infinity;
         let sum = 0;
         let count = 0;
+        let summ = 0;
+        let countt = 0;
 
         dataForScaler.forEach((row) => {
             const skuValue = row['skuValue'];
             if (typeof skuValue === 'number') {
                 minValue = Math.min(minValue, skuValue);
                 maxValue = Math.max(maxValue, skuValue);
-                sum += skuValue;
-                count++;
+                summ += skuValue;
+                countt++;
             }
         });
 
-        const Average = count > 0 ? sum / count : 0;
+        const Average = countt > 0 ? summ / countt : 0;
 
 
         for (const sequence of dataSequences) {

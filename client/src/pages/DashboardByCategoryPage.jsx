@@ -12,12 +12,14 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
+import Swal from 'sweetalert2'
 
 function DashboardByCategoryPage() {
 
     const { usuario } = useAuth();
     const [csvData, setCsvData] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState("");
+    const [selectedCategoryText, setSelectedCategoryText] = useState("");
     const [dataAvailable, setDataAvailable] = useState(false);
     const [loading, setLoading] = useState(true);
     const [chartData, setChartData] = useState([]);
@@ -41,24 +43,21 @@ function DashboardByCategoryPage() {
     const getCsv = async () => {
         try {
             const response = await getCsvDatoRequest(usuario.company);
-            
+
             Papa.parse(response.data, {
                 complete: (parsedData) => {
                     const data = parsedData.data.map((row) => ({
                         ...row,
                         date: moment(row.date, 'YYYY-MM-DD'),
                     }));
-    
-                    const sixMonthsAgo = moment().subtract(3, 'months');
-                    const filteredData = data.filter((row) => row.date.isSameOrAfter(sixMonthsAgo, 'day'));
-    
-                    filteredData.sort((a, b) => a.date - b.date);
-    
-                    const formattedData = filteredData.map((row) => ({
+
+                    data.sort((a, b) => a.date - b.date);
+
+                    const formattedData = data.map((row) => ({
                         ...row,
                         date: row.date.format('YYYY-MM-DD'),
                     }));
-    
+
                     setCsvData(formattedData);
                     setDataAvailable(true);
                 },
@@ -81,9 +80,7 @@ function DashboardByCategoryPage() {
             }
 
             const filteredData = csvData.filter((row) => row.category === selectedCategory);
-
-            const res = await getPredictByCategoryRequest(usuario.company, { category: selectedCategory });
-            setPredictCategoryData(res.data);
+            setSelectedCategoryText(selectedCategory);
 
             const dailyTotal = {};
 
@@ -97,6 +94,25 @@ function DashboardByCategoryPage() {
                     dailyTotal[date] = sales;
                 }
             });
+
+            const aggregatedData = Object.entries(dailyTotal).map(([date, sum]) => ({
+                date,
+                skuValue: sum,
+            }));
+
+            if (aggregatedData.length < 60) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: '¡Datos insuficientes!',
+                    text: 'Necesitas un mínimo de 60 datos.',
+                    confirmButtonColor: '#8F3C8A',
+                });
+                return; 
+            }
+
+
+            const res = await getPredictByCategoryRequest(usuario.company, { category: selectedCategory });
+            setPredictCategoryData(res.data);
 
             const sortedChartData = Object.entries(dailyTotal)
                 .sort(([dateA], [dateB]) => new Date(dateA) - new Date(dateB))
@@ -138,21 +154,22 @@ function DashboardByCategoryPage() {
     return (
         <div className='mt-14'>
             {loading ? (
-                <div className="text-center"> Loading ... </div>
+                <div className="text-center"> Cargando ... </div>
             ) : (
                 <>
                     {dataAvailable ? (
                         <div sx={{ minWidth: 120 }}>
                             <FormControl sx={{ minWidth: 300 }}>
-                                <InputLabel id="">Select Category:</InputLabel>
+                                <InputLabel id="">Selecciona una categoría:</InputLabel>
                                 <Select
                                     id="categorySelect"
-                                    label="Select Category"
+                                    label="Selecciona una categoría:"
                                     value={selectedCategory}
                                     onChange={(e) => setSelectedCategory(e.target.value)}
                                 >
                                     {Array.from(new Set(csvData.map((row) => row.category)))
-                                        .filter((category) => category.trim() !== "") // Filtrar valores vacíos
+                                        .filter((category) => category.trim() !== "") 
+                                        .sort()
                                         .map((category) => (
                                             <MenuItem key={category} value={category}>
                                                 {category}
@@ -160,38 +177,40 @@ function DashboardByCategoryPage() {
                                         ))}
                                 </Select>
                             </FormControl>
-                                <Button disabled={!isCategorySelected} onClick={getPredictByCategory} color='success' variant="contained">
-                                    Get Predictions
-                                </Button>
+                            <Button disabled={!isCategorySelected} onClick={getPredictByCategory} color='secondary' variant="contained">
+                                Obtener predicción
+                            </Button>
                             {chartData.length > 0 && (
                                 <Chart
                                     width={'100%'}
                                     height={'400px'}
                                     chartType="LineChart"
-                                    loader={<div>Loading Chart</div>}
+                                    loader={<div>Cargado gráfico</div>}
                                     data={[
-                                        ['Date', 'Total Sales', 'Predicted Sales'],
-                                        ...chartData,
+                                        ['Fecha', 'Ventas reales', 'Ventas Pronosticadas'],
+                                        ...chartData.filter(([date]) => {
+                                            const threeMonthsAgo = moment().subtract(6, 'months');
+                                            return moment(date).isSameOrAfter(threeMonthsAgo, 'day');
+                                        }),
                                     ]}
                                     options={{
-                                        title: `Total vs Predicted Sales by Day for ${selectedCategory}`,
+                                        title: `Ventas Totales vs Ventas Predichas por Día de ${selectedCategoryText}`,
                                         hAxis: {
-                                            title: 'Date',
+                                            title: 'Fecha',
                                         },
                                         vAxis: {
-                                            title: 'Value',
+                                            title: 'Valor',
                                         },
                                     }}
                                     rootProps={{ 'data-testid': '1' }}
                                 />
-
                             )}
                         </div>
                     ) : (
                         <>
-                            <h1 className="text-center">No data uploaded, you must upload a CSV</h1>
+                            <h1 className="text-center">No se han cargado datos. Debes subir un archivo CSV.</h1>
                             <div className="font-sans text-center">
-                                <Link to="/uploadfile" ><ColorButton >Click here, For upload CSV</ColorButton></Link>
+                                <Link to="/uploadfile" ><ColorButton >Haz clic aquí para subir el archivo CSV.</ColorButton></Link>
                             </div>
                         </>
                     )}
