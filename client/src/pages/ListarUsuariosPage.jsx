@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { deleteUsuarioRequest, getUsuariosRequest, updateActiveRequest } from '../api/usuarios';
+import { getUsuariosRequest, updateActiveRequest } from '../api/usuarios';
 import Swal from 'sweetalert2';
 import { DataGrid } from '@mui/x-data-grid';
 import IconButton from '@mui/material/IconButton';
@@ -30,21 +30,6 @@ function ListarUsuariosPage() {
       setUsuarios(usuarios);
     } catch (error) {
       console.error('Error al obtener usuarios:', error);
-    }
-  };
-
-  const handleDeleteUsuario = async (id) => {
-    try {
-      const res = await deleteUsuarioRequest(id);
-      console.log(res);
-      Swal.fire({
-        icon: 'success',
-        text: 'User deleted successfully',
-        confirmButtonColor: '#8F3C8A',
-      });
-      getUsuarios();
-    } catch (error) {
-      console.error('Error al eliminar usuario:', error);
     }
   };
 
@@ -86,17 +71,6 @@ function ListarUsuariosPage() {
                   checked={params.row.estado}
                   onChange={() => handleToggleActive(params.row.id, params.row.estado)}
                 />
-              ),
-            },
-            {
-              field: 'actions',
-              headerName: 'Acciones',
-              renderCell: (params) => (
-                <>
-                  <IconButton onClick={() => handleDeleteUsuario(params.row.id)}>
-                    <DeleteIcon />
-                  </IconButton>
-                </>
               ),
             },
           ]}
