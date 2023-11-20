@@ -188,10 +188,7 @@ function DashboardByCategoryPage() {
                                     loader={<div>Cargado gráfico</div>}
                                     data={[
                                         ['Fecha', 'Ventas reales', 'Ventas Pronosticadas'],
-                                        ...chartData.filter(([date]) => {
-                                            const threeMonthsAgo = moment().subtract(6, 'months');
-                                            return moment(date).isSameOrAfter(threeMonthsAgo, 'day');
-                                        }),
+                                        ...chartData
                                     ]}
                                     options={{
                                         title: `Ventas Totales vs Ventas Predichas por Día de ${selectedCategoryText}`,
