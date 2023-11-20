@@ -51,18 +51,23 @@ export const registro = async (req, res) => {
 export const login = async (req, res) => {
     const { correo, password } = req.body;
     try {
+        const usuarioFound = await usuario.findOne({ correo });
 
-        const usuarioFound = await usuario.findOne({ correo })
+        if (!usuarioFound) {
+            return res.status(400).json(["Correo incorrecto"]);
+        }
 
-        if (!usuarioFound.active) return res.status(400).json({succes: false, message: "El usuario esta inactivo!"})
-        
-        if (!usuarioFound) return res.status(400).json(["Correo incorrecto"]);
+        if (!usuarioFound.active) {
+            return res.status(400).json({ success: false, message: "El usuario está inactivo!" });
+        }
 
         const isMatch = await bcrypt.compare(password, usuarioFound.password);
 
-        if (!isMatch) return res.status(400).json(["Contraseña incorrecta"]);
+        if (!isMatch) {
+            return res.status(400).json(["Contraseña incorrecta"]);
+        }
 
-        const token = await createAccessToken({ id: usuarioFound._id })
+        const token = await createAccessToken({ id: usuarioFound._id });
         res.cookie('token', token);
         res.json({
             id: usuarioFound._id,
@@ -78,8 +83,8 @@ export const login = async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
-
 };
+
 
 export const logout = async (req, res) => {
     res.cookie('token', "", {

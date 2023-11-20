@@ -36,13 +36,6 @@ export const AuthProvider = ({ children }) => {
         try {
             const res = await loginRequest(usuario);
 
-            if (!res.data.active) {
-                setIsAuthenticated(false);
-                setUsuario(null);
-                throw new Error("Usuario inactivo");
-                // Aquí puedes redireccionar o mostrar un mensaje al usuario sobre su estado inactivo
-            }
-
             setIsAuthenticated(true);
             setUsuario(res.data);
 
@@ -54,16 +47,13 @@ export const AuthProvider = ({ children }) => {
                 window.location.href = '/resetPass';
             }
         } catch (error) {
-            if (error.message === "Usuario inactivo") {
-                // Aquí puedes redireccionar o mostrar un mensaje al usuario sobre su estado inactivo
-                alert("Usuario inactivo, no puedes iniciar sesión");
+
+            if (Array.isArray(error.response.data)) {
+                setErrors(error.response.data);
             } else {
-                if (Array.isArray(error.response.data)) {
-                    setErrors(error.response.data);
-                } else {
-                    setErrors([error.response.data.mesagge]);
-                }
+                setErrors([error.response.data.mesagge]);
             }
+
             setIsAuthenticated(false);
             setUsuario(null);
         }
