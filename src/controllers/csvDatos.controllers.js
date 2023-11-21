@@ -275,7 +275,7 @@ export const postPredictCategory = async (req, res) => {
             }
         });
 
-        const Average = countt > 0 ? summ / countt : 0;
+        const Average = summ / countt;
 
 
         for (const sequence of dataSequences) {
@@ -295,9 +295,12 @@ export const postPredictCategory = async (req, res) => {
 
         const average = sum / count;
 
+        const averageInt = parseInt(average)
+        const AverageInt = parseInt(Average)
+
         const scaledDataSequences = dataSequences.map((sequence) =>
             sequence.map((row) =>
-                row.map((value) => (value - min) / (average - min))
+                row.map((value) => (value - minValue) / (AverageInt - minValue))
             )
         );
 
@@ -309,7 +312,7 @@ export const postPredictCategory = async (req, res) => {
 
         const originalPredictions = scaledPredictions.map((scaledValue) => {
             return scaledValue.map((value) => {
-                const originalValue = (value - (-1)) / (1 - (-1)) * (Average - min) + min;
+                const originalValue = (value - (-1)) / (1 - (-1)) * (averageInt - minValue) + minValue;
                 return parseInt(originalValue);
             });
         });

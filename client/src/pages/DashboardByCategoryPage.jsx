@@ -131,8 +131,7 @@ function DashboardByCategoryPage() {
             ]);
 
             const historicalChartData = sortedChartData.map(([date, total]) => [date, total, null]);
-
-            const combinedChartData = [...historicalChartData, ...futureChartData];
+            const combinedChartData = [...historicalChartData.slice(-30), ...futureChartData];
 
             setChartData(combinedChartData);
             setLoading(false);
