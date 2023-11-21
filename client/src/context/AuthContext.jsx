@@ -46,8 +46,9 @@ export const AuthProvider = ({ children }) => {
             if (isPasswordValid) {
                 window.location.href = '/resetPass';
             }
-        } catch (error) {
 
+        } catch (error) {
+            
             if (Array.isArray(error.response.data)) {
                 setErrors(error.response.data);
             } else {
@@ -79,7 +80,6 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         async function checkLogin() {
             const cookies = Cookies.get();
-
 
             if (!cookies.token) {
                 setIsAuthenticated(false);

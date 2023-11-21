@@ -58,7 +58,7 @@ export const login = async (req, res) => {
         }
 
         if (!usuarioFound.active) {
-            return res.status(400).json({ success: false, message: "El usuario está inactivo!" });
+            return res.status(400).json(["El usuario está inactivo"]);
         }
 
         const isMatch = await bcrypt.compare(password, usuarioFound.password);

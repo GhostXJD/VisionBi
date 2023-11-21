@@ -17,7 +17,6 @@ import vision from '../images/visionBI (1).png';
 import { Link } from "react-router-dom";
 
 function LoginPage() {
-  //Constants
   const { signin, errors: signinErrors, isAuthenticated, hasRole } = useAuth();
   const { theme } = useTheme();
   const navigate = useNavigate();
@@ -25,12 +24,12 @@ function LoginPage() {
   useEffect(() => {
     if (isAuthenticated) {
       if (hasRole('admin')) {
-        navigate('/ListarUsuarios');
+        return navigate('/ListarUsuarios');
       } else {
-        navigate('/dashboard');
+        return navigate('/dashboard');
       }
     } else {
-      navigate('/login');
+      return navigate('/login');
     }
   }, [isAuthenticated, hasRole]);
 
@@ -76,6 +75,8 @@ function LoginPage() {
           formik.setFieldError('correo', 'Email is incorrect');
         } else if (errores == "Contraseña incorrecta") {
           formik.setFieldError('password', 'Password is incorrect');
+        } else if (errores == "El usuario está inactivo"){
+          formik.setFieldError('password', 'Inactive user');
         } else {
           navigate("/dashboard");
         }
@@ -95,7 +96,7 @@ function LoginPage() {
 
     <div className={`flex  h-[100vh]  items-center justify-center ${theme === 'dark' ? 'dark' : ''}`}  >
       <div className={` max-w-md w-full rounded-md ${theme === 'dark' ? "#3b0764" : "bg-white"} `}>
-        <div className={`LoginCard ${theme === 'dark' ? 'bg-zinc-800' : 'bg-white border-black'}`} style={{ border: '2px  #c1b9c7', borderRadius: '5px', boxShadow: '0 0 10px rgba(207, 195, 218, 0.7)', backgroundColor:'#fffdfe' }}>
+        <div className={`LoginCard ${theme === 'dark' ? 'bg-zinc-800' : 'bg-white border-black'}`} style={{ border: '2px  #c1b9c7', borderRadius: '5px', boxShadow: '0 0 10px rgba(207, 195, 218, 0.7)', backgroundColor: '#fffdfe' }}>
           <div className="LoginImg">
             <Link to="/"><img src={vision} alt="Descripción de la imagen" /></Link>
           </div>
@@ -165,9 +166,9 @@ function LoginPage() {
               <div className='LoginRemember'>
               </div>
               <Link to='/recoverPass' >
-              <h6 className='LoginForgot'>
-              ¿Has olvidado tu contraseña?
-              </h6>
+                <h6 className='LoginForgot'>
+                  ¿Has olvidado tu contraseña?
+                </h6>
               </Link>
             </div>
 
@@ -201,7 +202,7 @@ function LoginPage() {
 
           <div className='LoginNoAccount'>
             <Link to='/registro' >
-            ¿No tienes una cuenta?
+              ¿No tienes una cuenta?
             </Link>
           </div>
 
