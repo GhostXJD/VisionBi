@@ -108,11 +108,15 @@ function SideMenu({ handleMenuClose, handleDrawerClose }) {
                                 <label className="px-3 text-xs text-gray-500 uppercase dark:text-gray-400">Administracion</label>
                                 <li className="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-[#7f3ca5]">
                                     <ListAltIcon className="" />
-                                    <Link to='/ListarUsuarios'><span className="mx-2 text-sm font-medium">Lista de usuarios</span></Link>
+                                    <Link to='/ListarUsuarios'><span className="mx-2 text-sm font-medium">Usuarios</span></Link>
+                                </li>
+                                <li className="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-[#7f3ca5]">
+                                    <ListAltIcon className="" />
+                                    <Link to='/ListarCompania'><span className="mx-2 text-sm font-medium">Compañias</span></Link>
                                 </li>
                                 <li className="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-[#7f3ca5]">
                                     <MessageIcon className="" />
-                                    <Link to='/ListarMensajes'><span className="mx-2 text-sm font-medium">Listar mensajes</span></Link>
+                                    <Link to='/ListarMensajes'><span className="mx-2 text-sm font-medium">Mensajes</span></Link>
                                 </li>
                             </div>
                         </>
