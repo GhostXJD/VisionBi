@@ -1,14 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { getUsuariosRequest, updateActiveRequest } from '../api/usuarios';
-import Swal from 'sweetalert2';
 import { DataGrid } from '@mui/x-data-grid';
-import IconButton from '@mui/material/IconButton';
-import DeleteIcon from '@mui/icons-material/Delete';
 import Checkbox from '@mui/material/Checkbox';
 
 function ListarUsuariosPage() {
   const [usuarios, setUsuarios] = useState([]);
+  const [searchRut, setSearchRut] = useState(''); // Nuevo estado para el RUT de búsqueda
   const { isAuthenticated } = useAuth();
 
   useEffect(() => {
@@ -24,10 +22,10 @@ function ListarUsuariosPage() {
   const getUsuarios = async () => {
     try {
       const res = await getUsuariosRequest();
-      const usuarios = res.data.filter(
+      const filteredUsuarios = res.data.filter(
         (usuario) => usuario.tipoUsuario === 'representante' || usuario.tipoUsuario === 'empleado'
       );
-      setUsuarios(usuarios);
+      setUsuarios(filteredUsuarios);
     } catch (error) {
       console.error('Error al obtener usuarios:', error);
     }
@@ -42,11 +40,30 @@ function ListarUsuariosPage() {
     }
   };
 
+  const filterUsuariosByCompanyRut = (rut) => {
+    const filtered = usuarios.filter((usuario) =>
+      usuario.company.toLowerCase().includes(rut.toLowerCase())
+    );
+    return filtered;
+  };
+
+  const handleSearchInputChange = (event) => {
+    setSearchRut(event.target.value);
+  };
+
+  const filteredByCompanyRut = searchRut ? filterUsuariosByCompanyRut(searchRut) : usuarios;
+
   return (
     <div className="mx-auto my-5">
-      {usuarios.length > 0 ? (
+      <input
+        type="text"
+        placeholder="Buscar por RUT de la compañía"
+        value={searchRut}
+        onChange={handleSearchInputChange}
+      />
+      {filteredByCompanyRut.length > 0 ? (
         <DataGrid
-          rows={usuarios.map((usuario) => ({
+          rows={filteredByCompanyRut.map((usuario) => ({
             id: usuario._id,
             rut: usuario.rut,
             nombre: usuario.nombre,
@@ -81,7 +98,7 @@ function ListarUsuariosPage() {
           className="scrollable-body"
         />
       ) : (
-        <h1>No hay usuarios</h1>
+        <h1>No hay compañia con ese RUT</h1>
       )}
     </div>
   );

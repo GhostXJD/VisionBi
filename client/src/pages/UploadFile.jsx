@@ -97,7 +97,7 @@ function HomePage() {
             //console.log("Archivo CSV subido con éxito:", response);
             Swal.fire({
                 icon: 'success',
-                text: 'File upload sucessfuly',
+                text: 'Archivo guardado satisfactoriamente',
                 confirmButtonColor: '#8F3C8A',
             })
 
