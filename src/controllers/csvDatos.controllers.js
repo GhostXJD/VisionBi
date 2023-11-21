@@ -300,7 +300,7 @@ export const postPredictCategory = async (req, res) => {
 
         const scaledDataSequences = dataSequences.map((sequence) =>
             sequence.map((row) =>
-                row.map((value) => (value - minValue) / (AverageInt - minValue))
+                row.map((value) => (value - minValue) / (averageInt - minValue))
             )
         );
 
