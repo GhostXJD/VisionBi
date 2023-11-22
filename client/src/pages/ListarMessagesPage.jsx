@@ -6,6 +6,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
 import { Link } from "react-router-dom";
+import MessageIcon from '@mui/icons-material/Message';
 
 function ListarMenssage() {
     const navigate = useNavigate();
@@ -29,6 +30,9 @@ function ListarMenssage() {
 
     return (
         <div className='uploadFile'>
+            <h1 style={{ marginBottom: '30px' }}>
+                <MessageIcon sx={{ fontSize: 45 }} /> Mensajes
+            </h1>
             <div className='file'>
                 <DataGrid
                     rows={msgs.map((msg) => ({

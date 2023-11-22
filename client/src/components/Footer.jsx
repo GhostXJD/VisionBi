@@ -20,7 +20,7 @@ export default function Footer({ hiddenRoutes }) {
                         <h3>Contacto</h3>
                         <Link><a> <i><LocalPhoneRoundedIcon /></i> +56 2 2789 5411 </a></Link>
                         <Link><a> <i><PhoneAndroidRoundedIcon /></i> +56 9 4245 6139 </a></Link>
-                        <Link to='/contactus'><a><i><EmailRoundedIcon /></i> Contactanos </a></Link>
+                        <Link to='/contactus'><a><i><EmailRoundedIcon /></i> Contáctanos </a></Link>
                     </div>
 
                     <div className="box">

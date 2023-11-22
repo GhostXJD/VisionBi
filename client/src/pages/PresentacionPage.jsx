@@ -54,22 +54,22 @@ function PresentationPage() {
                         <img src={csv} alt="csv" className='file-img' />
                     </div>
                     <div className="box-file">
-                        <p>To upload your sales history, you can use a CSV file (Comma-Separated Values) that includes the following information:</p>
-                        <ul> • Order: This field records the unique number associated with each purchase transaction.</ul>
-                        <ul> • Date: Indicates the date on which the sale occurred.</ul>
+                        <p>Para cargar tu historial de ventas, puedes utilizar un archivo CSV (Valores Separados por Comas) que incluya la siguiente información:</p>
+                        <ul> • Pedido: Este campo registra el número único asociado con cada transacción de compra.</ul>
+                        <ul> • Fecha: Indica la fecha en que ocurrió la venta.</ul>
 
-                        <ul> • Category: Describes the category or type of product sold in that transaction.</ul>
+                        <ul> • Categoría: Describe la categoría o tipo de producto vendido en esa transacción. </ul>
 
-                        <ul> • Quantity: Reflects the quantity of products sold in that purchase order.</ul>
+                        <ul> • Cantidad: Refleja la cantidad de productos vendidos en ese pedido de compra. </ul>
 
-                        <ul> • Price: Represents the unit price of each product sold.</ul>
+                        <ul> • Precio: Representa el precio unitario de cada producto vendido. </ul>
 
-                        <ul> • State: Refers to the geographical region or location where the sale took place.</ul>
+                        <ul> • Estado: Se refiere a la región geográfica o ubicación donde tuvo lugar la venta. </ul>
 
-                        <ul> • Neighborhood: Specifies the smaller geographic area where the transaction occurred.</ul>
+                        <ul> • Vecindario: Especifica la área geográfica más pequeña donde ocurrió la transacción. </ul>
 
-                        <ul> • Total by Order: Represents the totsl price of an order sale.</ul>
-                        <p>To complete this process, simply upload a CSV file containing this information. This will enable you to analyze and manage your sales history efficiently and effectively.</p>
+                        <ul> • Total por Pedido: Representa el precio total de una venta por pedido. </ul>
+                        <p>Para completar este proceso, simplemente carga un archivo CSV que contenga esta información. Esto te permitirá analizar y gestionar tu historial de ventas de manera eficiente y efectiva.</p>
                     </div>
                 </div>
             </div>

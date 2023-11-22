@@ -155,7 +155,8 @@ export default function PersistentDrawerLeft({ children, hiddenRoutes }) {
                                     open={Boolean(anchorEl)}
                                     onClose={handleMenuClose}
                                 >
-                                    <MenuItem onClick={() => { toggleTheme(); }}
+
+                                    {/* <MenuItem onClick={() => { toggleTheme(); }}
                                         className='flex items-center text-center px-4 py-1  h-8'>
                                         <div className="flex items-center space-x-2  mx-auto">
                                             <div>
@@ -180,7 +181,7 @@ export default function PersistentDrawerLeft({ children, hiddenRoutes }) {
                                                 </svg>
                                             </div>
                                         </div>
-                                    </MenuItem>
+                                    </MenuItem> */}
 
                                     <MenuItem className='text-gray-600 hover:text-[#8F3C8A]' onClick={() => { handleMenuClose(); profile(); }} >
                                         <AccountCircle className='text-[#8F3C8A]' /> Perfil

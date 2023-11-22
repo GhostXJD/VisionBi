@@ -3,36 +3,39 @@ import { useAuth } from '../context/AuthContext';
 import { getcompaniesRequest } from '../api/company';
 import Swal from 'sweetalert2';
 import { DataGrid } from '@mui/x-data-grid';
-import IconButton from '@mui/material/IconButton';
-import DeleteIcon from '@mui/icons-material/Delete';
-import Checkbox from '@mui/material/Checkbox';
+import ApartmentRoundedIcon from '@mui/icons-material/ApartmentRounded';
 
 function ListarCompaniaPage() {
-    const [companies, setCompanies] = useState([]);
-    const { isAuthenticated } = useAuth();
+  const [companies, setCompanies] = useState([]);
+  const { isAuthenticated } = useAuth();
 
-    useEffect(() => {
-        if (!isAuthenticated) {
-            window.location.href = '/';
-        }
-    }, [isAuthenticated]);
+  useEffect(() => {
+    if (!isAuthenticated) {
+      window.location.href = '/';
+    }
+  }, [isAuthenticated]);
 
-    useEffect(() => {
-        getCompanies();
-    }, []);
+  useEffect(() => {
+    getCompanies();
+  }, []);
 
-    const getCompanies = async () => {
-        try {
-            const res = await getcompaniesRequest();
-            setCompanies(res.data);
-            console.log('companies', res.data)
-        } catch (error) {
-            console.error('Error al obtener usuarios:', error);
-        }
-    };
+  const getCompanies = async () => {
+    try {
+      const res = await getcompaniesRequest();
+      setCompanies(res.data);
+      console.log('companies', res.data)
+    } catch (error) {
+      console.error('Error al obtener usuarios:', error);
+    }
+  };
 
-    return (
-        <div className="mx-auto my-5">
+  return (
+    <div className="mx-auto my-5">
+
+      <h1 style={{ marginBottom: '30px' }}>
+        <ApartmentRoundedIcon sx={{ fontSize: 45 }} /> Compañias
+      </h1>
+
       {companies.length > 0 ? (
         <DataGrid
           rows={companies.map((company) => ({
@@ -56,7 +59,7 @@ function ListarCompaniaPage() {
         <h1>No hay compañias</h1>
       )}
     </div>
-    )
+  )
 }
 
 export default ListarCompaniaPage

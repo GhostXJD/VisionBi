@@ -107,7 +107,7 @@ function DashboardByCategoryPage() {
                     text: 'Necesitas un mínimo de 60 datos.',
                     confirmButtonColor: '#8F3C8A',
                 });
-                return; 
+                return;
             }
 
 
@@ -158,8 +158,9 @@ function DashboardByCategoryPage() {
                 <>
                     {dataAvailable ? (
                         <div sx={{ minWidth: 120 }}>
-                            <FormControl sx={{ minWidth: 300 }}>
-                                <InputLabel id="">Selecciona una categoría:</InputLabel>
+                            <FormControl sx={{ minWidth: 300 }} color="secondary">
+
+                                <InputLabel color="secondary" id="">Selecciona una categoría:</InputLabel>
                                 <Select
                                     id="categorySelect"
                                     label="Selecciona una categoría:"
@@ -167,7 +168,7 @@ function DashboardByCategoryPage() {
                                     onChange={(e) => setSelectedCategory(e.target.value)}
                                 >
                                     {Array.from(new Set(csvData.map((row) => row.category)))
-                                        .filter((category) => category.trim() !== "") 
+                                        .filter((category) => category.trim() !== "")
                                         .sort()
                                         .map((category) => (
                                             <MenuItem key={category} value={category}>
@@ -176,7 +177,7 @@ function DashboardByCategoryPage() {
                                         ))}
                                 </Select>
                             </FormControl>
-                            <Button disabled={!isCategorySelected} onClick={getPredictByCategory} color='secondary' variant="contained">
+                            <Button disabled={!isCategorySelected} onClick={getPredictByCategory} color='secondary' variant="contained" style={{ marginLeft: '20px' }}>
                                 Obtener predicción
                             </Button>
                             {chartData.length > 0 && (
@@ -186,7 +187,7 @@ function DashboardByCategoryPage() {
                                     chartType="LineChart"
                                     loader={<div>Cargado gráfico</div>}
                                     data={[
-                                        ['Fecha', 'Ventas reales', 'Ventas Pronosticadas'],
+                                        ['Fecha', 'Ventas Reales', 'Ventas Pronosticadas'],
                                         ...chartData
                                     ]}
                                     options={{
@@ -196,6 +197,10 @@ function DashboardByCategoryPage() {
                                         },
                                         vAxis: {
                                             title: 'Valor',
+                                        }, pointSize: 6,
+                                        series: {
+                                            0: { color: '#8F3C8A', lineWidth: 2 }, // Color para 'Ventas reales'
+                                            1: { color: '#F03A56', lineWidth: 2 },  // Color para 'Ventas Pronosticadas'
                                         },
                                     }}
                                     rootProps={{ 'data-testid': '1' }}

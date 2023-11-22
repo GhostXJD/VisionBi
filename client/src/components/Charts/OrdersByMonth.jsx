@@ -80,10 +80,12 @@ function OrdersByMonth() {
                 type: "pie",
                 height: 600,
             },
+            colors: ['#8F3C8A', '#4535AA', '#D6D1F5', '#ED639E', '#9b59b6', '#E8789A', '#FCBD8D', '#EDDAB9', '#98B6EC', '#E79796','#9F8189','#FFCAD4'],
             labels: Object.keys(ordersByTimeUnit),
             title: {
                 text: "Total de pedidos por mes",
             },
+            
         },
         series: Object.values(ordersByTimeUnit),
     };
@@ -92,6 +94,7 @@ function OrdersByMonth() {
         <div>
             <div className="select-container">
                 <select
+                    color="secondary"
                     className="select-element"
                     value={selectedYear}
                     onChange={handleYearChange}

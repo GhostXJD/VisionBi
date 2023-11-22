@@ -324,15 +324,18 @@ export default function DashboardPage() {
                 0: {
                   curveType: 'function', // Esto asegura que la línea esté curvada
                   lineWidth: 2, // Ajusta el grosor de la línea para la meta
+                  color: '#8F3C8A',
                 },
                 1: {
                   curveType: 'function', // Esto asegura que la línea esté curvada
                   lineWidth: 2, // Ajusta el grosor de la línea para la meta
+                  color: '#F03A56',
                 },
                 2: {
                   curveType: 'function', // Esto asegura que la línea esté curvada
                   lineWidth: 2, // Ajusta el grosor de la línea para la meta
                   lineDashStyle: [4, 4], // Establece un estilo de línea punteada
+                  color: '#F39962',
                 },
                 3: {
                   curveType: 'function', // Esto asegura que la línea esté curvada
@@ -474,10 +477,10 @@ export default function DashboardPage() {
                 <div className="bg-gray-100 dark:text-gray-200 dark:bg-secondary-dark-bg h-44 rounded-xl w-full lg:w-60 p-8 pt-9 m-3 bg-hero-pattern bg-no-repeat bg-cover bg-center">
                   <div className="flex justify-between items-center">
                     <div>
-                      <p className="font-bold text-gray-400">Total de pedidos</p>
+                      <p className="font-bold text-gray-400">Total de Pedidos</p>
                       <p className="text-2xl">{totalOrders}</p>
                     </div>
-                    <button type="button" className="ml-auto text-2xl opacity-0.9 rounded-full p-4 hover:drop-shadow-xl bg-amber-400 text-white">
+                    <button type="button" className="ml-auto text-2xl opacity-0.9 rounded-full p-4 hover:drop-shadow-xl bg-[#7f3ca5] text-white">
                       <svg
                         stroke="currentColor"
                         fill="currentColor"
@@ -496,7 +499,7 @@ export default function DashboardPage() {
                       <p className="font-bold text-gray-400">Ventas previstas</p>
                       <p className="text-2xl">{formattedTotalPredictedSales}</p>
                     </div>
-                    <button type="button" className="ml-auto text-2xl opacity-0.9 rounded-full p-4 hover:drop-shadow-xl bg-amber-400 text-white">
+                    <button type="button" className="ml-auto text-2xl opacity-0.9 rounded-full p-4 hover:drop-shadow-xl bg-[#7f3ca5] text-white">
                       <svg
                         stroke="currentColor"
                         fill="currentColor"
@@ -517,7 +520,7 @@ export default function DashboardPage() {
                       <p className="font-bold text-gray-400">Meta</p>
                       <p className="text-2xl">{formattedGoal}</p>
                     </div>
-                    <button type="button" className="ml-auto text-2xl opacity-0.9 rounded-full p-4 hover:drop-shadow-xl bg-amber-400 text-white">
+                    <button type="button" className="ml-auto text-2xl opacity-0.9 rounded-full p-4 hover:drop-shadow-xl bg-[#7f3ca5] text-white">
                       <svg
                         stroke="currentColor"
                         fill="currentColor"

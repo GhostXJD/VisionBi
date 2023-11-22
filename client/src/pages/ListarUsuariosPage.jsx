@@ -3,6 +3,9 @@ import { useAuth } from '../context/AuthContext';
 import { getUsuariosRequest, updateActiveRequest } from '../api/usuarios';
 import { DataGrid } from '@mui/x-data-grid';
 import Checkbox from '@mui/material/Checkbox';
+import PeopleAltRoundedIcon from '@mui/icons-material/PeopleAltRounded';
+import TextField from '@mui/material/TextField';
+import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 
 function ListarUsuariosPage() {
   const [usuarios, setUsuarios] = useState([]);
@@ -55,12 +58,28 @@ function ListarUsuariosPage() {
 
   return (
     <div className="mx-auto my-5">
-      <input
-        type="text"
-        placeholder="Buscar por RUT de la compañía"
-        value={searchRut}
-        onChange={handleSearchInputChange}
-      />
+
+      <div className="company" style={{ marginBottom: '30px' }}>
+        <div>
+          <h1 style={{ marginBottom: '30px' }}>
+            <PeopleAltRoundedIcon sx={{ fontSize: 45 }} /> Usuarios
+          </h1>
+        </div>
+        <div>
+          <p> <SearchRoundedIcon sx={{ fontSize: 25 }} />Buscar por Compañía</p>
+          <TextField
+            type="text"
+            className='textForm'
+            color='secondary'
+            placeholder="RUT de la Compañía"
+            value={searchRut}
+            onChange={handleSearchInputChange}
+            InputProps={{
+              sx: { borderRadius: 3 }
+            }}
+          />
+        </div>
+      </div>
       {filteredByCompanyRut.length > 0 ? (
         <DataGrid
           rows={filteredByCompanyRut.map((usuario) => ({
@@ -85,6 +104,7 @@ function ListarUsuariosPage() {
               headerName: 'Estado',
               renderCell: (params) => (
                 <Checkbox
+                  color='secondary'
                   checked={params.row.estado}
                   onChange={() => handleToggleActive(params.row.id, params.row.estado)}
                 />
