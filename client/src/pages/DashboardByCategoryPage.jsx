@@ -100,7 +100,9 @@ function DashboardByCategoryPage() {
                 skuValue: sum,
             }));
 
-            if (aggregatedData.length < 60) {
+            console.log(aggregatedData)
+
+            if (aggregatedData.length <= 60) {
                 Swal.fire({
                     icon: 'warning',
                     title: '¡Datos insuficientes!',
