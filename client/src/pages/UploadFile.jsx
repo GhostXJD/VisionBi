@@ -10,6 +10,8 @@ import Papa from 'papaparse';
 import { DataGrid } from '@mui/x-data-grid';
 import moment from 'moment';
 import Swal from 'sweetalert2'
+import csv from "../images/csv.png";
+import FileLines from '../components/FileLines';
 
 const VisuallyHiddenInput = styled('input')({
     clip: 'rect(0 0 0 0)',
@@ -23,7 +25,6 @@ const VisuallyHiddenInput = styled('input')({
     width: 1,
 });
 
-
 function HomePage() {
     const navigate = useNavigate();
     const { isAuthenticated, usuario } = useAuth();
@@ -31,6 +32,16 @@ function HomePage() {
     const [archivoCSV, setArchivoCSV] = useState(null);
     const [csvData, setCsvData] = useState([]);
     const [hasUploadedFile, setHasUploadedFile] = useState(false);
+    const [open, setOpen] = useState(false);
+
+    const handleOpen = (e) => {
+        setOpen(true)
+      };
+    
+      const handleClose = () => {
+        getGoal();
+        setOpen(false);
+      }
 
     useEffect(() => {
         if (!isAuthenticated) navigate('/');
@@ -124,6 +135,11 @@ function HomePage() {
                             style={{ display: 'none' }}
                         />
                     </Button>
+                    <div className="file-guia" style={{ marginLeft: 'auto', width: '100px' }} onClick={(e) => { handleOpen(e) }}>
+                        <img src={csv} alt="csv" className='file-img' style={{ marginLeft: 'auto', marginRight: '15px' }} />
+                        <p>Ver formato</p>
+                    </div>
+                    {open && <FileLines open={open} handleClose={handleClose}  />}
                     <div className='p-2'>
                         {hasUploadedFile && (
                             <>

@@ -1102,6 +1102,24 @@ select-container {
 	/* Borde redondeado del thumb */
 }
 
+.uploadFile .file-guia p{
+	font-weight: bold;
+    text-align: right;
+    font-size: 1rem;
+	
+}
+
+
+
+.uploadFile .file-guia img{
+	height: 60px;
+	display: flex;
+}
+
+
+
+
+
 /* FIN ESTILOS DE UPLOAD FILE */
 
 /* ESTILOS DE  PERFIL*/
@@ -1180,6 +1198,28 @@ select-container {
     font-size: 1rem;
 }
 /* FIN ESTILOS DE COMPAÑIA */
+
+.box-file p{
+	font-style: italic;
+	font-weight: bold;
+    text-align: justify;
+    margin-left: 8%;
+    margin-right: 8%;
+	margin-top: 8px;
+	margin-bottom: 8px;
+    font-size: 1rem;
+}
+
+.box-file ul {
+	font-weight: bold;
+	
+    text-align: justify;
+    margin-left: 8%;
+    margin-right: 8%;
+    font-size: 1rem;
+}
+
+
 
 /* Messages.css */
 /* Estilos CSS */

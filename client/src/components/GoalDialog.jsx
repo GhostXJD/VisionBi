@@ -90,13 +90,13 @@ const AddGoal = (props) => {
                                         color="secondary"
                                         error={!!(formik.touched.amount && formik.errors.amount)}
                                         fullWidth
-                                        label="Amount"
+                                        label="Monto"
                                         name="amount"
                                         onBlur={formik.handleBlur}
                                         onChange={formik.handleChange}
                                         value={formik.values.amount}
                                     />
-                                    <div className="font-bold">Goal start date</div>
+                                    <div className="font-bold">Fecha de Inicio</div>
                                     <TextField
                                         color="secondary"
                                         error={!!(formik.touched.startDate && formik.errors.startDate)}
@@ -111,7 +111,7 @@ const AddGoal = (props) => {
                                             readOnly: true,
                                         }}
                                     />
-                                    <div className="font-bold">Goal end date</div>
+                                    <div className="font-bold">Fecha de termino</div>
                                     <TextField
                                         color="secondary"
                                         error={!!(formik.touched.endDate && formik.errors.endDate)}
