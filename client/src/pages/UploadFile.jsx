@@ -39,7 +39,6 @@ function HomePage() {
       };
     
       const handleClose = () => {
-        getGoal();
         setOpen(false);
       }
 
@@ -138,6 +137,7 @@ function HomePage() {
                         <p>Ver formato</p>
                     </div>
                     {open && <FileLines open={open} handleClose={handleClose}  />}
+                    
                     <div className='p-2'>
                         {hasUploadedFile && (
                             <>
