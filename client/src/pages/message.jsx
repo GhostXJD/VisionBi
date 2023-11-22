@@ -1,13 +1,12 @@
 import { useAuth } from '../context/AuthContext'
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import MessageIcon from '@mui/icons-material/Message';
 import { getMessageRequest } from '../api/messages';
 import Button from '@mui/material/Button';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
-import FormControl from '@mui/material/FormControl';
 import { updateMessageRequest } from '../api/messages';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';

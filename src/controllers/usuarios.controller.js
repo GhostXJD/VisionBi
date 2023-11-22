@@ -134,3 +134,16 @@ export const updateActive = async (req, res) => {
         res.status(404).json({ message: "Usuario no encontrado"});
     }
 };
+
+export const updateTypeUser = async (req, res) => {
+    try {
+        const updatedAType = await usuario.findByIdAndUpdate(
+            req.params.id,
+            req.body, {new: true}
+        )
+        if (!updatedAType) return res.status(404).json({message : "Usuario no encontrado"})
+        res.json(updatedAType)
+    } catch (error) {
+        res.status(404).json({ message: "Usuario no encontrado"});
+    }
+};

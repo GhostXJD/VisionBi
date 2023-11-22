@@ -6,10 +6,13 @@ import Checkbox from '@mui/material/Checkbox';
 import PeopleAltRoundedIcon from '@mui/icons-material/PeopleAltRounded';
 import TextField from '@mui/material/TextField';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
+import IconButton from '@mui/material/IconButton';
+import EditIcon from '@mui/icons-material/Edit';
+import { Link } from "react-router-dom";
 
 function ListarUsuariosPage() {
   const [usuarios, setUsuarios] = useState([]);
-  const [searchRut, setSearchRut] = useState(''); // Nuevo estado para el RUT de búsqueda
+  const [searchRut, setSearchRut] = useState('');
   const { isAuthenticated } = useAuth();
 
   useEffect(() => {
@@ -110,6 +113,23 @@ function ListarUsuariosPage() {
                 />
               ),
             },
+            {
+              field: 'editar',
+              headerName: 'Editar',
+              flex: 1,
+              headerClassName: 'custom-header-class',
+              renderCell: (usuario) => (
+                  <Link to={`/editar/${usuario.row.id}`}>
+                      <IconButton
+                          onClick={() => {
+                          }}
+                          disableRipple
+                      >
+                          <EditIcon sx={{ fontSize: '1.5rem', color: '#8F3C8A' }} />
+                      </IconButton>
+                  </Link>
+              ),
+          },
           ]}
           pageSize={5}
           autoHeight

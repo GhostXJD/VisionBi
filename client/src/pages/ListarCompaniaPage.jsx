@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { getcompaniesRequest } from '../api/company';
-import Swal from 'sweetalert2';
 import { DataGrid } from '@mui/x-data-grid';
 import ApartmentRoundedIcon from '@mui/icons-material/ApartmentRounded';
 
@@ -23,7 +22,6 @@ function ListarCompaniaPage() {
     try {
       const res = await getcompaniesRequest();
       setCompanies(res.data);
-      console.log('companies', res.data)
     } catch (error) {
       console.error('Error al obtener usuarios:', error);
     }

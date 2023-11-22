@@ -8,7 +8,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import { Link } from "react-router-dom";
 import MessageIcon from '@mui/icons-material/Message';
 
-function ListarMenssage() {
+function ListarMessages() {
     const navigate = useNavigate();
     const { isAuthenticated } = useAuth();
     const [msgs, setMessages] = useState([]);
@@ -74,4 +74,4 @@ function ListarMenssage() {
     );
 }
 
-export default ListarMenssage;
+export default ListarMessages;

@@ -1,4 +1,3 @@
-//TODO: Validar el rut de la compañia existente
 import { useAuth } from '../context/AuthContext'
 import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
@@ -151,13 +150,11 @@ function RegistroPage() {
 
     onSubmit: async (values, helpers) => {
       try {
-        //RUT Persona
         const rutSinFormato = values.rut.replace(/\./g, "").replace("-", "").trim();
         const dvIngresado = rutSinFormato.slice(-1);
         const rutNum = rutSinFormato.slice(0, -1);
         const dvCalculado = calcularDigitoVerificador(rutNum);
 
-        //RUT Empresa
         const rutSinFormatearBusiness = values.businessRut.replace(/\./g, "").replace("-", "").trim();
         const rutNumBusiness = rutSinFormatearBusiness.slice(0, -1);
         const dvIngresadoBusiness = rutSinFormatearBusiness.slice(-1);
