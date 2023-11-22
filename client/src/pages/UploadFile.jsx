@@ -54,7 +54,6 @@ function HomePage() {
     const getCsv = async () => {
         try {
             const response = await getCsvDatoRequest(usuario.company);
-            //console.log("Respuesta de la API:", response);
             Papa.parse(response.data, {
                 complete: (parsedData) => {
                     const data = parsedData.data.map((row) => ({
@@ -105,7 +104,6 @@ function HomePage() {
 
         try {
             const response = await createCsv(formData);
-            //console.log("Archivo CSV subido con éxito:", response);
             Swal.fire({
                 icon: 'success',
                 text: 'Archivo guardado satisfactoriamente',
@@ -150,7 +148,6 @@ function HomePage() {
                 </form>
             </div>
 
-            {/* Mostrar los datos del CSV en una tabla */}
             <div className='file'>
                 <h2 >Contenido del archivo CSV </h2>
                 <DataGrid
@@ -162,10 +159,10 @@ function HomePage() {
                         field: header,
                         headerName: header,
                         flex: 1,
-                        headerClassName: 'custom-header-class', // Agregar una clase personalizada para el encabezado
+                        headerClassName: 'custom-header-class',
                     })) : []}
                     pageSize={5}
-                    headerClassName='sticky-header' // Agregar una clase para el encabezado
+                    headerClassName='sticky-header'
                     className='scrollable-body'
                 />
             </div>

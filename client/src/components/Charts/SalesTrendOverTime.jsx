@@ -47,8 +47,7 @@ function SalesTrendOverTime() {
                     const data = parsedData.data.map((row) => ({
                         ...row,
                         date: new Date(row.date), // Formatea la fecha como objeto Date
-                        price: parseFloat(row.price), // Convierte a número
-                        quantity: parseInt(row.quantity), // Convierte a número
+                        skuValue: parseInt(row.skuValue), // Convierte a número
                     }));
                     setCsvData(data);
                 },
@@ -76,7 +75,7 @@ function SalesTrendOverTime() {
         const fecha = rowData.date;
         const month = fecha.getMonth() + 1;
         const day = fecha.getDate();
-        const valorTotal = rowData.quantity * rowData.price;
+        const valorTotal = rowData.skuValue;
 
         if (selectedMonth === "" || month.toString() === selectedMonth) {
             const formattedDate = `${fecha.getFullYear()}-${month.toString().padStart(2, "0")}-${day.toString().padStart(2, "0")}`;
