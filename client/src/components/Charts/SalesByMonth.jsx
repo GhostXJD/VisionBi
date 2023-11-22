@@ -41,8 +41,7 @@ function SalesByMonth() {
                     const data = parsedData.data.map((row) => ({
                         ...row,
                         date: row.date, // No se formatea la fecha
-                        price: parseFloat(row.price), // Convierte a número
-                        quantity: parseInt(row.quantity), // Convierte a número
+                        skuValue: parseInt(row.skuValue), // Convierte a número
                     }));
                     setCsvData(data);
                 },
@@ -72,7 +71,7 @@ function SalesByMonth() {
         const rowData = csvDataFiltered[i];
         const fecha = new Date(rowData.date);
         const month = fecha.getMonth();
-        const valorTotal = rowData.quantity * rowData.price;
+        const valorTotal = rowData.skuValue;
 
         if (monthlySales[month]) {
             monthlySales[month] += valorTotal;
