@@ -55,7 +55,7 @@ const FileLines = (props) => {
                         </div>
 
                         <Button fullWidth size="large" sx={{ mt: 3 }} color="secondary" type="submit" variant="contained" onClick={downloadCsv} >
-                            Descargar
+                            Descargar y Cerrar
                         </Button>
 
                         </DialogContent>
