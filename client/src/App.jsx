@@ -33,8 +33,9 @@ import ResetPass from './pages/resetPass';
 
 // Rutas admin
 import ListarUsuariosPage from './pages/ListarUsuariosPage';
+import EditarUsuarioPage from './pages/EditarUsuarioPage';
 import ListarCompaniaPage from './pages/ListarCompaniaPage';
-import ListarMenssagesPage from './pages/ListarMessagesPage';
+import ListarMessagesPage from './pages/ListarMessagesPage';
 import Message from './pages/message';
 
 // Rutas representante
@@ -85,8 +86,9 @@ function App() {
                   {/* Rutas Admin */}
                   <Route element={<ProtectedRoute role='admin' />}>
                     <Route path='/ListarUsuarios' element={<ListarUsuariosPage />} />
+                    <Route path='/editar/:id' element={<EditarUsuarioPage />} />
                     <Route path='/ListarCompania' element={<ListarCompaniaPage />} />
-                    <Route path='/ListarMensajes' element={<ListarMenssagesPage />} />
+                    <Route path='/ListarMensajes' element={<ListarMessagesPage />} />
                     <Route path='/message/:id' element={<Message />} />
                   </Route>
 
@@ -94,7 +96,6 @@ function App() {
                   <Route element={<ProtectedRoute role='representante' />}>
                     <Route path='/RegistrarEmpleado' element={<RegistroEmpleadoPage />} />
                     <Route path='/ListarEmpleados' element={<ListarEmpleadosPage />} />
-                    <Route path='/ListarMensajes' element={<ListarMenssagesPage />} />
                   </Route>
 
                   {/* Pagina no encontrada */}

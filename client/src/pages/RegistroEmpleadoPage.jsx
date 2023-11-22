@@ -90,7 +90,6 @@ function RegistroEmpleadoPage() {
 
         onSubmit: async (values, helpers) => {
             try {
-                //RUT Persona
                 const rutSinFormato = values.rut.replace(/\./g, "").replace("-", "").trim();
                 const funPass = rutSinFormato.substring(0, 5);
                 const dvIngresado = rutSinFormato.slice(-1);
@@ -119,7 +118,6 @@ function RegistroEmpleadoPage() {
                         text: 'La contraseña se define automaticamente como los primeros 5 dígitos del Rut',
                         confirmButtonColor: '#8F3C8A',
                     }).then(() => {
-                        // Redirigir al usuario a la página de inicio después de hacer clic en "Ok"
                         window.location.replace('/ListarEmpleados');
                     });
 

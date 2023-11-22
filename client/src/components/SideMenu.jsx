@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from "../context/AuthContext";
-import ListAltIcon from '@mui/icons-material/ListAlt';
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import LogoutIcon from '@mui/icons-material/Logout';
 import MessageIcon from '@mui/icons-material/Message';

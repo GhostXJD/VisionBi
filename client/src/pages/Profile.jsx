@@ -6,7 +6,6 @@ import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
 function Profile() {
   const { isAuthenticated, usuario } = useAuth();
 
-  // Redirige al usuario a la página de inicio si no está autenticado
   useEffect(() => {
     if (!isAuthenticated) navigate('/');
   }, [isAuthenticated]);

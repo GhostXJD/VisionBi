@@ -45,7 +45,6 @@ function ContactUs() {
                     text: 'Mensaje enviado',
                     confirmButtonColor: '#8F3C8A',
                 }).then(() => {
-                    // Redirigir al usuario a la página de inicio después de hacer clic en "Ok"
                     window.location.replace('/');
                 });
 
