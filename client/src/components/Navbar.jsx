@@ -76,7 +76,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 export default function PersistentDrawerLeft({ children, hiddenRoutes }) {
     const { toggleTheme, theme } = useTheme();
     const [open, setOpen] = React.useState(false);
-    const { isAuthenticated, logout, usuario } = useAuth();
+    const { isAuthenticated, logout, usuario, hasRole } = useAuth();
     const { pathname } = useLocation();
     const navigate = useNavigate();
 
@@ -90,7 +90,7 @@ export default function PersistentDrawerLeft({ children, hiddenRoutes }) {
         setAnchorEl(event.currentTarget);
     };
     const handleMenuClose = () => {
-        setAnchorEl(null); // Cierra el menú
+        setAnchorEl(null);
     };
 
     if (hiddenRoutes.find((hiddenRoute) => pathname == hiddenRoute)) {
@@ -105,6 +105,18 @@ export default function PersistentDrawerLeft({ children, hiddenRoutes }) {
         setOpen(false);
     };
 
+    const handleLogo = () => {
+        if (isAuthenticated) {
+            if (hasRole('empleado') || hasRole('representante')) {
+                navigate('/dashboard');
+            } else if (hasRole('admin')) {
+                navigate('/ListarUsuarios');
+            }
+        } else {
+            navigate('/');
+        }
+    }
+
     return (
         <Box sx={{ display: 'flex' }} className="my-5">
             <CssBaseline />
@@ -113,9 +125,7 @@ export default function PersistentDrawerLeft({ children, hiddenRoutes }) {
 
                     {isAuthenticated ? (
                         <>
-                            <Link to='/dashboard'>
-                                <img src={logo} alt="Logo" className='logo-img' />
-                            </Link>
+                            <img src={logo} alt="Logo" className='logo-img' onClick={handleLogo} />
                             <IconButton
                                 aria-label="open drawer"
                                 onClick={handleDrawerOpen}

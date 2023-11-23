@@ -10,6 +10,14 @@ import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
 import { Link } from "react-router-dom";
 
+const formatearRut = (rut) => {
+  const rutSinFormatear = rut.replace(/\./g, "").replace("-", "").trim();
+  const dv = rutSinFormatear.slice(-1);
+  const rutNum = rutSinFormatear.slice(0, -1);
+  const rutFormateado = rutNum.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + "-" + dv;
+  return rutFormateado;
+};
+
 function ListarUsuariosPage() {
   const [usuarios, setUsuarios] = useState([]);
   const [searchRut, setSearchRut] = useState('');
@@ -54,7 +62,9 @@ function ListarUsuariosPage() {
   };
 
   const handleSearchInputChange = (event) => {
-    setSearchRut(event.target.value);
+    const rut = event.target.value;
+    const rutFormateado = formatearRut(rut);
+    setSearchRut(rutFormateado);
   };
 
   const filteredByCompanyRut = searchRut ? filterUsuariosByCompanyRut(searchRut) : usuarios;
