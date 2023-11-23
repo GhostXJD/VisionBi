@@ -132,12 +132,6 @@ function HomePage() {
                             style={{ display: 'none' }}
                         />
                     </Button>
-                    <div className="file-guia" style={{ marginLeft: 'auto', width: '100px' }} onClick={(e) => { handleOpen(e) }}>
-                        <img src={csv} alt="csv" className='file-img' style={{ marginLeft: 'auto', marginRight: '15px' }} />
-                        <p>Ver formato</p>
-                    </div>
-                    {open && <FileLines open={open} handleClose={handleClose}  />}
-                    
                     <div className='p-2'>
                         {hasUploadedFile && (
                             <>
@@ -145,6 +139,11 @@ function HomePage() {
                             </>
                         )}
                     </div>
+                    <div className="file-guia" style={{ marginLeft: 'auto', width: '100px' }} onClick={(e) => { handleOpen(e) }}>
+                        <img src={csv} alt="csv" className='file-img' style={{ marginLeft: 'auto', marginRight: '15px' }} />
+                        <p>Ver formato</p>
+                    </div>
+                    {open && <FileLines open={open} handleClose={handleClose}  />}
                 </form>
             </div>
 

@@ -62,6 +62,7 @@ export default function DataTable() {
                     {
                         field: 'estado',
                         headerName: 'Estado',
+                        headerClassName: 'custom-header-class' ,
                         renderCell: (params) => (
                           <Checkbox
                             checked={params.row.estado}
