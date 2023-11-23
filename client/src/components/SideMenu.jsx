@@ -27,6 +27,7 @@ function SideMenu({ handleMenuClose, handleDrawerClose }) {
                 <nav className="-mx-3 space-y-6 ">
                     {(hasRole("representante") || hasRole("empleado")) && (
                         <>
+                            <label className="px-3 text-xs text-gray-500 uppercase dark:text-gray-400">dashboards</label>
                             <div className="space-y-3 ">
                                 <li className="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-[#7f3ca5]">
                                     <DashboardRoundedIcon className="" />

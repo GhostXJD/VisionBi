@@ -1,6 +1,4 @@
-import React from 'react'
 import { useEffect, useState } from "react";
-import { Chart } from "react-google-charts";
 import { useAuth } from "../context/AuthContext";
 import { getCsvDatoRequest, getPredictByCategoryRequest } from "../api/csvDatos";
 import { Link } from "react-router-dom";
@@ -13,9 +11,10 @@ import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import Swal from 'sweetalert2'
+import ApexCharts from "react-apexcharts";
+
 
 function DashboardByCategoryPage() {
-
     const { usuario } = useAuth();
     const [csvData, setCsvData] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState("");
@@ -26,11 +25,9 @@ function DashboardByCategoryPage() {
     const [filteredCsvData, setFilteredCsvData] = useState([]);
     const [predictCategoryData, setPredictCategoryData] = useState([]);
 
-
     useEffect(() => {
         getCsv();
     }, []);
-
     const ColorButton = styled(Button)(({ theme }) => ({
         color: theme.palette.getContrastText("#8F3C8A"),
         backgroundColor: "#8F3C8A",
@@ -39,7 +36,6 @@ function DashboardByCategoryPage() {
         },
         fontFamily: 'Poppins',
     }));
-
     const getCsv = async () => {
         try {
             const response = await getCsvDatoRequest(usuario.company);
@@ -48,14 +44,14 @@ function DashboardByCategoryPage() {
                 complete: (parsedData) => {
                     const data = parsedData.data.map((row) => ({
                         ...row,
-                        date: moment(row.date, 'YYYY-MM-DD'),
+                        date: moment(row.date, "YYYY-MM-DD"),
                     }));
 
                     data.sort((a, b) => a.date - b.date);
 
                     const formattedData = data.map((row) => ({
                         ...row,
-                        date: row.date.format('YYYY-MM-DD'),
+                        date: row.date.format("YYYY-MM-DD"),
                     }));
 
                     setCsvData(formattedData);
@@ -64,18 +60,18 @@ function DashboardByCategoryPage() {
                 header: true,
                 skipEmptyLines: true,
             });
-            setLoading(true);
+            setLoading(false);
         } catch (error) {
             console.log("Error al obtener los datos:", error);
             setDataAvailable(false);
-        } finally {
-            setLoading(false)
+            setLoading(false);
         }
     };
+
     const getPredictByCategory = async () => {
         try {
             if (!selectedCategory) {
-                console.log('Por favor selecciona categoría');
+                console.log("Por favor selecciona categoría");
                 return;
             }
 
@@ -100,18 +96,15 @@ function DashboardByCategoryPage() {
                 skuValue: sum,
             }));
 
-            console.log(aggregatedData)
-
-            if (aggregatedData.length <= 60) {
+            if (aggregatedData.length < 60) {
                 Swal.fire({
-                    icon: 'warning',
-                    title: '¡Datos insuficientes!',
-                    text: 'Necesitas un mínimo de 60 datos.',
-                    confirmButtonColor: '#8F3C8A',
+                    icon: "warning",
+                    title: "¡Datos insuficientes!",
+                    text: "Necesitas un mínimo de 60 datos.",
+                    confirmButtonColor: "#8F3C8A",
                 });
                 return;
             }
-
 
             const res = await getPredictByCategoryRequest(usuario.company, { category: selectedCategory });
             setPredictCategoryData(res.data);
@@ -138,7 +131,7 @@ function DashboardByCategoryPage() {
             setChartData(combinedChartData);
             setLoading(false);
         } catch (error) {
-            console.log('Error al predecir', error);
+            console.log("Error al predecir", error);
             setLoading(false);
         }
     };
@@ -153,9 +146,9 @@ function DashboardByCategoryPage() {
     }, [selectedCategory, csvData]);
 
     return (
-        <div className='mt-14'>
+        <div className="mt-14">
             {loading ? (
-                <div className="text-center"> Cargando ... </div>
+                <div className="text-center">Cargando ...</div>
             ) : (
                 <>
                     {dataAvailable ? (
@@ -183,44 +176,58 @@ function DashboardByCategoryPage() {
                                 Obtener predicción
                             </Button>
                             {chartData.length > 0 && (
-                                <Chart
-                                    width={'100%'}
-                                    height={'400px'}
-                                    chartType="LineChart"
-                                    loader={<div>Cargado gráfico</div>}
-                                    data={[
-                                        ['Fecha', 'Ventas Reales', 'Ventas Pronosticadas'],
-                                        ...chartData
-                                    ]}
-                                    options={{
-                                        title: `Ventas Totales vs Ventas Predichas por Día de ${selectedCategoryText}`,
-                                        hAxis: {
-                                            title: 'Fecha',
-                                        },
-                                        vAxis: {
-                                            title: 'Valor',
-                                        }, pointSize: 6,
-                                        series: {
-                                            0: { color: '#8F3C8A', lineWidth: 2 }, // Color para 'Ventas reales'
-                                            1: { color: '#F03A56', lineWidth: 2 },  // Color para 'Ventas Pronosticadas'
-                                        },
-                                    }}
-                                    rootProps={{ 'data-testid': '1' }}
-                                />
-                            )}
+                                    <ApexCharts
+                                        options={{
+                                            chart: {
+                                                type: "area",
+                                                height: 400,
+                                            },
+                                            xaxis: {
+                                                type: "datetime",
+                                                categories: chartData.map((entry) => entry[0]),
+                                                title: {
+                                                    text: "Fecha",
+                                                },
+                                            },
+                                            yaxis: {
+                                                title: {
+                                                    text: "Valor",
+                                                },
+                                            },
+                                            colors: ["#8F3C8A", "#F03A56"],
+                                            dataLabels: {
+                                                enabled: false,
+                                            },
+                                        }}
+                                        series={[
+                                            {
+                                                name: "Ventas Reales",
+                                                data: chartData.map((entry) => entry[1]),
+                                            },
+                                            {
+                                                name: "Ventas Pronosticadas",
+                                                data: chartData.map((entry) => entry[2]),
+                                            },
+                                        ]}
+                                        type="area"
+                                        height={400}
+                                    />
+                                )}
                         </div>
                     ) : (
                         <>
-                            <h1 className="text-center">No se han cargado datos. Debes subir un archivo CSV.</h1>
+                            <h1 className="text-center">
+                                No se han cargado datos. Debes subir un archivo CSV.
+                            </h1>
                             <div className="font-sans text-center">
-                                <Link to="/uploadfile" ><ColorButton >Haz clic aquí para subir el archivo CSV.</ColorButton></Link>
+                                <Link to="/uploadfile">Haz clic aquí para subir el archivo CSV.</Link>
                             </div>
                         </>
                     )}
                 </>
             )}
         </div>
-    )
+    );
 }
 
-export default DashboardByCategoryPage
+export default DashboardByCategoryPage;
