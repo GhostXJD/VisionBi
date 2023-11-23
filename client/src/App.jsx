@@ -45,8 +45,8 @@ import ListarEmpleadosPage from './pages/ListarEmpleadosPage';
 
 function App() {
   const hiddenRoutes = ['/login', '/registro']
-  const hiddenRoutesFooter = ['/login', '/registro','/uploadfile','/perfil','/perfil/ChangePassword','/dashboard','/dashboardByCategory','/revenue-by-category','/sales-by-neighborhood','/sales-trend-over-time','/sales-by-month','/sales-by-state','/orders-by-month','/ListarUsuarios','/RegistrarEmpleado','/ListarEmpleados','/resetPass','/recoverPass', '/ListarMensajes' , '/message/:id', '/ListarCompania']
-  
+  const hiddenRoutesFooter = ['/login', '/registro', '/uploadfile', '/perfil', '/perfil/ChangePassword', '/dashboard', '/dashboardByCategory', '/revenue-by-category', '/sales-by-neighborhood', '/sales-trend-over-time', '/sales-by-month', '/sales-by-state', '/orders-by-month', '/ListarUsuarios', '/RegistrarEmpleado', '/ListarEmpleados', '/resetPass', '/recoverPass', '/ListarMensajes', '/message/:id', '/ListarCompania']
+
   return (
     <AuthProvider>
       <ThemeProvider>
@@ -65,22 +65,12 @@ function App() {
                   <Route path='/vision' element={<Vision />} />
                   <Route path='/contactus' element={<ContactUs />} />
                   <Route path='/recoverPass' element={<RecoverPass />} />
-                  
+
                   {/* Rutas usuarios logueados */}
                   <Route element={<ProtectedRoute />}>
-                    <Route path='/uploadfile' element={<UploadFile />} />
                     <Route path='/perfil' element={<Profile />} />
                     <Route path='/perfil/ChangePassword' element={<ChangePasswordPage />} />
-                    <Route path='/dashboard' element={<DashboardPage />} />
-                    <Route path='/dashboardByCategory' element={<DashboardByCategoryPage />} />
                     <Route path='/resetPass' element={<ResetPass />} />
-                    {/*Charts*/}
-                    <Route path="/revenue-by-category" element={<RevenueByCategory />} />
-                    <Route path="/sales-by-neighborhood" element={<SalesByNeighborhood />} />
-                    <Route path="/sales-trend-over-time" element={<SalesTrendOverTime />} />
-                    <Route path="/sales-by-month" element={<SalesByMonth />} />
-                    <Route path="/sales-by-state" element={<SalesByState />} />
-                    <Route path="/orders-by-month" element={<OrdersByMonth />} />
                   </Route>
 
                   {/* Rutas Admin */}
@@ -94,8 +84,31 @@ function App() {
 
                   {/* Rutas Representante */}
                   <Route element={<ProtectedRoute role='representante' />}>
+                    <Route path='/uploadfile' element={<UploadFile />} />
                     <Route path='/RegistrarEmpleado' element={<RegistroEmpleadoPage />} />
                     <Route path='/ListarEmpleados' element={<ListarEmpleadosPage />} />
+                    <Route path='/dashboard' element={<DashboardPage />} />
+                    <Route path='/dashboardByCategory' element={<DashboardByCategoryPage />} />
+                    {/*Charts*/}
+                    <Route path="/revenue-by-category" element={<RevenueByCategory />} />
+                    <Route path="/sales-by-neighborhood" element={<SalesByNeighborhood />} />
+                    <Route path="/sales-trend-over-time" element={<SalesTrendOverTime />} />
+                    <Route path="/sales-by-month" element={<SalesByMonth />} />
+                    <Route path="/sales-by-state" element={<SalesByState />} />
+                    <Route path="/orders-by-month" element={<OrdersByMonth />} />
+                  </Route>
+
+                  <Route element={<ProtectedRoute role='empleado' />}>
+                    <Route path='/uploadfile' element={<UploadFile />} />
+                    <Route path='/dashboard' element={<DashboardPage />} />
+                    <Route path='/dashboardByCategory' element={<DashboardByCategoryPage />} />
+                    {/*Charts*/}
+                    <Route path="/revenue-by-category" element={<RevenueByCategory />} />
+                    <Route path="/sales-by-neighborhood" element={<SalesByNeighborhood />} />
+                    <Route path="/sales-trend-over-time" element={<SalesTrendOverTime />} />
+                    <Route path="/sales-by-month" element={<SalesByMonth />} />
+                    <Route path="/sales-by-state" element={<SalesByState />} />
+                    <Route path="/orders-by-month" element={<OrdersByMonth />} />
                   </Route>
 
                   {/* Pagina no encontrada */}
@@ -103,7 +116,7 @@ function App() {
                 </Routes>
               </main>
             </Navbar>
-            <Footer hiddenRoutes={hiddenRoutesFooter}/>
+            <Footer hiddenRoutes={hiddenRoutesFooter} />
           </CsvProvider>
         </BrowserRouter>
       </ThemeProvider>
