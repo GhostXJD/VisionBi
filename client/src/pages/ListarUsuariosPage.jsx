@@ -122,6 +122,8 @@ function ListarUsuariosPage() {
                   onChange={() => handleToggleActive(params.row.id, params.row.estado)}
                 />
               ),
+              flex: 1,
+              headerClassName: 'custom-header-class',
             },
             {
               field: 'editar',

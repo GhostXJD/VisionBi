@@ -45,7 +45,6 @@ function Top10RevenuesByCategory() {
     async function getCsv() {
         try {
             const response = await getCsvDatoRequest(usuario.company);
-            console.log("Respuesta de la API:", response);
             Papa.parse(response.data, {
                 complete: (parsedData) => {
                     const data = parsedData.data.map((row) => ({

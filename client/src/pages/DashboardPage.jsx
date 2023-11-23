@@ -191,7 +191,7 @@ export default function DashboardPage() {
   };
 
   const Prediction = () => {
-    let sortedChartData = [["Date", "Total", "Prediccion", "Meta"]];
+    let sortedChartData = [["Fecha", "Total ", "Prediccion ", "Meta "]];
 
     if (csvData.length === 0) {
       return <div>No hay datos disponibles para graficar.</div>;
@@ -266,7 +266,7 @@ export default function DashboardPage() {
 
     // Calcular la cantidad diaria para alcanzar la meta
     const daysDiff = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24)); // Diferencia en días
-    const dailyAmount = totalAmount / daysDiff;
+    const dailyAmount = parseInt(totalAmount / daysDiff);
 
     /// Crear datos para la línea de meta
     const dailyGoals = [];
@@ -352,7 +352,7 @@ export default function DashboardPage() {
         </div>
       );
     } else {
-      const sortedChartData = [["Date", "Total", "Predicted"]];
+      const sortedChartData = [["Fecha", "Total ", "Prediccion "]];
 
       if (csvData.length === 0) {
         return <div>No hay datos disponibles para graficar.</div>;
