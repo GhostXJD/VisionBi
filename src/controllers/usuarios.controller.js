@@ -5,9 +5,11 @@ import bcrypt from 'bcryptjs'
 export const createUsuario = async (req, res) => {
     const { rut, nombre, apellido, correo, password, active, tipoUsuario, company } = req.body;
     try {
-        const usuarioFound = await usuario.findOne({ rut });
-        if (usuarioFound)
-            return res.status(404).json(['El rut ya existe']);
+        const usuarioRut = await usuario.findOne({ rut });
+        if (usuarioRut) return res.status(404).json(['Este rut ya existe']);
+
+        const usuarioCorreo = await usuario.findOne({ correo });
+        if (usuarioCorreo) return res.status(404).json(['El correo ya existe']);
 
         const passwordHashs = await bcrypt.hash(password, 10)
 
@@ -73,7 +75,7 @@ export const updateUsuario = async (req, res) => {
     try {
         let { rut, nombre, apellido, correo, password, active, tipoUsuario, company } = req.body
         password = bcrypt.hashSync(password, 10)
-        
+
         await usuario.findByIdAndUpdate({ _id: req.params.id }, {
             rut,
             nombre,
@@ -84,9 +86,9 @@ export const updateUsuario = async (req, res) => {
             tipoUsuario,
             company
         })
-        
+
         if (!usuario) return res.status(404).json({ message: "Usuario not found" });
-        
+
         res.json(usuario);
     } catch (error) {
         res.status(404).json({ message: "Usuario not found" });
@@ -100,25 +102,32 @@ function generatePassword(rut) {
 }
 
 const getUsuarioByCorreo = async (correo) => {
-    return await usuario.findOne({ correo });
+    try {
+        const usuario = await usuario.findOne({ correo });
+        if (!usuario) res.status(404).json(['Este correo no existe']);
+        res.json(usuario)
+    } catch (error) {
+        res.status(404).json(["El correo ingresado no existe"]);
+    }
 };
 
 export const updatePass = async (req, res) => {
     try {
         const { correo } = req.params
-        const usuarioEncontrado = await getUsuarioByCorreo( correo )
+        const usuarioEncontrado = await getUsuarioByCorreo(correo)
+        if (!usuarioEncontrado) res.status(404).json(['Este correo no existe']);
 
         const rut = usuarioEncontrado.rut
         const passwordSinEncriptar = generatePassword(rut)
         const password = bcrypt.hashSync(passwordSinEncriptar, 10)
 
-        await usuario.findOneAndUpdate({correo: correo}, {
+        await usuario.findOneAndUpdate({ correo: correo }, {
             password
         })
-        
+
         res.json(usuario);
     } catch (error) {
-        res.status(404).json({ message: "El correo ingresado no existe" });
+        res.status(404).json(["El correo ingresado no existe"] );
     }
 };
 
@@ -126,12 +135,12 @@ export const updateActive = async (req, res) => {
     try {
         const updatedActive = await usuario.findByIdAndUpdate(
             req.params.id,
-            req.body, {new: true}
+            req.body, { new: true }
         )
-        if (!updatedActive) return res.status(404).json({message : "Usuario no encontrado"})
+        if (!updatedActive) return res.status(404).json({ message: "Usuario no encontrado" })
         res.json(updatedActive)
     } catch (error) {
-        res.status(404).json({ message: "Usuario no encontrado"});
+        res.status(404).json({ message: "Usuario no encontrado" });
     }
 };
 
@@ -139,11 +148,11 @@ export const updateTypeUser = async (req, res) => {
     try {
         const updatedAType = await usuario.findByIdAndUpdate(
             req.params.id,
-            req.body, {new: true}
+            req.body, { new: true }
         )
-        if (!updatedAType) return res.status(404).json({message : "Usuario no encontrado"})
+        if (!updatedAType) return res.status(404).json({ message: "Usuario no encontrado" })
         res.json(updatedAType)
     } catch (error) {
-        res.status(404).json({ message: "Usuario no encontrado"});
+        res.status(404).json({ message: "Usuario no encontrado" });
     }
 };

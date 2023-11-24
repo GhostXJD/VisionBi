@@ -7,11 +7,18 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import { useLocation } from 'react-router-dom';
 import { Link } from "react-router-dom";
 
-export default function Footer({ hiddenRoutes }) {
+export default function Footer({ hiddenRoutesFooter }) {
     const { pathname } = useLocation();
-    if (hiddenRoutes.find((hiddenRoute) => pathname == hiddenRoute)) {
-        return
+
+    const isRouteHidden = hiddenRoutesFooter.some((hiddenRoute) => {
+        const regex = new RegExp(`^${hiddenRoute.replace(/:[^\s/]+/g, '[^\\s/]+')}$`);
+        return regex.test(pathname);
+    });
+
+    if (isRouteHidden) {
+        return null; // O retorna lo que sea apropiado para ocultar el footer
     }
+
     return (
         <div>
             <section className="footer">
