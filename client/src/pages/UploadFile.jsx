@@ -9,7 +9,7 @@ import { getCsvDatoRequest } from '../api/csvDatos';
 import Papa from 'papaparse';
 import { DataGrid } from '@mui/x-data-grid';
 import moment from 'moment';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 import csv from "../images/csv.png";
 import FileLines from '../components/FileLines';
 
@@ -35,12 +35,34 @@ function HomePage() {
     const [open, setOpen] = useState(false);
 
     const handleOpen = (e) => {
-        setOpen(true)
-      };
-    
-      const handleClose = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
         setOpen(false);
-      }
+    };
+
+    const validateCsvColumns = (data) => {
+        // Define las columnas requeridas
+        const requiredColumns = ['order', 'date', 'state', 'neighborhood', 'category', 'skuValue', 'totalValue'];
+
+        // Obtiene las columnas del archivo CSV
+        const csvColumns = Object.keys(data.length > 0 ? data[0] : {});
+
+        // Verifica si todas las columnas requeridas están presentes
+        const hasAllColumns = requiredColumns.every((column) => csvColumns.includes(column));
+
+        if (!hasAllColumns) {
+            // Muestra una alerta o mensaje de error
+            Swal.fire({
+                icon: 'error',
+                text: 'El archivo CSV no tiene todas las columnas requeridas: ' + requiredColumns.join(', ') + '. verifique el formato solicitado',
+                confirmButtonColor: '#8F3C8A',
+            });
+        }
+
+        return hasAllColumns;
+    };
 
     useEffect(() => {
         if (!isAuthenticated) navigate('/');
@@ -96,6 +118,11 @@ function HomePage() {
     const onSubmit = async (event) => {
         event.preventDefault();
 
+        // Validar las columnas antes de enviar el formulario
+        if (!validateCsvColumns(csvData)) {
+            return;
+        }
+
         const formData = new FormData();
         formData.append('archivoCSV', archivoCSV);
         formData.append('userUploader', usuario.rut);
@@ -107,7 +134,7 @@ function HomePage() {
                 icon: 'success',
                 text: 'Archivo guardado satisfactoriamente',
                 confirmButtonColor: '#8F3C8A',
-            })
+            });
 
             setHasUploadedFile(false);
             getCsv();
@@ -115,7 +142,6 @@ function HomePage() {
             console.error("Error al subir el archivo CSV:", error);
         }
     };
-
 
     return (
         <div className='uploadFile'>
@@ -143,7 +169,7 @@ function HomePage() {
                         <img src={csv} alt="csv" className='file-img' style={{ marginLeft: 'auto', marginRight: '15px' }} />
                         <p>Ver formato</p>
                     </div>
-                    {open && <FileLines open={open} handleClose={handleClose}  />}
+                    {open && <FileLines open={open} handleClose={handleClose} />}
                 </form>
             </div>
 

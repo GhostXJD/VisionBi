@@ -357,10 +357,10 @@ export const getCsvDatos = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
-
 export const createCsvDato = async (req, res) => {
     try {
-        if (!req.file) {
+        // Verificar si existe el archivo y es un CSV
+        if (!req.file || !req.file.mimetype.includes('csv')) {
             return res.status(400).json({ message: 'Archivo CSV requerido' });
         }
 
@@ -369,41 +369,31 @@ export const createCsvDato = async (req, res) => {
         // Verificar si ya existe un registro con el mismo userUploader y company
         const existingCsvDato = await csvDato.findOne({ userUploader, company });
 
+        // Eliminar el archivo CSV existente si existe
         if (existingCsvDato) {
-            // Si existe, elimina el archivo CSV existente
-            // y luego crea uno nuevo
             const deletedCsvDato = await csvDato.findOneAndDelete({ userUploader, company });
 
-            if (deletedCsvDato) {
-                const newCsvDato = new csvDato({
-                    archivoCSV: req.file.buffer,
-                    userUploader: userUploader,
-                    company: company,
-                    date: new Date(),
-                });
-
-                const savedCsvDato = await newCsvDato.save();
-                return res.json(savedCsvDato);
+            if (!deletedCsvDato) {
+                return res.status(500).json({ message: 'No se pudo eliminar el CSV existente' });
             }
-        } else {
-            // Si no existe, crea un nuevo registro
-            const newCsvDato = new csvDato({
-                archivoCSV: req.file.buffer,
-                userUploader: userUploader,
-                company: company,
-                date: new Date(),
-            });
-
-            const savedCsvDato = await newCsvDato.save();
-            return res.json(savedCsvDato);
         }
 
-        return res.status(500).json({ message: 'No se pudo actualizar ni crear el registro' });
+        // Crear un nuevo registro
+        const newCsvDato = new csvDato({
+            archivoCSV: req.file.buffer,
+            userUploader,
+            company,
+            date: new Date(),
+        });
+
+        const savedCsvDato = await newCsvDato.save();
+        return res.json(savedCsvDato);
     } catch (error) {
-        res.status(500).json({ message: error.message });
-        console.log("error", error);
+        console.error("Error:", error);
+        return res.status(500).json({ message: error.message });
     }
 };
+
 
 
 
