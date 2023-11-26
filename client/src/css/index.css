@@ -1188,6 +1188,15 @@ select-container {
 	background-color: #8F3C8A;
 }
 
+.css-3dzjca-MuiPaper-root-MuiPopover-paper-MuiMenu-paper::-webkit-scrollbar {
+	width: 0.5rem;
+}
+.css-3dzjca-MuiPaper-root-MuiPopover-paper-MuiMenu-paper::-webkit-scrollbar-track {
+	background-color: var(--white);
+}
+.css-3dzjca-MuiPaper-root-MuiPopover-paper-MuiMenu-paper::-webkit-scrollbar-thumb {
+	background-color: #8F3C8A;
+}
 /* FIN ESTILOS DE SIDEMENU */
 
 /* ESTILOS DE COMPAÑIA*/
