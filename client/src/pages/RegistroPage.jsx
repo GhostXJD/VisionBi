@@ -207,11 +207,11 @@ function RegistroPage() {
     if (registroError.length > 0) {
       for (const errores of registroError) {
         if (errores == "El correo ya existe") {
-          formik.setFieldError('correo', 'This email already exists');
+          formik.setFieldError('correo', 'Este correo ya existe');
         } else if (errores == "Este rut ya existe") {
-          formik.setFieldError('rut', 'This RUT already exists');
+          formik.setFieldError('rut', 'Este rut ya existe');
         } else if (errores == "Este RUT de empresa ya existe") {
-          formik.setFieldError('businessRut', 'This RUT already exists');
+          formik.setFieldError('businessRut', 'Este RUT de empresa ya existe');
         }
         else {
           navigate("/dashboard")

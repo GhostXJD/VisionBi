@@ -14,8 +14,9 @@ import PersonAddAlt1RoundedIcon from '@mui/icons-material/PersonAddAlt1Rounded';
 function RegistroEmpleadoPage() {
 
     const [rutError, setRutError] = useState("");
-    const { isAuthenticated, errors: registroError, usuario } = useAuth();
+    const { isAuthenticated, usuario } = useAuth();
     const navigate = useNavigate();
+    const [errors, setErrors] = useState([]);
     const { theme } = useTheme();
 
     useEffect(() => {
@@ -124,13 +125,26 @@ function RegistroEmpleadoPage() {
                 } else {
                     setRutError("Este RUT no existe");
                 }
-            } catch (err) {
+            } catch (error) {
                 helpers.setStatus({ success: false });
-                helpers.setErrors({ submit: err.message });
                 helpers.setSubmitting(false);
+                setErrors(error.response.data)
             }
         }
     });
+
+    useEffect(() => {
+        if (errors.length > 0) {
+            for (const errores of errors) {
+                if (errores == "Este rut ya existe") {
+                    formik.setFieldError('rut', 'Este rut ya existe');
+                }
+                if (errores == "El correo ya existe") {
+                    formik.setFieldError('correo', 'Este correo ya existe');
+                }
+            }
+        }
+    }, [errors]);
 
     return (
 

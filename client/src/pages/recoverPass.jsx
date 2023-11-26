@@ -6,8 +6,11 @@ import Stack from '@mui/material/Stack';
 import { updatePassUsuarioRequest } from '../api/usuarios'
 import Swal from 'sweetalert2'
 import LockIcon from '@mui/icons-material/Lock';
+import { useEffect, useState } from 'react';
 
 function recoverPassPage() {
+
+    const [errors, setErrors] = useState([]);
 
     const formik = useFormik({
         initialValues: {
@@ -36,13 +39,23 @@ function recoverPassPage() {
                     });
                 }
 
-            } catch (err) {
+            } catch (error) {
                 helpers.setStatus({ success: false });
-                helpers.setErrors({ submit: err.message });
                 helpers.setSubmitting(false);
+                setErrors(error.response.data)
             }
         }
     });
+
+    useEffect(() => {
+        if (errors.length > 0) {
+            for (const errores of errors) {
+                if (errores == "El correo ingresado no existe") {
+                    formik.setFieldError('mail', 'Este correo no existe');
+                }
+            }
+        }
+    }, [errors]);
 
     return (
 

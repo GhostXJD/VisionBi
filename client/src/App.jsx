@@ -45,7 +45,7 @@ import ListarEmpleadosPage from './pages/ListarEmpleadosPage';
 
 function App() {
   const hiddenRoutes = ['/login', '/registro']
-  const hiddenRoutesFooter = ['/login', '/registro', '/uploadfile', '/perfil', '/perfil/ChangePassword', '/dashboard', '/dashboardByCategory', '/revenue-by-category', '/sales-by-neighborhood', '/sales-trend-over-time', '/sales-by-month', '/sales-by-state', '/orders-by-month', '/ListarUsuarios', '/RegistrarEmpleado', '/ListarEmpleados', '/resetPass', '/recoverPass', '/ListarMensajes', '/message/:id', '/ListarCompania']
+  const hiddenRoutesFooter = ['/login', '/registro', '/uploadfile', '/perfil', '/perfil/ChangePassword', '/dashboard', '/dashboardByCategory', '/revenue-by-category', '/sales-by-neighborhood', '/sales-trend-over-time', '/sales-by-month', '/sales-by-state', '/orders-by-month', '/ListarUsuarios', '/RegistrarEmpleado', '/ListarEmpleados', '/resetPass', '/recoverPass', '/ListarMensajes', '/message/:id', '/ListarCompania', '/editar/:id']
 
   return (
     <AuthProvider>
@@ -116,7 +116,7 @@ function App() {
                 </Routes>
               </main>
             </Navbar>
-            <Footer hiddenRoutes={hiddenRoutesFooter} />
+            <Footer hiddenRoutesFooter={hiddenRoutesFooter} />
           </CsvProvider>
         </BrowserRouter>
       </ThemeProvider>
