@@ -28,7 +28,7 @@ function PresentationPage() {
 
             </div>
             <div className="services">
-                <h3>SERIVICOS</h3>
+                <h3>SERVICIOS</h3>
                 <div className="index-info" >
                     <div className="box-services">
                         <img src={comparativas} alt="comparativas" className='services-img' />
