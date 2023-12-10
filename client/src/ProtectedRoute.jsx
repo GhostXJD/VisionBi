@@ -16,6 +16,22 @@ function ProtectedRoute({ role, ...props }) {
     return <Navigate to="/" replace />;
   }
 
+  // Evitar que el administrador acceda a rutas específicas
+  const restrictedRoutesForAdmin = [
+    '/dashboard',
+    '/dashboardByCategory',
+    '/revenue-by-category',
+    '/sales-by-neighborhood',
+    '/sales-trend-over-time',
+    '/sales-by-month',
+    '/sales-by-state',
+    '/orders-by-month'
+  ];
+
+  if (hasRole('admin') && restrictedRoutesForAdmin.some(route => location.pathname.startsWith(route))) {
+    return <Navigate to="/" replace />;
+  }
+
   return <Outlet {...props} />;
 }
 

@@ -71,6 +71,15 @@ function App() {
                     <Route path='/perfil' element={<Profile />} />
                     <Route path='/perfil/ChangePassword' element={<ChangePasswordPage />} />
                     <Route path='/resetPass' element={<ResetPass />} />
+                    <Route path='/dashboard' element={<DashboardPage />} />
+                    <Route path='/dashboardByCategory' element={<DashboardByCategoryPage />} />
+                    {/*Charts*/}
+                    <Route path="/revenue-by-category" element={<RevenueByCategory />} />
+                    <Route path="/sales-by-neighborhood" element={<SalesByNeighborhood />} />
+                    <Route path="/sales-trend-over-time" element={<SalesTrendOverTime />} />
+                    <Route path="/sales-by-month" element={<SalesByMonth />} />
+                    <Route path="/sales-by-state" element={<SalesByState />} />
+                    <Route path="/orders-by-month" element={<OrdersByMonth />} />
                   </Route>
 
                   {/* Rutas Admin */}
@@ -87,28 +96,6 @@ function App() {
                     <Route path='/uploadfile' element={<UploadFile />} />
                     <Route path='/RegistrarEmpleado' element={<RegistroEmpleadoPage />} />
                     <Route path='/ListarEmpleados' element={<ListarEmpleadosPage />} />
-                    <Route path='/dashboard' element={<DashboardPage />} />
-                    <Route path='/dashboardByCategory' element={<DashboardByCategoryPage />} />
-                    {/*Charts*/}
-                    <Route path="/revenue-by-category" element={<RevenueByCategory />} />
-                    <Route path="/sales-by-neighborhood" element={<SalesByNeighborhood />} />
-                    <Route path="/sales-trend-over-time" element={<SalesTrendOverTime />} />
-                    <Route path="/sales-by-month" element={<SalesByMonth />} />
-                    <Route path="/sales-by-state" element={<SalesByState />} />
-                    <Route path="/orders-by-month" element={<OrdersByMonth />} />
-                  </Route>
-
-                  <Route element={<ProtectedRoute role='empleado' />}>
-                    <Route path='/uploadfile' element={<UploadFile />} />
-                    <Route path='/dashboard' element={<DashboardPage />} />
-                    <Route path='/dashboardByCategory' element={<DashboardByCategoryPage />} />
-                    {/*Charts*/}
-                    <Route path="/revenue-by-category" element={<RevenueByCategory />} />
-                    <Route path="/sales-by-neighborhood" element={<SalesByNeighborhood />} />
-                    <Route path="/sales-trend-over-time" element={<SalesTrendOverTime />} />
-                    <Route path="/sales-by-month" element={<SalesByMonth />} />
-                    <Route path="/sales-by-state" element={<SalesByState />} />
-                    <Route path="/orders-by-month" element={<OrdersByMonth />} />
                   </Route>
 
                   {/* Pagina no encontrada */}
