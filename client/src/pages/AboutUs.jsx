@@ -1,8 +1,9 @@
 import aboutus from "../images/AboutUs.png";
-import MiguelBadilla from "../images/MiguelBadilla.png";
-import JavierDiaz from "../images/JavierDiaz.png";
-import EstefaniNavarro from "../images/EstefaniNavarro.png";
-import IgnacioRuiz from "../images/IgnacioRuiz.png";
+import Miguel from "../images/Miguel.jpg";
+import Javier from "../images/Javier.jpg";
+import Estefani from "../images/Estefani.jpg";
+import Ignacio from "../images/Ignacio.jpg";
+
 import { SocialIcon } from 'react-social-icons/component'
 import 'react-social-icons/instagram'
 import 'react-social-icons/github'
@@ -36,7 +37,7 @@ function AboutUs() {
                 <h3>Un gran equipo es la clave</h3>
                 <div className="about-members">
                     <div className="box-members">
-                        <Avatar className="avatar" alt="MiguelBadilla" src={MiguelBadilla} sx={{ width: 200, height: 200 }} />
+                        <Avatar className="avatar" alt="MiguelBadilla" src={Miguel} sx={{ width: 200, height: 200 }} />
                         <h2>Miguel Badilla</h2>
                         <p className='dark:text-black'>Estudiante de ingeniería informática</p>
                         <div className="redes">
@@ -52,7 +53,7 @@ function AboutUs() {
                         </div>
                     </div>
                     <div className="box-members">
-                        <Avatar className="avatar" src={JavierDiaz} alt="JavierDiaz" sx={{ width: 200, height: 200 }} />
+                        <Avatar className="avatar" src={Javier} alt="JavierDiaz" sx={{ width: 200, height: 200 }} />
                         <h2>Javier Díaz</h2>
                         <p className='dark:text-black'>Estudiante de ingeniería informática</p>
                         <div className="redes">
@@ -68,7 +69,7 @@ function AboutUs() {
                         </div>
                     </div>
                     <div className="box-members">
-                        <Avatar className="avatar" src={EstefaniNavarro} alt="EstefaniNavarro" sx={{ width: 200, height: 200 }} />
+                        <Avatar className="avatar" src={Estefani} alt="EstefaniNavarro" sx={{ width: 200, height: 200 }} />
 
                         <h2>Estefani Navarro</h2>
                         <p className='dark:text-black'>Estudiante de ingeniería informática</p>
@@ -85,7 +86,7 @@ function AboutUs() {
                         </div>
                     </div>
                     <div className="box-members">
-                        <Avatar className="avatar" src={IgnacioRuiz} alt="IgnacioRuiz" sx={{ width: 200, height: 200 }} />
+                        <Avatar className="avatar" src={Ignacio} alt="IgnacioRuiz" sx={{ width: 200, height: 200 }} />
                         <h2>Ignacio Ruiz</h2>
                         <p className='dark:text-black'>Estudiante de ingeniería informática</p>
                         <div className="redes">
