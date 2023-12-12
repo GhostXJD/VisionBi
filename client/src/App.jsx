@@ -71,6 +71,7 @@ function App() {
                     <Route path='/perfil' element={<Profile />} />
                     <Route path='/perfil/ChangePassword' element={<ChangePasswordPage />} />
                     <Route path='/resetPass' element={<ResetPass />} />
+                    <Route path='/uploadfile' element={<UploadFile />} />
                     <Route path='/dashboard' element={<DashboardPage />} />
                     <Route path='/dashboardByCategory' element={<DashboardByCategoryPage />} />
                     {/*Charts*/}
@@ -93,7 +94,6 @@ function App() {
 
                   {/* Rutas Representante */}
                   <Route element={<ProtectedRoute role='representante' />}>
-                    <Route path='/uploadfile' element={<UploadFile />} />
                     <Route path='/RegistrarEmpleado' element={<RegistroEmpleadoPage />} />
                     <Route path='/ListarEmpleados' element={<ListarEmpleadosPage />} />
                   </Route>
