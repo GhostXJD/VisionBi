@@ -25,7 +25,8 @@ function ProtectedRoute({ role, ...props }) {
     '/sales-trend-over-time',
     '/sales-by-month',
     '/sales-by-state',
-    '/orders-by-month'
+    '/orders-by-month',
+    '/uploadfile'
   ];
 
   if (hasRole('admin') && restrictedRoutesForAdmin.some(route => location.pathname.startsWith(route))) {
